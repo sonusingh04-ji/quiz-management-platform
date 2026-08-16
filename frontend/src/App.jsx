@@ -1,10 +1,17 @@
 import { Routes, Route } from "react-router-dom";
 
 // =====================================================
+// ADMIN DASHBOARD
+// =====================================================
+import AdminDashboard from "./pages/AdminDashboard.jsx";
+
+// =====================================================
 // AUTH
 // =====================================================
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
+import ForgotPassword from "./pages/ForgotPassword.jsx";
+import ResetPassword from "./pages/ResetPassword.jsx";
 
 // =====================================================
 // STUDENT PAGES
@@ -18,8 +25,6 @@ import Leaderboard from "./pages/Leaderboard.jsx";
 import Results from "./pages/Results.jsx";
 import Profile from "./pages/Profile.jsx";
 import Discover from "./pages/Discover.jsx";
-import ForgotPassword from "./pages/ForgotPassword.jsx";
-import ResetPassword from "./pages/ResetPassword.jsx";
 
 // =====================================================
 // ADMIN PAGES
@@ -28,37 +33,43 @@ import ManageQuizzes from "./pages/ManageQuizzes.jsx";
 import ManageUsers from "./pages/ManageUsers.jsx";
 import AdminResults from "./pages/AdminResults.jsx";
 import AdminAnalytics from "./pages/AdminAnalytics.jsx";
-import Reports from "./pages/Reports";
 import ManageCategories from "./pages/ManageCategories.jsx";
+import Reports from "./pages/Reports.jsx";
+
+
 function App() {
     return (
         <Routes>
 
             {/* =================================================
-                LOGIN
+                AUTHENTICATION
             ================================================= */}
+
             <Route
                 path="/"
                 element={<Login />}
             />
-                <Route
-                    path="/forgot-password"
-                    element={<ForgotPassword />}
-                />
-                <Route
-                    path="/reset-password"
-                    element={<ResetPassword />}
-                />
+
             <Route
                 path="/register"
                 element={<Register />}
             />
 
+            <Route
+                path="/forgot-password"
+                element={<ForgotPassword />}
+            />
+
+            <Route
+                path="/reset-password"
+                element={<ResetPassword />}
+            />
+
+
             {/* =================================================
-                DASHBOARD
-                Admin and Student dashboard are currently handled
-                by Dashboard.jsx
-            ================================================= */}
+                STUDENT DASHBOARD
+                ================================================= */}
+
             <Route
                 path="/dashboard"
                 element={<Dashboard />}
@@ -66,8 +77,19 @@ function App() {
 
 
             {/* =================================================
-                CREATE QUIZ
-            ================================================= */}
+                ADMIN DASHBOARD
+                ================================================= */}
+
+            <Route
+                path="/admin-dashboard"
+                element={<AdminDashboard />}
+            />
+
+
+            {/* =================================================
+                STUDENT - CREATE QUIZ
+                ================================================= */}
+
             <Route
                 path="/create-quiz"
                 element={<CreateQuiz />}
@@ -75,29 +97,9 @@ function App() {
 
 
             {/* =================================================
-                MANAGE QUIZZES
-                ADMIN
-            ================================================= */}
-            <Route
-                path="/manage-quizzes"
-                element={<ManageQuizzes />}
-            />
+                STUDENT - TAKE QUIZ
+                ================================================= */}
 
-
-            {/* =================================================
-                MANAGE USERS
-                ADMIN
-            ================================================= */}
-            <Route
-                path="/manage-users"
-                element={<ManageUsers />}
-            />
-
-
-            {/* =================================================
-                TAKE QUIZ
-                STUDENT
-            ================================================= */}
             <Route
                 path="/quiz/:id"
                 element={<TakeQuiz />}
@@ -105,9 +107,9 @@ function App() {
 
 
             {/* =================================================
-                HISTORY
-                STUDENT
-            ================================================= */}
+                STUDENT - HISTORY
+                ================================================= */}
+
             <Route
                 path="/history"
                 element={<History />}
@@ -115,9 +117,9 @@ function App() {
 
 
             {/* =================================================
-                ATTEMPT DETAILS
-                STUDENT
-            ================================================= */}
+                STUDENT - ATTEMPT DETAILS
+                ================================================= */}
+
             <Route
                 path="/attempt-details/:attemptId"
                 element={<AttemptDetails />}
@@ -125,9 +127,9 @@ function App() {
 
 
             {/* =================================================
-                LEADERBOARD
-                STUDENT
-            ================================================= */}
+                STUDENT - LEADERBOARD
+                ================================================= */}
+
             <Route
                 path="/leaderboard"
                 element={<Leaderboard />}
@@ -135,8 +137,9 @@ function App() {
 
 
             {/* =================================================
-                STUDENT RESULTS
-            ================================================= */}
+                STUDENT - RESULTS
+                ================================================= */}
+
             <Route
                 path="/results"
                 element={<Results />}
@@ -144,17 +147,9 @@ function App() {
 
 
             {/* =================================================
-                ADMIN RESULTS
-            ================================================= */}
-            <Route
-                path="/admin/results"
-                element={<AdminResults />}
-            />
+                STUDENT - PROFILE
+                ================================================= */}
 
-
-            {/* =================================================
-                PROFILE
-            ================================================= */}
             <Route
                 path="/profile"
                 element={<Profile />}
@@ -162,9 +157,9 @@ function App() {
 
 
             {/* =================================================
-                DISCOVER
-                STUDENT
-            ================================================= */}
+                STUDENT - DISCOVER
+                ================================================= */}
+
             <Route
                 path="/discover"
                 element={<Discover />}
@@ -172,20 +167,65 @@ function App() {
 
 
             {/* =================================================
-                ADMIN ANALYTICS
-            ================================================= */}
+                ADMIN - MANAGE QUIZZES
+                ================================================= */}
+
+            <Route
+                path="/manage-quizzes"
+                element={<ManageQuizzes />}
+            />
+
+
+            {/* =================================================
+                ADMIN - MANAGE USERS
+                ================================================= */}
+
+            <Route
+                path="/manage-users"
+                element={<ManageUsers />}
+            />
+
+
+            {/* =================================================
+                ADMIN - RESULTS
+                ================================================= */}
+
+            <Route
+                path="/admin/results"
+                element={<AdminResults />}
+            />
+
+
+            {/* =================================================
+                ADMIN - ANALYTICS
+                ================================================= */}
+
             <Route
                 path="/admin/analytics"
                 element={<AdminAnalytics />}
             />
-                <Route
-                    path="/admin/categories"
-                    element={<ManageCategories />}
-                />
-                <Route
-                    path="/reports"
-                    element={<Reports />}
-                />
+
+
+            {/* =================================================
+                ADMIN - CATEGORIES
+                ================================================= */}
+
+            <Route
+                path="/admin/categories"
+                element={<ManageCategories />}
+            />
+
+
+            {/* =================================================
+                ADMIN - REPORTS
+                ================================================= */}
+
+            <Route
+                path="/reports"
+                element={<Reports />}
+            />
+
+
         </Routes>
     );
 }

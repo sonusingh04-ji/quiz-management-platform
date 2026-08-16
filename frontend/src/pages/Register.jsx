@@ -4,7 +4,6 @@ import api from "../services/api";
 import "./Register.css";
 
 const Register = () => {
-
     const navigate = useNavigate();
 
     const [fullName, setFullName] = useState("");
@@ -12,10 +11,7 @@ const Register = () => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    // Account role
     const [role, setRole] = useState("student");
-
-    // Admin registration code
     const [adminCode, setAdminCode] = useState("");
 
     const [loading, setLoading] = useState(false);
@@ -23,66 +19,42 @@ const Register = () => {
     const [success, setSuccess] = useState("");
 
     const handleSubmit = async (e) => {
-
         e.preventDefault();
 
         setError("");
         setSuccess("");
 
-        // Password confirmation
         if (password !== confirmPassword) {
             setError("Passwords do not match.");
             return;
         }
 
-        // Password length
         if (password.length < 6) {
-            setError(
-                "Password must be at least 6 characters long."
-            );
+            setError("Password must be at least 6 characters long.");
             return;
         }
 
-        // Admin code validation
         if (role === "admin" && !adminCode.trim()) {
-            setError(
-                "Admin registration code is required."
-            );
+            setError("Admin registration code is required.");
             return;
         }
 
         setLoading(true);
 
         try {
-
-            console.log("Registering user...");
-            console.log("Role:", role);
-
-            const response = await api.post(
-                "/auth/register",
-                {
-                    fullName,
-                    email,
-                    password,
-                    role,
-                    adminCode:
-                        role === "admin"
-                            ? adminCode
-                            : undefined
-                }
-            );
-
-            console.log(
-                "Registration response:",
-                response.data
-            );
+            const response = await api.post("/auth/register", {
+                fullName,
+                email,
+                password,
+                role,
+                adminCode: role === "admin" ? adminCode : undefined,
+            });
 
             setSuccess(
                 response.data?.message ||
                 "Registration successful."
             );
 
-            // Clear form
             setFullName("");
             setEmail("");
             setPassword("");
@@ -90,278 +62,445 @@ const Register = () => {
             setAdminCode("");
             setRole("student");
 
-            // Go to login
             setTimeout(() => {
                 navigate("/");
             }, 1500);
 
         } catch (error) {
-
-            console.error(
-                "Registration error:",
-                error
-            );
+            console.error("Registration error:", error);
 
             if (error.response) {
-
                 setError(
                     error.response.data?.message ||
                     "Registration failed."
                 );
-
             } else {
-
-                setError(
-                    "Cannot connect to the server."
-                );
+                setError("Cannot connect to the server.");
             }
 
         } finally {
-
             setLoading(false);
-
         }
     };
 
     return (
         <div className="register-page">
 
-            <div className="register-card">
+            {/* =====================================
+                LEFT BRANDING PANEL
+            ===================================== */}
+            <section className="register-hero">
 
-                {/* Title */}
-                <h1>
-                    Quiz Management Platform
-                </h1>
+                <div className="hero-glow hero-glow-one"></div>
+                <div className="hero-glow hero-glow-two"></div>
 
-                {/* Subtitle */}
-                <p>
-                    {role === "admin"
-                        ? "Create your administrator account"
-                        : "Create your student account"}
-                </p>
+                <div className="hero-content">
 
-                <form onSubmit={handleSubmit}>
+                    <div className="hero-badge">
+                        <span>✦</span>
+                        Smart Assessment Platform
+                    </div>
 
-                    {/* Full Name */}
-                    <div className="register-field">
+                    <h2>
+                        Learn.
+                        <br />
+                        Practice.
+                        <br />
+                        <span>Achieve.</span>
+                    </h2>
 
-                        <label>
-                            Full Name
-                        </label>
+                    <p className="hero-description">
+                        Build your knowledge, test your skills,
+                        and track your progress with intelligent
+                        online assessments.
+                    </p>
 
-                        <input
-                            type="text"
-                            placeholder="Enter your full name"
-                            value={fullName}
-                            onChange={(e) =>
-                                setFullName(e.target.value)
-                            }
-                            required
-                        />
+                    <div className="hero-stats">
+
+                        <div className="hero-stat">
+                            <strong>100+</strong>
+                            <span>Questions</span>
+                        </div>
+
+                        <div className="hero-stat">
+                            <strong>24/7</strong>
+                            <span>Access</span>
+                        </div>
+
+                        <div className="hero-stat">
+                            <strong>∞</strong>
+                            <span>Learning</span>
+                        </div>
 
                     </div>
 
+                    <div className="hero-visual">
 
-                    {/* Email */}
-                    <div className="register-field">
+                        <div className="floating-card card-one">
+                            <span>✓</span>
+                            Practice
+                        </div>
 
-                        <label>
-                            Email
-                        </label>
+                        <div className="floating-card card-two">
+                            <span>★</span>
+                            Improve
+                        </div>
 
-                        <input
-                            type="email"
-                            placeholder="Enter your email"
-                            value={email}
-                            onChange={(e) =>
-                                setEmail(e.target.value)
-                            }
-                            required
-                        />
+                        <div className="quiz-stack">
 
-                    </div>
+                            <div className="quiz-layer layer-back"></div>
 
+                            <div className="quiz-layer layer-middle"></div>
 
-                    {/* Account Type */}
-                    <div className="register-field">
+                            <div className="quiz-layer layer-front">
+                                <div className="quiz-icon">Q</div>
 
-                        <label>
-                            Account Type
-                        </label>
-
-                        <div className="role-options">
-
-                            {/* Student */}
-                            <label className="role-option">
-
-                                <input
-                                    type="radio"
-                                    name="role"
-                                    value="student"
-                                    checked={
-                                        role === "student"
-                                    }
-                                    onChange={() => {
-                                        setRole("student");
-                                        setAdminCode("");
-                                        setError("");
-                                    }}
-                                />
-
-                                <span>
-                                    Student
-                                </span>
-
-                            </label>
-
-
-                            {/* Admin */}
-                            <label className="role-option">
-
-                                <input
-                                    type="radio"
-                                    name="role"
-                                    value="admin"
-                                    checked={
-                                        role === "admin"
-                                    }
-                                    onChange={() => {
-                                        setRole("admin");
-                                        setError("");
-                                    }}
-                                />
-
-                                <span>
-                                    Admin
-                                </span>
-
-                            </label>
+                                <div className="quiz-lines">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
 
                         </div>
 
                     </div>
 
+                </div>
+            </section>
 
-                    {/* Admin Registration Code */}
-                    {role === "admin" && (
 
-                        <div className="register-field admin-code-field">
+            {/* =====================================
+                RIGHT REGISTER PANEL
+            ===================================== */}
+            <section className="register-panel">
+
+                <div className="register-content">
+
+                    {/* Brand */}
+                    <div className="register-brand">
+
+                        <div className="brand-icon">
+                            Q
+                        </div>
+
+                        <div>
+                            <strong>Quiz Management</strong>
+                            <span>Platform</span>
+                        </div>
+
+                    </div>
+
+
+                    {/* Heading */}
+                    <div className="register-heading">
+
+                        <h1>
+                            Create your account <span>✨</span>
+                        </h1>
+
+                        <p>
+                            Start your learning journey today.
+                        </p>
+
+                    </div>
+
+
+                    {/* Form */}
+                    <form
+                        onSubmit={handleSubmit}
+                        className="register-form"
+                    >
+
+                        {/* Full Name */}
+                        <div className="register-field">
 
                             <label>
-                                Admin Registration Code
+                                Full name
                             </label>
 
-                            <input
-                                type="password"
-                                placeholder="Enter admin registration code"
-                                value={adminCode}
-                                onChange={(e) =>
-                                    setAdminCode(
-                                        e.target.value
-                                    )
-                                }
-                                required
-                            />
+                            <div className="input-wrapper">
 
-                            <small>
-                                Admin access requires a valid
-                                registration code.
-                            </small>
+                                <span className="input-icon">
+                                    👤
+                                </span>
+
+                                <input
+                                    type="text"
+                                    placeholder="Enter your full name"
+                                    value={fullName}
+                                    onChange={(e) =>
+                                        setFullName(e.target.value)
+                                    }
+                                    required
+                                />
+
+                            </div>
 
                         </div>
 
-                    )}
+
+                        {/* Email */}
+                        <div className="register-field">
+
+                            <label>
+                                Email address
+                            </label>
+
+                            <div className="input-wrapper">
+
+                                <span className="input-icon">
+                                    ✉
+                                </span>
+
+                                <input
+                                    type="email"
+                                    placeholder="you@example.com"
+                                    value={email}
+                                    onChange={(e) =>
+                                        setEmail(e.target.value)
+                                    }
+                                    required
+                                />
+
+                            </div>
+
+                        </div>
 
 
-                    {/* Password */}
-                    <div className="register-field">
+                        {/* Account Type */}
+                        <div className="register-field">
 
-                        <label>
-                            Password
-                        </label>
+                            <label>
+                                Account type
+                            </label>
 
-                        <input
-                            type="password"
-                            placeholder="Enter password"
-                            value={password}
-                            onChange={(e) =>
-                                setPassword(e.target.value)
+                            <div className="role-options">
+
+                                <label
+                                    className={`role-option ${
+                                        role === "student"
+                                            ? "active"
+                                            : ""
+                                    }`}
+                                >
+
+                                    <input
+                                        type="radio"
+                                        name="role"
+                                        value="student"
+                                        checked={role === "student"}
+                                        onChange={() => {
+                                            setRole("student");
+                                            setAdminCode("");
+                                            setError("");
+                                        }}
+                                    />
+
+                                    <span className="role-icon">
+                                        🎓
+                                    </span>
+
+                                    <span className="role-text">
+                                        <strong>Student</strong>
+                                        <small>
+                                            Take quizzes & learn
+                                        </small>
+                                    </span>
+
+                                </label>
+
+
+                                <label
+                                    className={`role-option ${
+                                        role === "admin"
+                                            ? "active"
+                                            : ""
+                                    }`}
+                                >
+
+                                    <input
+                                        type="radio"
+                                        name="role"
+                                        value="admin"
+                                        checked={role === "admin"}
+                                        onChange={() => {
+                                            setRole("admin");
+                                            setError("");
+                                        }}
+                                    />
+
+                                    <span className="role-icon">
+                                        🛡️
+                                    </span>
+
+                                    <span className="role-text">
+                                        <strong>Admin</strong>
+                                        <small>
+                                            Manage the platform
+                                        </small>
+                                    </span>
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+
+                        {/* Admin Code */}
+                        {role === "admin" && (
+
+                            <div className="register-field admin-code-field">
+
+                                <label>
+                                    Admin registration code
+                                </label>
+
+                                <div className="input-wrapper">
+
+                                    <span className="input-icon">
+                                        🔐
+                                    </span>
+
+                                    <input
+                                        type="password"
+                                        placeholder="Enter admin code"
+                                        value={adminCode}
+                                        onChange={(e) =>
+                                            setAdminCode(e.target.value)
+                                        }
+                                        required
+                                    />
+
+                                </div>
+
+                                <small>
+                                    Admin access requires a valid
+                                    registration code.
+                                </small>
+
+                            </div>
+
+                        )}
+
+
+                        {/* Password */}
+                        <div className="register-field">
+
+                            <label>
+                                Password
+                            </label>
+
+                            <div className="input-wrapper">
+
+                                <span className="input-icon">
+                                    🔒
+                                </span>
+
+                                <input
+                                    type="password"
+                                    placeholder="Create a password"
+                                    value={password}
+                                    onChange={(e) =>
+                                        setPassword(e.target.value)
+                                    }
+                                    required
+                                />
+
+                            </div>
+
+                        </div>
+
+
+                        {/* Confirm Password */}
+                        <div className="register-field">
+
+                            <label>
+                                Confirm password
+                            </label>
+
+                            <div className="input-wrapper">
+
+                                <span className="input-icon">
+                                    🔒
+                                </span>
+
+                                <input
+                                    type="password"
+                                    placeholder="Confirm your password"
+                                    value={confirmPassword}
+                                    onChange={(e) =>
+                                        setConfirmPassword(e.target.value)
+                                    }
+                                    required
+                                />
+
+                            </div>
+
+                        </div>
+
+
+                        {/* Error */}
+                        {error && (
+                            <div className="register-message error">
+                                <span>!</span>
+                                {error}
+                            </div>
+                        )}
+
+
+                        {/* Success */}
+                        {success && (
+                            <div className="register-message success">
+                                <span>✓</span>
+                                {success}
+                            </div>
+                        )}
+
+
+                        {/* Submit */}
+                        <button
+                            type="submit"
+                            className="register-button"
+                            disabled={loading}
+                        >
+                            {loading
+                                ? "Creating account..."
+                                : role === "admin"
+                                    ? "Create Admin Account →"
+                                    : "Create Student Account →"
                             }
-                            required
-                        />
+                        </button>
+
+                    </form>
+
+
+                    {/* Login */}
+                    <div className="register-login">
+
+                        <span>
+                            Already have an account?
+                        </span>
+
+                        <button
+                            type="button"
+                            onClick={() => navigate("/")}
+                        >
+                            Sign in
+                        </button>
 
                     </div>
 
 
-                    {/* Confirm Password */}
-                    <div className="register-field">
-
-                        <label>
-                            Confirm Password
-                        </label>
-
-                        <input
-                            type="password"
-                            placeholder="Confirm your password"
-                            value={confirmPassword}
-                            onChange={(e) =>
-                                setConfirmPassword(
-                                    e.target.value
-                                )
-                            }
-                            required
-                        />
-
+                    <div className="register-footer">
+                        Secure registration&nbsp; • &nbsp;
+                        Quiz Management Platform
                     </div>
-
-
-                    {/* Error */}
-                    {error && (
-                        <div className="register-error">
-                            {error}
-                        </div>
-                    )}
-
-
-                    {/* Success */}
-                    {success && (
-                        <div className="register-success">
-                            {success}
-                        </div>
-                    )}
-
-
-                    {/* Submit */}
-                    <button
-                        type="submit"
-                        className="register-button"
-                        disabled={loading}
-                    >
-                        {loading
-                            ? "Creating Account..."
-                            : role === "admin"
-                                ? "Create Admin Account"
-                                : "Create Student Account"}
-                    </button>
-
-                </form>
-
-
-                {/* Login */}
-                <div className="register-login">
-
-                    Already have an account?{" "}
-
-                    <button
-                        type="button"
-                        onClick={() => navigate("/")}
-                    >
-                        Login
-                    </button>
 
                 </div>
 
-            </div>
+            </section>
 
         </div>
     );

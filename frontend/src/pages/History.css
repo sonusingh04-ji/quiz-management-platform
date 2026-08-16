@@ -1,422 +1,1015 @@
-/* =========================================
-   Quiz History Page
-========================================= */
+/* =========================================================
+   QUIZ HISTORY — PREMIUM UI
+========================================================= */
 
 .history-page {
     min-height: 100vh;
-    padding: 40px;
-    background: #f5f6fb;
+
+    padding: 36px 45px 55px;
+
     box-sizing: border-box;
+
+    background:
+            radial-gradient(
+                    circle at 90% 0%,
+                    rgba(81, 70, 229, 0.10),
+                    transparent 32%
+            ),
+            radial-gradient(
+                    circle at 0% 35%,
+                    rgba(124, 58, 237, 0.06),
+                    transparent 30%
+            ),
+            #f6f7fb;
+
+    color: #202638;
 }
 
 
-/* =========================================
-   Header
-========================================= */
+/* =========================================================
+   HEADER
+========================================================= */
 
 .history-header {
-    max-width: 1200px;
-    margin: 0 auto 30px;
+    max-width: 1250px;
+
+    margin: 0 auto 28px;
 
     display: flex;
-    justify-content: space-between;
+
     align-items: center;
-    gap: 20px;
+
+    justify-content: space-between;
+
+    gap: 25px;
+}
+
+.history-header > div {
+    position: relative;
 }
 
 .history-header h1 {
     margin: 0 0 8px;
 
     font-size: 34px;
-    font-weight: 700;
+
+    line-height: 1.15;
+
+    font-weight: 800;
+
+    letter-spacing: -0.6px;
+
     color: #202638;
+}
+
+.history-header h1::before {
+    content: "";
+
+    display: inline-block;
+
+    width: 6px;
+
+    height: 31px;
+
+    margin-right: 12px;
+
+    vertical-align: -4px;
+
+    border-radius: 10px;
+
+    background:
+            linear-gradient(
+                    180deg,
+                    #5146e5,
+                    #7c3aed
+            );
 }
 
 .history-header p {
-    margin: 0;
+    margin: 0 0 0 19px;
 
-    font-size: 16px;
-    color: #737b8c;
+    color: #747c8f;
+
+    font-size: 15px;
+
+    line-height: 1.5;
 }
 
 
-/* =========================================
-   Back Button
-========================================= */
+/* =========================================================
+   BACK DASHBOARD BUTTON
+========================================================= */
 
 .back-dashboard-btn {
-    border: none;
-    padding: 12px 20px;
+    display: inline-flex;
 
-    background: #4f46e5;
-    color: white;
+    align-items: center;
 
-    border-radius: 8px;
+    justify-content: center;
+
+    gap: 8px;
+
+    min-height: 45px;
+
+    padding: 0 19px;
+
+    border: 1px solid #dddffa;
+
+    border-radius: 11px;
+
+    background: #ffffff;
+
+    color: #5146e5;
 
     font-size: 14px;
-    font-weight: 600;
+
+    font-weight: 700;
 
     cursor: pointer;
 
-    transition: 0.2s ease;
+    box-shadow:
+            0 5px 18px rgba(30, 35, 70, 0.06);
+
+    transition:
+            background 0.2s ease,
+            color 0.2s ease,
+            border-color 0.2s ease,
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
 }
 
 .back-dashboard-btn:hover {
-    background: #4338ca;
+    background: #5146e5;
+
+    color: #ffffff;
+
+    border-color: #5146e5;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+            0 8px 20px rgba(81, 70, 229, 0.20);
 }
 
 
-/* =========================================
-   Statistics
-========================================= */
+/* =========================================================
+   STATISTICS
+========================================================= */
 
 .history-stats {
-    max-width: 1200px;
-    margin: 0 auto 30px;
+    max-width: 1250px;
+
+    margin: 0 auto 25px;
 
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
 
-    gap: 20px;
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
 }
 
 .history-stat-card {
-    background: white;
+    position: relative;
 
-    padding: 24px;
+    overflow: hidden;
 
-    border-radius: 14px;
+    min-height: 125px;
 
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    padding: 22px;
 
     display: flex;
+
     flex-direction: column;
 
-    gap: 8px;
+    justify-content: center;
+
+    gap: 7px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border: 1px solid #e9eaf2;
+
+    border-radius: 17px;
+
+    box-shadow:
+            0 7px 25px rgba(30, 35, 70, 0.06);
+
+    transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+}
+
+.history-stat-card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 100px;
+
+    height: 100px;
+
+    right: -35px;
+
+    bottom: -50px;
+
+    border-radius: 50%;
+
+    background:
+            rgba(81, 70, 229, 0.06);
+}
+
+.history-stat-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+            0 12px 30px rgba(30, 35, 70, 0.10);
 }
 
 .history-stat-card span {
-    font-size: 14px;
-    color: #737b8c;
+    color: #7b8294;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.1px;
 }
 
 .history-stat-card strong {
-    font-size: 28px;
     color: #202638;
+
+    font-size: 31px;
+
+    line-height: 1;
+
+    font-weight: 800;
+
+    letter-spacing: -0.5px;
+}
+
+.history-stat-card:nth-child(1) strong {
+    color: #5146e5;
+}
+
+.history-stat-card:nth-child(2) strong {
+    color: #7c3aed;
+}
+
+.history-stat-card:nth-child(3) strong {
+    color: #0891b2;
 }
 
 
-/* =========================================
-   Main History Card
-========================================= */
+/* =========================================================
+   MAIN HISTORY CARD
+========================================================= */
 
 .history-card {
-    max-width: 1200px;
+    max-width: 1250px;
+
     margin: 0 auto;
-
-    background: white;
-
-    border-radius: 16px;
 
     padding: 28px;
 
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border: 1px solid #e9eaf2;
+
+    border-radius: 19px;
+
+    box-shadow:
+            0 8px 30px rgba(30, 35, 70, 0.07);
 }
 
 .history-card-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
     margin-bottom: 24px;
+
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid #edf0f5;
 }
 
 .history-card-header h2 {
-    margin: 0 0 6px;
+    margin: 0 0 5px;
 
-    font-size: 22px;
     color: #202638;
+
+    font-size: 21px;
+
+    font-weight: 750;
 }
 
 .history-card-header p {
     margin: 0;
 
-    color: #737b8c;
-    font-size: 14px;
+    color: #81889a;
+
+    font-size: 13px;
 }
 
 
-/* =========================================
-   Table
-========================================= */
+/* =========================================================
+   TABLE WRAPPER
+========================================================= */
 
 .history-table-wrapper {
     width: 100%;
+
     overflow-x: auto;
+
+    border: 1px solid #edf0f5;
+
+    border-radius: 14px;
+
+    scrollbar-width: thin;
+
+    scrollbar-color: #cfd2df transparent;
 }
+
+.history-table-wrapper::-webkit-scrollbar {
+    height: 7px;
+}
+
+.history-table-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.history-table-wrapper::-webkit-scrollbar-thumb {
+    background: #d2d5e0;
+
+    border-radius: 20px;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
 
 .history-table {
     width: 100%;
 
-    border-collapse: collapse;
+    min-width: 1000px;
 
-    min-width: 900px;
+    border-collapse: separate;
+
+    border-spacing: 0;
 }
 
 .history-table th {
-    padding: 15px 12px;
+    padding: 15px 14px;
 
     text-align: left;
 
-    background: #f7f8fc;
+    background: #f8f8fc;
 
-    color: #687084;
+    color: #747c8e;
 
-    font-size: 13px;
-    font-weight: 600;
+    font-size: 11px;
 
-    border-bottom: 1px solid #e8eaf0;
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.55px;
+
+    white-space: nowrap;
+
+    border-bottom: 1px solid #e9ebf1;
+}
+
+.history-table th:first-child {
+    padding-left: 18px;
+
+    border-top-left-radius: 13px;
+}
+
+.history-table th:last-child {
+    border-top-right-radius: 13px;
 }
 
 .history-table td {
-    padding: 17px 12px;
+    padding: 17px 14px;
 
-    color: #454c5d;
+    color: #555d6f;
 
-    font-size: 14px;
+    font-size: 13px;
 
-    border-bottom: 1px solid #eef0f4;
+    white-space: nowrap;
+
+    border-bottom: 1px solid #eef0f5;
+
+    background: #ffffff;
+
+    transition: background 0.15s ease;
 }
 
-.history-table tbody tr:hover {
+.history-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.history-table tbody tr:hover td {
     background: #fafaff;
 }
 
-.quiz-title {
-    font-weight: 600;
-    color: #202638 !important;
-}
 
-.score {
+/* =========================================================
+   ROW NUMBER
+========================================================= */
+
+.history-table td:first-child {
+    padding-left: 18px;
+
+    color: #9aa1b1;
+
+    font-size: 12px;
+
     font-weight: 700;
 }
 
 
-/* =========================================
-   Status
-========================================= */
+/* =========================================================
+   QUIZ TITLE
+========================================================= */
+
+.quiz-title {
+    max-width: 220px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    color: #202638 !important;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   SCORE
+========================================================= */
+
+.score {
+    color: #5146e5 !important;
+
+    font-size: 14px !important;
+
+    font-weight: 800 !important;
+}
+
+
+/* =========================================================
+   STATUS BADGES
+========================================================= */
 
 .status-badge {
-    display: inline-block;
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    min-width: 72px;
 
     padding: 6px 11px;
 
-    border-radius: 20px;
+    border-radius: 30px;
 
-    font-size: 12px;
-    font-weight: 700;
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.35px;
+
+    text-transform: uppercase;
+}
+
+.status-badge::before {
+    content: "";
+
+    width: 6px;
+
+    height: 6px;
+
+    border-radius: 50%;
 }
 
 .status-passed {
-    background: #dcfce7;
+    background: #e9f9ef;
+
     color: #15803d;
+
+    border: 1px solid #c8efd6;
+}
+
+.status-passed::before {
+    background: #22c55e;
 }
 
 .status-failed {
-    background: #fee2e2;
-    color: #dc2626;
+    background: #fff0f0;
+
+    color: #b91c1c;
+
+    border: 1px solid #ffd2d2;
+}
+
+.status-failed::before {
+    background: #ef4444;
 }
 
 
-/* =========================================
-   Empty History
-========================================= */
+/* =========================================================
+   VIEW DETAILS BUTTON
+========================================================= */
+
+.view-details-btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 105px;
+
+    padding: 8px 13px;
+
+    border: 1px solid #dcd9ff;
+
+    border-radius: 9px;
+
+    background: #f3f2ff;
+
+    color: #5146e5;
+
+    font-size: 12px;
+
+    font-weight: 750;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition:
+            background 0.2s ease,
+            border-color 0.2s ease,
+            color 0.2s ease,
+            transform 0.15s ease,
+            box-shadow 0.2s ease;
+}
+
+.view-details-btn:hover {
+    background: #5146e5;
+
+    border-color: #5146e5;
+
+    color: #ffffff;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+            0 5px 13px rgba(81, 70, 229, 0.20);
+}
+
+.view-details-btn:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   EMPTY HISTORY
+========================================================= */
 
 .empty-history {
+    min-height: 350px;
+
+    padding: 55px 25px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
     text-align: center;
 
-    padding: 70px 20px;
+    box-sizing: border-box;
 }
 
 .empty-icon {
-    font-size: 50px;
+    width: 82px;
+    height: 82px;
 
-    margin-bottom: 15px;
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-bottom: 18px;
+
+    border-radius: 24px;
+
+    background:
+            linear-gradient(
+                    145deg,
+                    #eeedff,
+                    #f6f2ff
+            );
+
+    font-size: 37px;
+
+    box-shadow:
+            0 8px 22px rgba(81, 70, 229, 0.08);
 }
 
 .empty-history h3 {
     margin: 0 0 8px;
 
-    font-size: 22px;
-
     color: #202638;
+
+    font-size: 21px;
+
+    font-weight: 750;
 }
 
 .empty-history p {
-    margin: 0 0 22px;
+    max-width: 400px;
 
-    color: #737b8c;
+    margin: 0 0 24px;
+
+    color: #7c8395;
+
+    font-size: 14px;
+
+    line-height: 1.5;
 }
 
 .empty-history button {
     border: none;
 
-    padding: 11px 20px;
+    padding: 12px 22px;
 
-    background: #4f46e5;
+    border-radius: 10px;
 
-    color: white;
+    background: #5146e5;
 
-    border-radius: 8px;
+    color: #ffffff;
 
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 13px;
+
+    font-weight: 700;
 
     cursor: pointer;
+
+    box-shadow:
+            0 6px 16px rgba(81, 70, 229, 0.18);
+
+    transition:
+            background 0.2s ease,
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+}
+
+.empty-history button:hover {
+    background: #4338ca;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+            0 9px 20px rgba(81, 70, 229, 0.25);
 }
 
 
-/* =========================================
-   Pagination
-========================================= */
+/* =========================================================
+   PAGINATION
+========================================================= */
 
 .pagination {
-    max-width: 1200px;
+    max-width: 1250px;
 
-    margin: 24px auto 0;
+    margin: 20px auto 0;
 
     display: flex;
 
-    justify-content: center;
-
     align-items: center;
 
-    gap: 20px;
+    justify-content: center;
+
+    gap: 18px;
 }
 
 .pagination button {
-    border: none;
+    min-width: 105px;
 
-    padding: 10px 18px;
+    padding: 10px 17px;
 
-    border-radius: 8px;
+    border: 1px solid #dedff0;
 
-    background: #4f46e5;
+    border-radius: 9px;
 
-    color: white;
+    background: #ffffff;
 
-    font-size: 14px;
+    color: #5146e5;
+
+    font-size: 13px;
+
+    font-weight: 700;
 
     cursor: pointer;
+
+    box-shadow:
+            0 4px 12px rgba(30, 35, 70, 0.04);
+
+    transition:
+            background 0.2s ease,
+            border-color 0.2s ease,
+            color 0.2s ease,
+            transform 0.2s ease;
 }
 
 .pagination button:hover:not(:disabled) {
-    background: #4338ca;
+    background: #5146e5;
+
+    border-color: #5146e5;
+
+    color: #ffffff;
+
+    transform: translateY(-1px);
 }
 
 .pagination button:disabled {
-    background: #d9dce5;
+    background: #eceef4;
 
-    color: #8b91a0;
+    border-color: #eceef4;
+
+    color: #a1a7b5;
 
     cursor: not-allowed;
+
+    box-shadow: none;
 }
 
 .pagination span {
-    font-size: 14px;
+    min-width: 105px;
 
-    font-weight: 600;
+    text-align: center;
 
-    color: #555d70;
+    color: #646c7e;
+
+    font-size: 13px;
+
+    font-weight: 700;
 }
 
 
-/* =========================================
-   Loading
-========================================= */
+/* =========================================================
+   LOADING
+========================================================= */
 
 .history-loading {
     min-height: 70vh;
 
     display: flex;
 
-    justify-content: center;
+    flex-direction: column;
 
     align-items: center;
 
-    font-size: 18px;
+    justify-content: center;
 
-    color: #687084;
+    color: #737b8c;
+
+    font-size: 15px;
+}
+
+.history-loading::before {
+    content: "";
+
+    width: 38px;
+    height: 38px;
+
+    margin-bottom: 15px;
+
+    border: 3px solid #e4e3f7;
+
+    border-top-color: #5146e5;
+
+    border-radius: 50%;
+
+    animation: history-spin 0.8s linear infinite;
+}
+
+@keyframes history-spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 
-/* =========================================
-   Error
-========================================= */
+/* =========================================================
+   ERROR
+========================================================= */
 
 .history-error {
-    max-width: 1200px;
+    max-width: 1250px;
 
     margin: 0 auto 20px;
 
-    padding: 14px 18px;
+    padding: 13px 17px;
 
-    border-radius: 8px;
+    display: flex;
 
-    background: #fee2e2;
+    align-items: center;
+
+    border: 1px solid #fecaca;
+
+    border-radius: 10px;
+
+    background: #fff1f2;
 
     color: #b91c1c;
 
-    font-size: 14px;
+    font-size: 13px;
+
+    font-weight: 600;
+
+    box-sizing: border-box;
 }
 
 
-/* =========================================
-   Responsive
-========================================= */
+/* =========================================================
+   RESPONSIVE — TABLET
+========================================================= */
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
 
     .history-page {
-        padding: 20px;
+        padding: 28px 22px 45px;
+    }
+
+    .history-header {
+        align-items: flex-start;
+    }
+
+    .history-header h1 {
+        font-size: 30px;
+    }
+
+    .history-stats {
+        gap: 13px;
+    }
+
+    .history-stat-card {
+        padding: 18px;
+    }
+
+    .history-stat-card strong {
+        font-size: 27px;
+    }
+
+    .history-card {
+        padding: 22px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .history-page {
+        padding: 20px 15px 35px;
     }
 
     .history-header {
         flex-direction: column;
-        align-items: flex-start;
+
+        align-items: stretch;
+
+        gap: 17px;
+    }
+
+    .history-header h1 {
+        font-size: 27px;
+    }
+
+    .history-header h1::before {
+        height: 26px;
+
+        margin-right: 9px;
+    }
+
+    .history-header p {
+        margin-left: 15px;
+
+        font-size: 13px;
+    }
+
+    .back-dashboard-btn {
+        width: 100%;
     }
 
     .history-stats {
         grid-template-columns: 1fr;
+
+        gap: 11px;
+    }
+
+    .history-stat-card {
+        min-height: 95px;
     }
 
     .history-card {
-        padding: 18px;
+        padding: 17px;
+
+        border-radius: 15px;
     }
+
+    .history-card-header {
+        margin-bottom: 18px;
+        padding-bottom: 15px;
+    }
+
+    .history-card-header h2 {
+        font-size: 19px;
+    }
+
+    .history-table {
+        min-width: 950px;
+    }
+
+    .pagination {
+        gap: 8px;
+    }
+
+    .pagination button {
+        min-width: 90px;
+
+        padding: 9px 12px;
+    }
+
+    .pagination span {
+        min-width: 85px;
+
+        font-size: 12px;
+    }
+
+    .empty-history {
+        min-height: 300px;
+
+        padding: 40px 15px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE — SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
 
     .history-header h1 {
-        font-size: 28px;
+        font-size: 24px;
     }
 
-}
-/* =====================================================
-   VIEW DETAILS BUTTON
-===================================================== */
+    .history-header p {
+        font-size: 12px;
+    }
 
-.view-details-btn {
-    border: none;
-    background: #4f46e5;
-    color: white;
-    padding: 8px 14px;
-    border-radius: 7px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-}
+    .history-stat-card strong {
+        font-size: 25px;
+    }
 
-.view-details-btn:hover {
-    background: #4338ca;
-    transform: translateY(-1px);
-}
+    .pagination button {
+        min-width: auto;
 
-.view-details-btn:active {
-    transform: translateY(0);
+        padding: 9px 10px;
+
+        font-size: 11px;
+    }
+
+    .pagination span {
+        min-width: auto;
+
+        font-size: 11px;
+    }
 }

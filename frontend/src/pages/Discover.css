@@ -1,167 +1,640 @@
-/* =========================================
-   Discover Page
-========================================= */
+/* =====================================================
+   DISCOVER PAGE
+===================================================== */
 
 .discover-page {
     min-height: 100vh;
-    background: #f5f6fb;
-    padding: 40px 50px;
+    padding: 35px 50px 60px;
     box-sizing: border-box;
+
+    background:
+            radial-gradient(
+                    circle at 10% 0%,
+                    rgba(99, 102, 241, 0.08),
+                    transparent 25%
+            ),
+            radial-gradient(
+                    circle at 95% 20%,
+                    rgba(124, 58, 237, 0.06),
+                    transparent 25%
+            ),
+            #f7f8fc;
+
+    color: #202638;
 }
 
-/* =========================================
-   Header
-========================================= */
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.discover-hero {
+    max-width: 1200px;
+    min-height: 300px;
+
+    margin: 0 auto 35px;
+
+    padding: 42px 48px;
+
+    box-sizing: border-box;
+
+    position: relative;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-radius: 28px;
+
+    background:
+            radial-gradient(
+                    circle at 80% 10%,
+                    rgba(255,255,255,0.18),
+                    transparent 25%
+            ),
+            linear-gradient(
+                    135deg,
+                    #312e81,
+                    #5146e5 50%,
+                    #7c3aed
+            );
+
+    color: white;
+
+    box-shadow:
+            0 25px 55px rgba(79,70,229,0.23);
+}
+
+.discover-hero-content {
+    position: relative;
+    z-index: 5;
+
+    max-width: 650px;
+}
+
+.discover-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 8px 13px;
+
+    margin-bottom: 17px;
+
+    border: 1px solid rgba(255,255,255,0.2);
+
+    border-radius: 999px;
+
+    background: rgba(255,255,255,0.1);
+
+    backdrop-filter: blur(10px);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 0.3px;
+}
+
+.discover-badge span {
+    font-size: 15px;
+}
+
+.discover-hero h1 {
+    margin: 0;
+
+    font-size: 42px;
+
+    line-height: 1.12;
+
+    font-weight: 800;
+
+    letter-spacing: -1px;
+}
+
+.discover-hero h1 span {
+    display: block;
+
+    background:
+            linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #ddd6fe
+            );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.discover-hero p {
+    max-width: 580px;
+
+    margin: 15px 0 25px;
+
+    color: rgba(255,255,255,0.78);
+
+    font-size: 15px;
+
+    line-height: 1.7;
+}
+
+.discover-hero-stats {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.discover-hero-stats div {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.discover-hero-stats strong {
+    font-size: 21px;
+    color: white;
+}
+
+.discover-hero-stats span {
+    color: rgba(255,255,255,0.65);
+    font-size: 11px;
+}
+
+
+/* =====================================================
+   HERO VISUAL
+===================================================== */
+
+.discover-hero-visual {
+    width: 300px;
+    height: 270px;
+
+    position: relative;
+
+    flex-shrink: 0;
+}
+
+.hero-main-circle {
+    width: 130px;
+    height: 130px;
+
+    position: absolute;
+
+    left: 85px;
+    top: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+            linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.3),
+                    rgba(255,255,255,0.08)
+            );
+
+    border: 1px solid rgba(255,255,255,0.25);
+
+    box-shadow:
+            0 20px 50px rgba(0,0,0,0.15);
+
+    backdrop-filter: blur(12px);
+
+    z-index: 3;
+}
+
+.hero-main-circle span {
+    font-size: 58px;
+
+    color: white;
+
+    filter:
+            drop-shadow(
+                    0 8px 18px
+                    rgba(255,255,255,0.25)
+            );
+}
+
+.hero-orbit {
+    position: absolute;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,255,255,0.16);
+}
+
+.orbit-one {
+    width: 210px;
+    height: 210px;
+
+    left: 45px;
+    top: 15px;
+}
+
+.orbit-two {
+    width: 270px;
+    height: 270px;
+
+    left: 15px;
+    top: -15px;
+}
+
+.floating-topic {
+    position: absolute;
+
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+
+    background: rgba(255,255,255,0.14);
+
+    border: 1px solid rgba(255,255,255,0.18);
+
+    backdrop-filter: blur(10px);
+
+    font-size: 21px;
+
+    z-index: 5;
+
+    box-shadow:
+            0 10px 25px rgba(0,0,0,0.12);
+}
+
+.topic-java {
+    left: 22px;
+    top: 50px;
+}
+
+.topic-code {
+    right: 12px;
+    top: 95px;
+
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.topic-check {
+    left: 48px;
+    bottom: 32px;
+
+    background: rgba(34,197,94,0.2);
+}
+
+.floating-score {
+    position: absolute;
+
+    right: 0;
+    bottom: 25px;
+
+    padding: 12px 16px;
+
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 14px;
+
+    background: rgba(255,255,255,0.12);
+
+    border: 1px solid rgba(255,255,255,0.18);
+
+    backdrop-filter: blur(10px);
+
+    z-index: 6;
+}
+
+.floating-score strong {
+    font-size: 17px;
+}
+
+.floating-score span {
+    color: rgba(255,255,255,0.65);
+    font-size: 10px;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
 
 .discover-header {
     max-width: 1200px;
-    margin: 0 auto 30px;
+
+    margin: 0 auto 20px;
 
     display: flex;
-    justify-content: space-between;
+
     align-items: center;
+    justify-content: space-between;
+
     gap: 20px;
 }
 
-.discover-header h1 {
-    margin: 0 0 8px;
+.header-title-row {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
 
-    font-size: 32px;
-    font-weight: 700;
+.header-icon {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background: #eeecff;
+
+    font-size: 20px;
+}
+
+.discover-header h2 {
+    margin: 0 0 3px;
+
     color: #202638;
+
+    font-size: 23px;
 }
 
 .discover-header p {
     margin: 0;
 
-    font-size: 16px;
-    color: #737b8f;
+    color: #7b8498;
+
+    font-size: 14px;
 }
 
 .back-dashboard-btn {
     border: none;
-    background: #eeeefe;
-    color: #5146e5;
 
-    padding: 13px 20px;
+    padding: 11px 17px;
 
     border-radius: 10px;
 
-    font-size: 15px;
-    font-weight: 600;
+    background: white;
+
+    color: #5146e5;
+
+    border: 1px solid #e4e6f0;
+
+    font-size: 14px;
+
+    font-weight: 700;
 
     cursor: pointer;
 
-    transition: 0.2s ease;
+    transition:
+            0.25s ease;
 }
 
 .back-dashboard-btn:hover {
     background: #5146e5;
+
     color: white;
+
+    border-color: #5146e5;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+            0 8px 18px
+            rgba(81,70,229,0.18);
 }
 
-/* =========================================
-   Filters
-========================================= */
+
+/* =====================================================
+   FILTERS
+===================================================== */
 
 .discover-filters {
     max-width: 1200px;
-    margin: 0 auto 25px;
 
-    background: white;
+    margin: 0 auto 18px;
 
-    padding: 20px;
-
-    border-radius: 16px;
+    padding: 15px;
 
     display: grid;
-    grid-template-columns: 1fr 200px 200px;
 
-    gap: 15px;
+    grid-template-columns:
+        minmax(300px, 1fr)
+        220px
+        220px
+        auto;
 
-    box-shadow: 0 4px 20px rgba(30, 35, 60, 0.06);
+    gap: 10px;
+
+    align-items: center;
+
+    background: rgba(255,255,255,0.9);
+
+    border: 1px solid #e7e9f1;
+
+    border-radius: 17px;
+
+    box-shadow:
+            0 8px 25px
+            rgba(30,35,60,0.05);
+
+    backdrop-filter: blur(10px);
 }
 
-.search-box {
+.filter-search {
     height: 48px;
-
-    border: 1px solid #dfe3ed;
-
-    border-radius: 10px;
 
     display: flex;
     align-items: center;
 
-    padding: 0 15px;
+    padding: 0 14px;
 
-    background: white;
+    border: 1px solid #e0e3ed;
+
+    border-radius: 11px;
+
+    background: #fafbfe;
 
     box-sizing: border-box;
+
+    transition:
+            border-color .2s ease,
+            box-shadow .2s ease;
 }
 
-.search-box span {
-    font-size: 18px;
+.filter-search:focus-within {
+    border-color: #5146e5;
+
+    box-shadow:
+            0 0 0 3px
+            rgba(81,70,229,0.08);
+
+    background: white;
+}
+
+.filter-search-icon {
     margin-right: 10px;
+
+    font-size: 16px;
 }
 
-.search-box input {
+.filter-search input {
     width: 100%;
 
     border: none;
     outline: none;
 
-    font-size: 15px;
+    background: transparent;
 
     color: #252b3a;
-}
-
-.search-box input::placeholder {
-    color: #9aa1b2;
-}
-
-.discover-filters select {
-    height: 48px;
-
-    border: 1px solid #dfe3ed;
-
-    border-radius: 10px;
-
-    padding: 0 14px;
-
-    background: white;
-
-    color: #4f5669;
-
-    font-size: 15px;
-
-    outline: none;
-
-    cursor: pointer;
-}
-
-.discover-filters select:focus {
-    border-color: #5146e5;
-}
-
-/* =========================================
-   Result Count
-========================================= */
-
-.discover-result-count {
-    max-width: 1200px;
-    margin: 0 auto 20px;
-
-    color: #737b8f;
 
     font-size: 14px;
 }
 
-/* =========================================
-   Quiz Grid
-========================================= */
+.filter-search input::placeholder {
+    color: #9ca3b5;
+}
+
+.clear-search {
+    width: 27px;
+    height: 27px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #e8e9f1;
+
+    color: #697187;
+
+    cursor: pointer;
+
+    font-size: 17px;
+
+    line-height: 1;
+}
+
+.filter-select-wrapper {
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 0 12px;
+
+    border: 1px solid #e0e3ed;
+
+    border-radius: 11px;
+
+    background: #fafbfe;
+
+    box-sizing: border-box;
+}
+
+.filter-select-wrapper span {
+    font-size: 15px;
+}
+
+.filter-select-wrapper select {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: #4f5669;
+
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+.clear-filters-btn {
+    height: 48px;
+
+    padding: 0 16px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    background: #eeecff;
+
+    color: #5146e5;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.clear-filters-btn:hover {
+    background: #5146e5;
+
+    color: white;
+}
+
+
+/* =====================================================
+   RESULT BAR
+===================================================== */
+
+.discover-result-bar {
+    max-width: 1200px;
+
+    margin: 0 auto 16px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+}
+
+.discover-result-bar strong {
+    color: #5146e5;
+
+    font-size: 16px;
+}
+
+.discover-result-bar span {
+    color: #7b8498;
+
+    font-size: 13px;
+}
+
+.filter-active {
+    padding: 5px 10px;
+
+    border-radius: 999px;
+
+    background: #eeecff;
+
+    color: #5146e5 !important;
+
+    font-size: 11px !important;
+
+    font-weight: 700;
+}
+
+
+/* =====================================================
+   QUIZ GRID
+===================================================== */
 
 .discover-grid {
     max-width: 1200px;
+
     margin: 0 auto;
 
     display: grid;
@@ -169,307 +642,781 @@
     grid-template-columns:
         repeat(3, minmax(0, 1fr));
 
-    gap: 20px;
+    gap: 22px;
 }
 
-/* =========================================
-   Quiz Card
-========================================= */
+
+/* =====================================================
+   QUIZ CARD
+===================================================== */
 
 .discover-quiz-card {
-    background: white;
-
-    border-radius: 16px;
-
-    padding: 22px;
-
-    box-sizing: border-box;
-
-    box-shadow: 0 5px 20px rgba(30, 35, 60, 0.07);
-
-    transition:
-            transform 0.2s ease,
-            box-shadow 0.2s ease;
+    overflow: hidden;
 
     display: flex;
     flex-direction: column;
+
+    min-width: 0;
+
+    background: white;
+
+    border: 1px solid #e6e8f0;
+
+    border-radius: 21px;
+
+    box-shadow:
+            0 8px 25px
+            rgba(30,35,60,0.055);
+
+    transition:
+            transform .3s ease,
+            box-shadow .3s ease,
+            border-color .3s ease;
 }
 
 .discover-quiz-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-7px);
+
+    border-color:
+            rgba(81,70,229,0.2);
 
     box-shadow:
-            0 12px 28px rgba(30, 35, 60, 0.12);
+            0 22px 45px
+            rgba(79,70,229,0.12);
 }
 
-.quiz-card-top {
+
+/* =====================================================
+   CARD VISUAL
+===================================================== */
+
+.quiz-card-visual {
+    height: 155px;
+
+    position: relative;
+    overflow: hidden;
+
     display: flex;
 
-    justify-content: space-between;
-
     align-items: center;
-
-    margin-bottom: 25px;
+    justify-content: center;
 }
 
-.quiz-category {
-    background: #eef0ff;
+.quiz-card-visual.java {
+    background:
+            linear-gradient(
+                    135deg,
+                    #fff1e6,
+                    #ffe0c7
+            );
+}
+
+.quiz-card-visual.python {
+    background:
+            linear-gradient(
+                    135deg,
+                    #e8f5ff,
+                    #dbeafe
+            );
+}
+
+.quiz-card-visual.sql {
+    background:
+            linear-gradient(
+                    135deg,
+                    #e8eaff,
+                    #ddd6fe
+            );
+}
+
+.quiz-card-visual.javascript {
+    background:
+            linear-gradient(
+                    135deg,
+                    #fffbdc,
+                    #fef3a7
+            );
+}
+
+.quiz-card-visual.react {
+    background:
+            linear-gradient(
+                    135deg,
+                    #e6fbff,
+                    #cffafe
+            );
+}
+
+.quiz-card-visual.web {
+    background:
+            linear-gradient(
+                    135deg,
+                    #edf2ff,
+                    #e0e7ff
+            );
+}
+
+.quiz-card-visual.spring {
+    background:
+            linear-gradient(
+                    135deg,
+                    #eaf9ef,
+                    #dcfce7
+            );
+}
+
+.quiz-card-visual.cpp {
+    background:
+            linear-gradient(
+                    135deg,
+                    #eaf2ff,
+                    #dbeafe
+            );
+}
+
+.quiz-card-visual.general {
+    background:
+            linear-gradient(
+                    135deg,
+                    #f1efff,
+                    #e9d5ff
+            );
+}
+
+
+/* =====================================================
+   VISUAL SHAPES
+===================================================== */
+
+.visual-shape {
+    position: absolute;
+
+    border-radius: 50%;
+
+    filter: blur(1px);
+
+    opacity: .55;
+}
+
+.shape-one {
+    width: 130px;
+    height: 130px;
+
+    left: -45px;
+    top: -55px;
+
+    background:
+            rgba(255,255,255,.6);
+}
+
+.shape-two {
+    width: 100px;
+    height: 100px;
+
+    right: -30px;
+    bottom: -45px;
+
+    background:
+            rgba(255,255,255,.65);
+}
+
+
+/* =====================================================
+   VISUAL ICON
+===================================================== */
+
+.visual-icon {
+    position: relative;
+
+    z-index: 2;
+
+    font-size: 60px;
+
+    font-weight: 800;
 
     color: #5146e5;
 
-    padding: 8px 12px;
-
-    border-radius: 8px;
-
-    font-size: 13px;
-
-    font-weight: 600;
+    filter:
+            drop-shadow(
+                    0 10px 15px
+                    rgba(30,35,60,0.12)
+            );
 }
 
-.quiz-time {
-    color: #737b8f;
-
-    font-size: 14px;
+.quiz-card-visual.java .visual-icon {
+    color: #d76a25;
 }
 
-.discover-quiz-card h2 {
-    margin: 0 0 10px;
-
-    color: #202638;
-
-    font-size: 21px;
-
-    line-height: 1.3;
+.quiz-card-visual.python .visual-icon {
+    color: #3776ab;
 }
 
-.quiz-description {
-    color: #737b8f;
-
-    font-size: 15px;
-
-    line-height: 1.6;
-
-    min-height: 48px;
-
-    margin: 0 0 20px;
+.quiz-card-visual.sql .visual-icon {
+    color: #5146e5;
 }
 
-/* =========================================
-   Quiz Information
-========================================= */
+.quiz-card-visual.javascript .visual-icon {
+    color: #b88a00;
 
-.quiz-card-info {
-    border-top: 1px solid #edf0f5;
+    font-size: 42px;
+}
 
-    padding-top: 16px;
+.quiz-card-visual.react .visual-icon {
+    color: #0891b2;
+}
 
-    margin-top: auto;
+.quiz-card-visual.spring .visual-icon {
+    color: #16a34a;
+}
+
+.quiz-card-visual.cpp .visual-icon {
+    color: #2563eb;
+
+    font-size: 42px;
+}
+
+
+/* =====================================================
+   VISUAL LABELS
+===================================================== */
+
+.visual-category {
+    position: absolute;
+
+    left: 14px;
+    top: 14px;
+
+    z-index: 4;
+
+    padding: 7px 10px;
+
+    border-radius: 999px;
+
+    background:
+            rgba(255,255,255,0.8);
+
+    backdrop-filter: blur(10px);
+
+    color: #41485b;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: .4px;
+}
+
+.visual-difficulty {
+    position: absolute;
+
+    right: 14px;
+    top: 14px;
+
+    z-index: 4;
+
+    padding: 7px 10px;
+
+    border-radius: 999px;
+
+    background:
+            rgba(255,255,255,0.8);
+
+    backdrop-filter: blur(10px);
+
+    color: #555d70;
+
+    font-size: 10px;
+
+    font-weight: 800;
+}
+
+
+/* =====================================================
+   CARD BODY
+===================================================== */
+
+.quiz-card-body {
+    padding: 20px;
 
     display: flex;
+    flex-direction: column;
 
-    justify-content: space-between;
+    flex: 1;
+}
+
+.quiz-card-meta {
+    display: flex;
 
     align-items: center;
 
-    color: #737b8f;
+    gap: 17px;
 
-    font-size: 14px;
-}
+    margin-bottom: 12px;
 
-.difficulty {
-    padding: 6px 10px;
-
-    border-radius: 7px;
+    color: #858da0;
 
     font-size: 12px;
+}
+
+.quiz-card-body h2 {
+    margin: 0 0 9px;
+
+    color: #202638;
+
+    font-size: 20px;
+
+    line-height: 1.3;
+
+    font-weight: 750;
+}
+
+.quiz-description {
+    margin: 0;
+
+    min-height: 48px;
+
+    color: #747c90;
+
+    font-size: 13px;
+
+    line-height: 1.65;
+}
+
+
+/* =====================================================
+   CARD BOTTOM
+===================================================== */
+
+.quiz-card-bottom {
+    margin-top: 18px;
+
+    padding-top: 15px;
+
+    border-top: 1px solid #edf0f5;
+}
+
+.difficulty-info {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+}
+
+.difficulty-label {
+    color: #9aa1b1;
+
+    font-size: 11px;
 
     font-weight: 600;
 }
 
+.difficulty {
+    padding: 5px 9px;
+
+    border-radius: 7px;
+
+    font-size: 10px;
+
+    font-weight: 800;
+}
+
 .difficulty.easy {
-    background: #e6f8ed;
-    color: #16934a;
+    background: #e8f8ee;
+    color: #15803d;
 }
 
 .difficulty.medium {
     background: #fff4df;
-    color: #c47700;
+    color: #b86b00;
 }
 
 .difficulty.hard {
-    background: #ffe7e7;
-    color: #d33b3b;
+    background: #ffe8e8;
+    color: #dc2626;
 }
 
-/* =========================================
-   Start Quiz Button
-========================================= */
+
+/* =====================================================
+   START BUTTON
+===================================================== */
 
 .start-quiz-btn {
     width: 100%;
 
+    margin-top: 17px;
+
+    padding: 13px 16px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
     border: none;
 
-    background: #5146e5;
+    border-radius: 11px;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #5146e5,
+                    #6d5dfc
+            );
 
     color: white;
 
-    padding: 13px 18px;
+    font-size: 13px;
 
-    border-radius: 9px;
-
-    margin-top: 18px;
-
-    font-size: 15px;
-
-    font-weight: 600;
+    font-weight: 750;
 
     cursor: pointer;
 
-    transition: 0.2s ease;
+    box-shadow:
+            0 8px 18px
+            rgba(81,70,229,0.17);
+
+    transition:
+            transform .2s ease,
+            box-shadow .2s ease;
 }
 
 .start-quiz-btn:hover {
-    background: #4238c9;
+    transform: translateY(-2px);
 
-    transform: translateY(-1px);
+    box-shadow:
+            0 12px 25px
+            rgba(81,70,229,0.25);
 }
 
-/* =========================================
-   Loading
-========================================= */
+.start-arrow {
+    font-size: 18px;
+
+    transition:
+            transform .2s ease;
+}
+
+.start-quiz-btn:hover .start-arrow {
+    transform: translateX(4px);
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
 
 .discover-loading {
-    max-width: 1200px;
+    max-width: 500px;
 
-    margin: 100px auto;
+    margin: 90px auto;
 
     text-align: center;
-
-    color: #737b8f;
 }
 
-.loading-spinner {
-    width: 42px;
-    height: 42px;
+.loading-animation {
+    height: 45px;
 
-    margin: 0 auto 15px;
+    display: flex;
 
-    border: 4px solid #e6e7f2;
+    justify-content: center;
+    align-items: center;
 
-    border-top-color: #5146e5;
+    gap: 7px;
+}
+
+.loading-animation div {
+    width: 9px;
+    height: 9px;
 
     border-radius: 50%;
 
-    animation: discover-spin 0.8s linear infinite;
+    background: #5146e5;
+
+    animation:
+            discover-loading 1s
+            infinite ease-in-out;
 }
 
-@keyframes discover-spin {
-    to {
-        transform: rotate(360deg);
+.loading-animation div:nth-child(2) {
+    animation-delay: .15s;
+}
+
+.loading-animation div:nth-child(3) {
+    animation-delay: .3s;
+}
+
+@keyframes discover-loading {
+
+    0%,
+    80%,
+    100% {
+        transform: scale(.6);
+
+        opacity: .4;
+    }
+
+    40% {
+        transform: scale(1);
+
+        opacity: 1;
     }
 }
 
-/* =========================================
-   No Quizzes
-========================================= */
+.discover-loading h3 {
+    margin: 10px 0 5px;
+
+    color: #30374a;
+
+    font-size: 18px;
+}
+
+.discover-loading p {
+    margin: 0;
+
+    color: #8a92a5;
+
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   EMPTY STATE
+===================================================== */
 
 .no-quizzes {
-    max-width: 600px;
+    max-width: 500px;
 
-    margin: 80px auto;
+    margin: 70px auto;
 
-    background: white;
-
-    border-radius: 16px;
-
-    padding: 50px 30px;
+    padding: 45px 30px;
 
     text-align: center;
 
-    box-shadow: 0 5px 20px rgba(30, 35, 60, 0.06);
+    background: white;
+
+    border:
+            1px solid #e6e8f0;
+
+    border-radius: 22px;
+
+    box-shadow:
+            0 12px 35px
+            rgba(30,35,60,.06);
 }
 
-.no-quizzes-icon {
-    font-size: 45px;
+.empty-visual {
+    width: 90px;
+    height: 90px;
 
-    margin-bottom: 15px;
+    margin: 0 auto 20px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eeecff;
+}
+
+.empty-circle {
+    font-size: 35px;
 }
 
 .no-quizzes h2 {
     margin: 0 0 8px;
 
     color: #202638;
+
+    font-size: 22px;
 }
 
 .no-quizzes p {
-    margin: 0 0 25px;
+    margin: 0 auto 24px;
 
-    color: #737b8f;
+    max-width: 350px;
+
+    color: #7b8498;
+
+    font-size: 14px;
+
+    line-height: 1.6;
 }
 
 .no-quizzes button {
     border: none;
 
+    padding: 12px 20px;
+
+    border-radius: 10px;
+
     background: #5146e5;
 
     color: white;
 
-    padding: 12px 20px;
+    font-size: 13px;
 
-    border-radius: 8px;
-
-    font-weight: 600;
+    font-weight: 700;
 
     cursor: pointer;
+
+    transition: .2s ease;
 }
 
 .no-quizzes button:hover {
     background: #4238c9;
+
+    transform: translateY(-2px);
 }
 
-/* =========================================
-   Responsive
-========================================= */
 
-@media (max-width: 1000px) {
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1100px) {
+
+    .discover-page {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    .discover-hero {
+        padding: 35px;
+    }
+
+    .discover-hero h1 {
+        font-size: 36px;
+    }
+
+    .discover-hero-visual {
+        transform: scale(.85);
+
+        margin-right: -20px;
+    }
+
+    .discover-filters {
+        grid-template-columns:
+            1fr 190px 190px;
+    }
+
+    .clear-filters-btn {
+        grid-column: 1 / -1;
+
+        width: fit-content;
+    }
+
     .discover-grid {
         grid-template-columns:
             repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+@media (max-width: 800px) {
+
+    .discover-hero {
+        min-height: auto;
+
+        padding: 32px;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .discover-hero-visual {
+        align-self: center;
+
+        margin-top: 15px;
+    }
+
+    .discover-header {
+        align-items: flex-start;
     }
 
     .discover-filters {
         grid-template-columns: 1fr 1fr;
     }
 
-    .search-box {
+    .filter-search {
         grid-column: 1 / -1;
+    }
+
+    .discover-grid {
+        grid-template-columns: 1fr;
     }
 }
 
-@media (max-width: 700px) {
+
+@media (max-width: 600px) {
+
     .discover-page {
-        padding: 25px 18px;
+        padding: 20px 15px 40px;
+    }
+
+    .discover-hero {
+        padding: 27px 23px;
+
+        border-radius: 22px;
+    }
+
+    .discover-hero h1 {
+        font-size: 30px;
+    }
+
+    .discover-hero p {
+        font-size: 13px;
+    }
+
+    .discover-hero-stats {
+        gap: 18px;
+    }
+
+    .discover-hero-stats strong {
+        font-size: 17px;
+    }
+
+    .discover-hero-stats span {
+        font-size: 9px;
+    }
+
+    .discover-hero-visual {
+        width: 250px;
+        height: 220px;
+
+        transform: scale(.8);
+
+        transform-origin: center;
     }
 
     .discover-header {
         flex-direction: column;
-        align-items: flex-start;
     }
 
-    .discover-header h1 {
-        font-size: 26px;
+    .back-dashboard-btn {
+        width: 100%;
     }
 
     .discover-filters {
         grid-template-columns: 1fr;
     }
 
-    .search-box {
+    .filter-search {
         grid-column: auto;
     }
 
-    .discover-grid {
-        grid-template-columns: 1fr;
+    .clear-filters-btn {
+        width: 100%;
+    }
+
+    .discover-result-bar {
+        margin-top: 5px;
+    }
+
+    .quiz-card-visual {
+        height: 145px;
     }
 }

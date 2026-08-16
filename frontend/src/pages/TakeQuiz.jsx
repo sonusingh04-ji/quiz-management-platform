@@ -22,9 +22,10 @@ const TakeQuiz = () => {
 
     const [result, setResult] = useState(null);
 
-    // =====================================================
-    // CHECK LOGIN
-    // =====================================================
+    /* =====================================================
+       CHECK LOGIN
+    ===================================================== */
+
     useEffect(() => {
         const token = localStorage.getItem("token");
         const storedUser = localStorage.getItem("user");
@@ -37,11 +38,10 @@ const TakeQuiz = () => {
         try {
             const user = JSON.parse(storedUser);
 
-            // Student should take quizzes.
-            // Admin should manage quizzes instead.
             if (user.role !== "student") {
                 alert("Only students can attempt quizzes.");
                 navigate("/dashboard");
+                return;
             }
         } catch (error) {
             console.error("Invalid user data:", error);
@@ -53,9 +53,10 @@ const TakeQuiz = () => {
         }
     }, [navigate]);
 
-    // =====================================================
-    // START QUIZ
-    // =====================================================
+    /* =====================================================
+       START QUIZ
+    ===================================================== */
+
     useEffect(() => {
         const startQuiz = async () => {
             try {
@@ -65,32 +66,27 @@ const TakeQuiz = () => {
                     `/attempts/start/${id}`
                 );
 
+                console.log("START QUIZ:", response.data);
+
                 const data = response.data.data;
 
                 setAttemptId(data.attemptId);
                 setQuiz(data.quiz);
-                setQuestions(data.questions);
+                setQuestions(data.questions || []);
 
-                // Duration is in minutes
                 const durationInSeconds =
                     Number(data.quiz.duration || 30) * 60;
 
                 setTimeLeft(durationInSeconds);
-
             } catch (error) {
-                console.error(
-                    "Start Quiz Error:",
-                    error
-                );
+                console.error("Start Quiz Error:", error);
 
                 const message =
                     error.response?.data?.message ||
                     "Unable to start quiz.";
 
                 alert(message);
-
                 navigate("/dashboard");
-
             } finally {
                 setLoading(false);
             }
@@ -101,9 +97,10 @@ const TakeQuiz = () => {
         }
     }, [id, navigate]);
 
-    // =====================================================
-    // TIMER
-    // =====================================================
+    /* =====================================================
+       TIMER
+    ===================================================== */
+
     useEffect(() => {
         if (
             loading ||
@@ -130,12 +127,12 @@ const TakeQuiz = () => {
         }, 1000);
 
         return () => clearInterval(timer);
-
     }, [timeLeft, loading, submitted]);
 
-    // =====================================================
-    // FORMAT TIMER
-    // =====================================================
+    /* =====================================================
+       FORMAT TIMER
+    ===================================================== */
+
     const formatTime = (seconds) => {
         if (seconds === null) {
             return "00:00";
@@ -149,44 +146,73 @@ const TakeQuiz = () => {
         ).padStart(2, "0")}`;
     };
 
-    // =====================================================
-    // SELECT ANSWER
-    // =====================================================
+    /* =====================================================
+       TIMER STATE
+    ===================================================== */
+
+    const getTimerClass = () => {
+        if (timeLeft === null) {
+            return "";
+        }
+
+        if (timeLeft <= 60) {
+            return "timer danger";
+        }
+
+        if (timeLeft <= 300) {
+            return "timer warning";
+        }
+
+        return "timer";
+    };
+
+    /* =====================================================
+       SELECT ANSWER
+    ===================================================== */
+
     const handleAnswerSelect = (questionId, option) => {
         setAnswers((previous) => ({
             ...previous,
-            [questionId]: option
+            [questionId]: option,
         }));
     };
 
-    // =====================================================
-    // NEXT QUESTION
-    // =====================================================
+    /* =====================================================
+       NEXT QUESTION
+    ===================================================== */
+
     const handleNext = () => {
         if (currentQuestion < questions.length - 1) {
-            setCurrentQuestion((previous) => previous + 1);
+            setCurrentQuestion(
+                (previous) => previous + 1
+            );
         }
     };
 
-    // =====================================================
-    // PREVIOUS QUESTION
-    // =====================================================
+    /* =====================================================
+       PREVIOUS QUESTION
+    ===================================================== */
+
     const handlePrevious = () => {
         if (currentQuestion > 0) {
-            setCurrentQuestion((previous) => previous - 1);
+            setCurrentQuestion(
+                (previous) => previous - 1
+            );
         }
     };
 
-    // =====================================================
-    // GO TO QUESTION
-    // =====================================================
+    /* =====================================================
+       GO TO QUESTION
+    ===================================================== */
+
     const goToQuestion = (index) => {
         setCurrentQuestion(index);
     };
 
-    // =====================================================
-    // SUBMIT QUIZ
-    // =====================================================
+    /* =====================================================
+       SUBMIT QUIZ
+    ===================================================== */
+
     const handleSubmit = async (autoSubmit = false) => {
         if (submitting || submitted) {
             return;
@@ -205,156 +231,197 @@ const TakeQuiz = () => {
         try {
             setSubmitting(true);
 
-            // Convert frontend answers object
-            // into backend expected format.
             const formattedAnswers = Object.entries(
                 answers
             ).map(([questionId, selectedOption]) => ({
                 questionId: Number(questionId),
-                selectedOption
+                selectedOption,
             }));
 
             const response = await api.post(
                 "/attempts/submit",
                 {
                     quizId: Number(id),
-                    answers: formattedAnswers
+                    answers: formattedAnswers,
                 }
             );
+
+            console.log("SUBMIT RESULT:", response.data);
 
             const data = response.data.data;
 
             setResult(data);
             setSubmitted(true);
             setTimeLeft(0);
-
         } catch (error) {
-            console.error(
-                "Submit Quiz Error:",
-                error
-            );
+            console.error("Submit Quiz Error:", error);
 
             const message =
                 error.response?.data?.message ||
                 "Failed to submit quiz.";
 
             alert(message);
-
         } finally {
             setSubmitting(false);
         }
     };
 
-    // =====================================================
-    // LOADING
-    // =====================================================
+    /* =====================================================
+       LOADING SCREEN
+    ===================================================== */
+
     if (loading) {
         return (
             <div className="take-quiz-loading">
                 <div className="loading-box">
-                    <h2>Loading Quiz...</h2>
-                    <p>Please wait.</p>
+                    <div className="loading-icon">
+                        🧠
+                    </div>
+
+                    <h2>Preparing Your Quiz</h2>
+
+                    <p>
+                        Loading questions and setting up your
+                        attempt...
+                    </p>
+
+                    <div className="loading-spinner"></div>
                 </div>
             </div>
         );
     }
 
-    // =====================================================
-    // RESULT SCREEN
-    // =====================================================
+    /* =====================================================
+       RESULT SCREEN
+    ===================================================== */
+
     if (submitted && result) {
         const attempt = result.attempt;
-        const savedResult = result.result;
 
         return (
-            <div className="take-quiz-page">
+            <div className="take-quiz-page result-page">
+
                 <div className="result-container">
 
-                    <div className="result-icon">
-                        {attempt.status === "PASSED"
-                            ? "🎉"
-                            : "📚"}
-                    </div>
+                    <div className="result-top">
+                        <div className="result-icon">
+                            {attempt.status === "PASSED"
+                                ? "🎉"
+                                : "📚"}
+                        </div>
 
-                    <h1>Quiz Completed</h1>
-
-                    <p className="result-message">
-                        {quiz?.title}
-                    </p>
-
-                    <div className="result-status">
                         <span
-                            className={
-                                attempt.status ===
-                                "PASSED"
+                            className={`result-badge ${
+                                attempt.status === "PASSED"
                                     ? "passed"
                                     : "failed"
-                            }
+                            }`}
                         >
                             {attempt.status}
                         </span>
+
+                        <h1>Quiz Completed!</h1>
+
+                        <p className="result-message">
+                            {quiz?.title}
+                        </p>
+
+                        <p className="result-subtitle">
+                            Great work! Here is your performance
+                            summary.
+                        </p>
+                    </div>
+
+                    <div className="result-score">
+                        <div className="score-circle">
+                            <strong>
+                                {Number(
+                                    attempt.percentage
+                                ).toFixed(0)}
+                                %
+                            </strong>
+
+                            <span>Score</span>
+                        </div>
                     </div>
 
                     <div className="result-grid">
 
                         <div className="result-card">
-                            <span>Score</span>
-                            <strong>
-                                {Number(
-                                    attempt.percentage
-                                ).toFixed(2)}
-                                %
-                            </strong>
-                        </div>
+                            <div className="result-card-icon">
+                                📝
+                            </div>
 
-                        <div className="result-card">
                             <span>Total Questions</span>
+
                             <strong>
-                                {
-                                    attempt.total_questions
-                                }
+                                {attempt.total_questions}
                             </strong>
                         </div>
 
                         <div className="result-card">
-                            <span>Correct</span>
+                            <div className="result-card-icon">
+                                ✅
+                            </div>
+
+                            <span>Correct Answers</span>
+
                             <strong>
-                                {
-                                    attempt.correct_answers
-                                }
+                                {attempt.correct_answers}
                             </strong>
                         </div>
 
                         <div className="result-card">
-                            <span>Wrong</span>
+                            <div className="result-card-icon">
+                                ❌
+                            </div>
+
+                            <span>Wrong Answers</span>
+
                             <strong>
-                                {
-                                    attempt.wrong_answers
-                                }
+                                {attempt.wrong_answers}
                             </strong>
                         </div>
 
                         <div className="result-card">
+                            <div className="result-card-icon">
+                                ⏳
+                            </div>
+
                             <span>Unanswered</span>
+
                             <strong>
-                                {
-                                    attempt.unanswered
-                                }
+                                {attempt.unanswered}
                             </strong>
                         </div>
 
                         <div className="result-card">
+                            <div className="result-card-icon">
+                                ⏱️
+                            </div>
+
                             <span>Time Taken</span>
+
                             <strong>
                                 {Math.floor(
-                                    attempt.time_taken /
-                                    60
+                                    attempt.time_taken / 60
                                 )}
                                 :
                                 {String(
-                                    attempt.time_taken %
-                                    60
+                                    attempt.time_taken % 60
                                 ).padStart(2, "0")}
+                            </strong>
+                        </div>
+
+                        <div className="result-card">
+                            <div className="result-card-icon">
+                                🏆
+                            </div>
+
+                            <span>Result</span>
+
+                            <strong>
+                                {attempt.status}
                             </strong>
                         </div>
 
@@ -368,7 +435,7 @@ const TakeQuiz = () => {
                                 navigate("/dashboard")
                             }
                         >
-                            Back to Dashboard
+                            ← Back to Dashboard
                         </button>
 
                         <button
@@ -387,14 +454,26 @@ const TakeQuiz = () => {
         );
     }
 
-    // =====================================================
-    // NO QUESTIONS
-    // =====================================================
+    /* =====================================================
+       NO QUESTIONS
+    ===================================================== */
+
     if (!questions.length) {
         return (
             <div className="take-quiz-loading">
-                <div className="loading-box">
+
+                <div className="loading-box empty-box">
+
+                    <div className="loading-icon">
+                        📭
+                    </div>
+
                     <h2>No Questions Available</h2>
+
+                    <p>
+                        This quiz does not have any questions
+                        available yet.
+                    </p>
 
                     <button
                         className="primary-btn"
@@ -402,9 +481,11 @@ const TakeQuiz = () => {
                             navigate("/dashboard")
                         }
                     >
-                        Back to Dashboard
+                        ← Back to Dashboard
                     </button>
+
                 </div>
+
             </div>
         );
     }
@@ -418,213 +499,234 @@ const TakeQuiz = () => {
     const answeredCount =
         Object.keys(answers).length;
 
+    const unansweredCount =
+        questions.length - answeredCount;
+
     const progress =
         ((currentQuestion + 1) /
             questions.length) *
         100;
 
-    // =====================================================
-    // QUIZ SCREEN
-    // =====================================================
+    const options = [
+        {
+            key: "option_a",
+            letter: "A",
+            value: question.option_a,
+        },
+        {
+            key: "option_b",
+            letter: "B",
+            value: question.option_b,
+        },
+        {
+            key: "option_c",
+            letter: "C",
+            value: question.option_c,
+        },
+        {
+            key: "option_d",
+            letter: "D",
+            value: question.option_d,
+        },
+    ];
+
+    /* =====================================================
+       QUIZ SCREEN
+    ===================================================== */
+
     return (
         <div className="take-quiz-page">
 
-            {/* Header */}
+            {/* ==========================================
+                TOP HEADER
+            ========================================== */}
+
             <header className="quiz-header">
 
-                <div>
-                    <h1>{quiz.title}</h1>
+                <div className="quiz-title-section">
 
-                    <p>
-                        {quiz.category} •{" "}
-                        {quiz.difficulty}
-                    </p>
+                    <button
+                        className="quiz-back-btn"
+                        onClick={() =>
+                            navigate("/dashboard")
+                        }
+                    >
+                        ←
+                    </button>
+
+                    <div>
+                        <span className="quiz-small-label">
+                            QUIZ IN PROGRESS
+                        </span>
+
+                        <h1>
+                            {quiz?.title ||
+                                "Untitled Quiz"}
+                        </h1>
+
+                        <p>
+                            {quiz?.category ||
+                                "General"}
+
+                            <span>•</span>
+
+                            {quiz?.difficulty ||
+                                "Medium"}
+
+                            {attemptId && (
+                                <>
+                                    <span>•</span>
+                                    Attempt #{attemptId}
+                                </>
+                            )}
+                        </p>
+                    </div>
+
                 </div>
 
-                <div className="timer">
-                    <span>⏱</span>
-                    <strong>
-                        {formatTime(timeLeft)}
-                    </strong>
+                <div className={getTimerClass()}>
+
+                    <div className="timer-icon">
+                        ⏱
+                    </div>
+
+                    <div>
+                        <small>Time Remaining</small>
+
+                        <strong>
+                            {formatTime(timeLeft)}
+                        </strong>
+                    </div>
+
                 </div>
 
             </header>
 
-            {/* Progress */}
-            <div className="progress-container">
+            {/* ==========================================
+                PROGRESS
+            ========================================== */}
+
+            <section className="progress-container">
 
                 <div className="progress-info">
-                    <span>
-                        Question{" "}
-                        {currentQuestion + 1} of{" "}
-                        {questions.length}
-                    </span>
+
+                    <div>
+                        <strong>
+                            Question {currentQuestion + 1}
+                        </strong>
+
+                        <span>
+                            {" "}of {questions.length}
+                        </span>
+                    </div>
 
                     <span>
-                        {answeredCount} /{" "}
-                        {questions.length} answered
+                        {answeredCount} answered
                     </span>
+
                 </div>
 
                 <div className="progress-bar">
+
                     <div
                         className="progress-fill"
                         style={{
-                            width: `${progress}%`
+                            width: `${progress}%`,
                         }}
                     />
+
                 </div>
 
-            </div>
+            </section>
 
-            {/* Main */}
+            {/* ==========================================
+                MAIN CONTENT
+            ========================================== */}
+
             <main className="quiz-content">
 
-                {/* Question */}
+                {/* ======================================
+                    QUESTION
+                ====================================== */}
+
                 <section className="question-card">
 
-                    <div className="question-number">
-                        Question{" "}
-                        {currentQuestion + 1}
+                    <div className="question-card-header">
+
+                        <span className="question-number">
+                            Question{" "}
+                            {String(
+                                currentQuestion + 1
+                            ).padStart(2, "0")}
+                        </span>
+
+                        <span className="question-hint">
+                            Choose one answer
+                        </span>
+
                     </div>
 
                     <h2>
                         {question.question}
                     </h2>
 
+                    {/* OPTIONS */}
+
                     <div className="options">
 
-                        <label
-                            className={
+                        {options.map((option) => {
+
+                            const isSelected =
                                 selectedAnswer ===
-                                "option_a"
-                                    ? "option selected"
-                                    : "option"
-                            }
-                        >
-                            <input
-                                type="radio"
-                                name={`question-${question.id}`}
-                                checked={
-                                    selectedAnswer ===
-                                    "option_a"
-                                }
-                                onChange={() =>
-                                    handleAnswerSelect(
-                                        question.id,
-                                        "option_a"
-                                    )
-                                }
-                            />
+                                option.key;
 
-                            <span className="option-letter">
-                                A
-                            </span>
+                            return (
+                                <label
+                                    key={option.key}
+                                    className={
+                                        isSelected
+                                            ? "option selected"
+                                            : "option"
+                                    }
+                                >
 
-                            <span>
-                                {question.option_a}
-                            </span>
-                        </label>
+                                    <input
+                                        type="radio"
+                                        name={`question-${question.id}`}
+                                        value={option.key}
+                                        checked={
+                                            isSelected
+                                        }
+                                        onChange={() =>
+                                            handleAnswerSelect(
+                                                question.id,
+                                                option.key
+                                            )
+                                        }
+                                    />
 
-                        <label
-                            className={
-                                selectedAnswer ===
-                                "option_b"
-                                    ? "option selected"
-                                    : "option"
-                            }
-                        >
-                            <input
-                                type="radio"
-                                name={`question-${question.id}`}
-                                checked={
-                                    selectedAnswer ===
-                                    "option_b"
-                                }
-                                onChange={() =>
-                                    handleAnswerSelect(
-                                        question.id,
-                                        "option_b"
-                                    )
-                                }
-                            />
+                                    <span className="option-letter">
+                                        {option.letter}
+                                    </span>
 
-                            <span className="option-letter">
-                                B
-                            </span>
+                                    <span className="option-text">
+                                        {option.value}
+                                    </span>
 
-                            <span>
-                                {question.option_b}
-                            </span>
-                        </label>
+                                    <span className="option-check">
+                                        {isSelected
+                                            ? "✓"
+                                            : ""}
+                                    </span>
 
-                        <label
-                            className={
-                                selectedAnswer ===
-                                "option_c"
-                                    ? "option selected"
-                                    : "option"
-                            }
-                        >
-                            <input
-                                type="radio"
-                                name={`question-${question.id}`}
-                                checked={
-                                    selectedAnswer ===
-                                    "option_c"
-                                }
-                                onChange={() =>
-                                    handleAnswerSelect(
-                                        question.id,
-                                        "option_c"
-                                    )
-                                }
-                            />
-
-                            <span className="option-letter">
-                                C
-                            </span>
-
-                            <span>
-                                {question.option_c}
-                            </span>
-                        </label>
-
-                        <label
-                            className={
-                                selectedAnswer ===
-                                "option_d"
-                                    ? "option selected"
-                                    : "option"
-                            }
-                        >
-                            <input
-                                type="radio"
-                                name={`question-${question.id}`}
-                                checked={
-                                    selectedAnswer ===
-                                    "option_d"
-                                }
-                                onChange={() =>
-                                    handleAnswerSelect(
-                                        question.id,
-                                        "option_d"
-                                    )
-                                }
-                            />
-
-                            <span className="option-letter">
-                                D
-                            </span>
-
-                            <span>
-                                {question.option_d}
-                            </span>
-                        </label>
+                                </label>
+                            );
+                        })}
 
                     </div>
 
-                    {/* Navigation */}
+                    {/* NAVIGATION */}
+
                     <div className="question-navigation">
 
                         <button
@@ -639,15 +741,18 @@ const TakeQuiz = () => {
                             ← Previous
                         </button>
 
+                        <span className="navigation-count">
+                            {currentQuestion + 1} /{" "}
+                            {questions.length}
+                        </span>
+
                         {currentQuestion <
                         questions.length - 1 ? (
                             <button
                                 className="primary-btn"
-                                onClick={
-                                    handleNext
-                                }
+                                onClick={handleNext}
                             >
-                                Next →
+                                Next Question →
                             </button>
                         ) : (
                             <button
@@ -659,7 +764,7 @@ const TakeQuiz = () => {
                             >
                                 {submitting
                                     ? "Submitting..."
-                                    : "Submit Quiz"}
+                                    : "Submit Quiz ✓"}
                             </button>
                         )}
 
@@ -667,10 +772,28 @@ const TakeQuiz = () => {
 
                 </section>
 
-                {/* Question Navigator */}
+                {/* ======================================
+                    SIDEBAR
+                ====================================== */}
+
                 <aside className="question-sidebar">
 
-                    <h3>Questions</h3>
+                    <div className="sidebar-heading">
+
+                        <div>
+                            <h3>Questions</h3>
+
+                            <p>
+                                Navigate through the quiz
+                            </p>
+                        </div>
+
+                        <span>
+                            {answeredCount}/
+                            {questions.length}
+                        </span>
+
+                    </div>
 
                     <div className="question-list">
 
@@ -707,7 +830,15 @@ const TakeQuiz = () => {
                                             )
                                         }
                                     >
-                                        {index + 1}
+                                        <span>
+                                            {index + 1}
+                                        </span>
+
+                                        {isAnswered && (
+                                            <small>
+                                                ✓
+                                            </small>
+                                        )}
                                     </button>
                                 );
                             }
@@ -715,43 +846,60 @@ const TakeQuiz = () => {
 
                     </div>
 
+                    {/* LEGEND */}
+
                     <div className="legend">
 
                         <div>
                             <span className="legend-box current-box" />
-                            Current
+                            <span>Current</span>
                         </div>
 
                         <div>
                             <span className="legend-box answered-box" />
-                            Answered
+                            <span>Answered</span>
                         </div>
 
                         <div>
                             <span className="legend-box unanswered-box" />
-                            Unanswered
+                            <span>Unanswered</span>
                         </div>
 
                     </div>
 
+                    {/* SUMMARY */}
+
                     <div className="quiz-summary">
 
-                        <p>
+                        <div className="summary-row">
+                            <span>Answered</span>
                             <strong>
                                 {answeredCount}
-                            </strong>{" "}
-                            answered
-                        </p>
+                            </strong>
+                        </div>
 
-                        <p>
+                        <div className="summary-row">
+                            <span>Remaining</span>
                             <strong>
-                                {questions.length -
-                                    answeredCount}
-                            </strong>{" "}
-                            unanswered
-                        </p>
+                                {unansweredCount}
+                            </strong>
+                        </div>
 
                     </div>
+
+                    {/* SUBMIT FROM SIDEBAR */}
+
+                    <button
+                        className="sidebar-submit"
+                        disabled={submitting}
+                        onClick={() =>
+                            handleSubmit(false)
+                        }
+                    >
+                        {submitting
+                            ? "Submitting..."
+                            : "Submit Quiz"}
+                    </button>
 
                 </aside>
 

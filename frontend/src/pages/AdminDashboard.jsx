@@ -11,6 +11,10 @@ const AdminDashboard = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
+    // =========================================================
+    // LOAD ADMIN
+    // =========================================================
+
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
         const token = localStorage.getItem("token");
@@ -23,7 +27,7 @@ const AdminDashboard = () => {
         try {
             const parsedUser = JSON.parse(storedUser);
 
-            // Frontend protection
+            // Admin protection
             if (parsedUser.role?.toLowerCase() !== "admin") {
                 navigate("/dashboard");
                 return;
@@ -31,8 +35,8 @@ const AdminDashboard = () => {
 
             setUser(parsedUser);
             fetchDashboardStats();
-        } catch (error) {
-            console.error("Invalid user data:", error);
+        } catch (err) {
+            console.error("Invalid user data:", err);
 
             localStorage.removeItem("user");
             localStorage.removeItem("token");
@@ -40,6 +44,10 @@ const AdminDashboard = () => {
             navigate("/");
         }
     }, [navigate]);
+
+    // =========================================================
+    // FETCH DASHBOARD STATISTICS
+    // =========================================================
 
     const fetchDashboardStats = async () => {
         try {
@@ -53,29 +61,37 @@ const AdminDashboard = () => {
             if (response.data.success) {
                 setStats(response.data.data);
             } else {
-                setError("Unable to load dashboard statistics.");
+                setError(
+                    response.data.message ||
+                    "Unable to load dashboard statistics."
+                );
             }
-        } catch (error) {
-            console.error("Dashboard stats error:", error);
+        } catch (err) {
+            console.error("Dashboard stats error:", err);
 
             if (
-                error.response?.status === 401 ||
-                error.response?.status === 403
+                err.response?.status === 401 ||
+                err.response?.status === 403
             ) {
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
+
                 navigate("/");
                 return;
             }
 
             setError(
-                error.response?.data?.message ||
+                err.response?.data?.message ||
                 "Unable to load dashboard statistics."
             );
         } finally {
             setLoading(false);
         }
     };
+
+    // =========================================================
+    // LOGOUT
+    // =========================================================
 
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -84,149 +100,238 @@ const AdminDashboard = () => {
         navigate("/");
     };
 
+    // =========================================================
+    // NAVIGATION
+    // =========================================================
+
+    const goTo = (path) => {
+        navigate(path);
+    };
+
+    // =========================================================
+    // LOADING
+    // =========================================================
+
     if (!user || loading) {
         return (
             <div className="admin-loading">
-                <div className="admin-spinner"></div>
-                <p>Loading Admin Dashboard...</p>
+                <div className="admin-loading-card">
+                    <div className="admin-spinner"></div>
+
+                    <h2>Loading Admin Dashboard</h2>
+
+                    <p>
+                        Please wait while we load your platform statistics.
+                    </p>
+                </div>
             </div>
         );
     }
 
+    // =========================================================
+    // ADMIN DASHBOARD
+    // =========================================================
+
     return (
         <div className="admin-dashboard">
 
-            {/* ================= SIDEBAR ================= */}
+            {/* =================================================
+                SIDEBAR
+            ================================================= */}
 
             <aside className="admin-sidebar">
+
+                {/* BRAND */}
 
                 <div className="admin-brand">
                     <div className="admin-brand-icon">
                         Q
                     </div>
 
-                    <div>
+                    <div className="admin-brand-text">
                         <h2>Quiz Platform</h2>
                         <span>Administration</span>
                     </div>
                 </div>
 
+
+                {/* NAVIGATION */}
+
                 <nav className="admin-nav">
 
+                    {/* Dashboard */}
+
                     <button
+                        type="button"
                         className="admin-nav-item active"
-                        onClick={() =>
-                            navigate("/admin-dashboard")
-                        }
+                        onClick={() => goTo("/admin-dashboard")}
                     >
-                        <span>📊</span>
-                        Dashboard
+                        <span className="nav-icon">📊</span>
+                        <span>Dashboard</span>
                     </button>
 
-                    <button
-                        className="admin-nav-item"
-                        onClick={() =>
-                            navigate("/admin/users")
-                        }
-                    >
-                        <span>👥</span>
-                        Users
-                    </button>
+
+                    {/* Create Quiz */}
 
                     <button
+                        type="button"
                         className="admin-nav-item"
-                        onClick={() =>
-                            navigate("/admin/quizzes")
-                        }
+                        onClick={() => goTo("/create-quiz")}
                     >
-                        <span>📝</span>
-                        Quizzes
+                        <span className="nav-icon">➕</span>
+                        <span>Create Quiz</span>
                     </button>
 
-                    <button
-                        className="admin-nav-item"
-                        onClick={() =>
-                            navigate("/create-quiz")
-                        }
-                    >
-                        <span>➕</span>
-                        Create Quiz
-                    </button>
+
+                    {/* Manage Quizzes */}
 
                     <button
+                        type="button"
                         className="admin-nav-item"
-                        onClick={() =>
-                            navigate("/admin/results")
-                        }
+                        onClick={() => goTo("/manage-quizzes")}
                     >
-                        <span>📈</span>
-                        Results
+                        <span className="nav-icon">📝</span>
+                        <span>Manage Quizzes</span>
                     </button>
 
+
+                    {/* Manage Users */}
+
                     <button
+                        type="button"
                         className="admin-nav-item"
-                        onClick={() =>
-                            navigate("/admin/analytics")
-                        }
+                        onClick={() => goTo("/manage-users")}
                     >
-                        <span>📊</span>
-                        Analytics
+                        <span className="nav-icon">👥</span>
+                        <span>Manage Users</span>
                     </button>
+
+
+                    {/* Results */}
+
                     <button
+                        type="button"
                         className="admin-nav-item"
-                        onClick={() =>
-                            navigate("/admin/categories")
-                        }
+                        onClick={() => goTo("/admin/results")}
                     >
-                        <span>🗂️</span>
-                        Categories
+                        <span className="nav-icon">📈</span>
+                        <span>Results</span>
                     </button>
+
+
+                    {/* Analytics */}
+
+                    <button
+                        type="button"
+                        className="admin-nav-item"
+                        onClick={() => goTo("/admin/analytics")}
+                    >
+                        <span className="nav-icon">📊</span>
+                        <span>Analytics</span>
+                    </button>
+
+
+                    {/* Categories */}
+
+                    <button
+                        type="button"
+                        className="admin-nav-item"
+                        onClick={() => goTo("/admin/categories")}
+                    >
+                        <span className="nav-icon">🗂️</span>
+                        <span>Manage Categories</span>
+                    </button>
+
+
+                    {/* Reports */}
+
+                    <button
+                        type="button"
+                        className="admin-nav-item"
+                        onClick={() => goTo("/reports")}
+                    >
+                        <span className="nav-icon">📋</span>
+                        <span>Reports</span>
+                    </button>
+
                 </nav>
 
-                <button
-                    className="admin-logout"
-                    onClick={handleLogout}
-                >
-                    <span>🚪</span>
-                    Logout
-                </button>
+
+                {/* SIDEBAR FOOTER */}
+
+                <div className="admin-sidebar-footer">
+
+                    <button
+                        type="button"
+                        className="admin-logout"
+                        onClick={handleLogout}
+                    >
+                        <span className="nav-icon">🚪</span>
+                        <span>Logout</span>
+                    </button>
+
+                </div>
 
             </aside>
 
 
-            {/* ================= MAIN ================= */}
+            {/* =================================================
+                MAIN CONTENT
+            ================================================= */}
 
             <main className="admin-main">
 
-                {/* TOP BAR */}
+                {/* =================================================
+                    TOP HEADER
+                ================================================= */}
 
                 <header className="admin-topbar">
 
-                    <div>
+                    <div className="admin-heading">
+
+                        <div className="admin-breadcrumb">
+                            Administration
+                            <span>›</span>
+                            Dashboard
+                        </div>
+
                         <h1>Admin Dashboard</h1>
 
                         <p>
-                            Manage the quiz platform and monitor
-                            performance.
+                            Manage your quiz platform, users and performance
+                            from one place.
                         </p>
+
                     </div>
+
+
+                    {/* ADMIN PROFILE */}
 
                     <div className="admin-user">
 
                         <div className="admin-avatar">
-                            {user.full_name
-                                ?.charAt(0)
+                            {(
+                                user.full_name ||
+                                user.fullName ||
+                                user.name ||
+                                user.email ||
+                                "A"
+                            )
+                                .charAt(0)
                                 .toUpperCase()}
                         </div>
 
-                        <div>
+                        <div className="admin-user-info">
+
                             <strong>
-                                {user.full_name}
+                                {user.full_name ||
+                                    user.fullName ||
+                                    user.name ||
+                                    "Administrator"}
                             </strong>
 
-                            <span>
-                                Administrator
-                            </span>
+                            <span>Administrator</span>
+
                         </div>
 
                     </div>
@@ -234,118 +339,236 @@ const AdminDashboard = () => {
                 </header>
 
 
-                {/* ERROR */}
+                {/* =================================================
+                    ERROR
+                ================================================= */}
 
                 {error && (
                     <div className="admin-error">
-                        ⚠️ {error}
+
+                        <div className="admin-error-icon">
+                            ⚠️
+                        </div>
+
+                        <div>
+                            <strong>Unable to load statistics</strong>
+
+                            <p>{error}</p>
+                        </div>
+
+                        <button
+                            type="button"
+                            onClick={fetchDashboardStats}
+                        >
+                            Retry
+                        </button>
+
                     </div>
                 )}
 
 
-                {/* ================= STATISTICS ================= */}
+                {/* =================================================
+                    WELCOME BANNER
+                ================================================= */}
+
+                <section className="admin-welcome">
+
+                    <div className="welcome-content">
+
+                        <span className="welcome-label">
+                            ADMINISTRATION CENTER
+                        </span>
+
+                        <h2>
+                            Welcome back,{" "}
+                            {(
+                                user.full_name ||
+                                user.fullName ||
+                                user.name ||
+                                "Administrator"
+                            ).split(" ")[0]}
+                            ! 👋
+                        </h2>
+
+                        <p>
+                            Keep your quiz platform organized and monitor
+                            everything from your administration dashboard.
+                        </p>
+
+                    </div>
+
+                    <div className="welcome-decoration">
+                        <div className="welcome-circle circle-one"></div>
+                        <div className="welcome-circle circle-two"></div>
+                        <div className="welcome-grid"></div>
+                    </div>
+
+                </section>
+
+
+                {/* =================================================
+                    MAIN STATISTICS
+                ================================================= */}
 
                 {stats && (
                     <>
-                        <section className="admin-stats-grid">
+                        <section className="admin-section">
 
-                            <div className="admin-stat-card">
-
-                                <div className="admin-stat-icon blue">
-                                    👥
-                                </div>
+                            <div className="admin-section-heading">
 
                                 <div>
-                                    <span>Total Students</span>
+                                    <span className="section-eyebrow">
+                                        PLATFORM OVERVIEW
+                                    </span>
 
-                                    <h3>
-                                        {stats.total_students}
-                                    </h3>
+                                    <h2>Key Statistics</h2>
+
+                                    <p>
+                                        A quick overview of your platform
+                                        activity.
+                                    </p>
                                 </div>
 
                             </div>
 
 
-                            <div className="admin-stat-card">
+                            <div className="admin-stats-grid">
 
-                                <div className="admin-stat-icon purple">
-                                    📝
+                                {/* Students */}
+
+                                <div className="admin-stat-card">
+
+                                    <div className="admin-stat-icon blue">
+                                        👥
+                                    </div>
+
+                                    <div className="admin-stat-content">
+                                        <span>Total Students</span>
+
+                                        <h3>
+                                            {stats.total_students ?? 0}
+                                        </h3>
+
+                                        <small>
+                                            Registered students
+                                        </small>
+                                    </div>
+
                                 </div>
 
-                                <div>
-                                    <span>Total Quizzes</span>
 
-                                    <h3>
-                                        {stats.total_quizzes}
-                                    </h3>
+                                {/* Quizzes */}
+
+                                <div className="admin-stat-card">
+
+                                    <div className="admin-stat-icon purple">
+                                        📝
+                                    </div>
+
+                                    <div className="admin-stat-content">
+                                        <span>Total Quizzes</span>
+
+                                        <h3>
+                                            {stats.total_quizzes ?? 0}
+                                        </h3>
+
+                                        <small>
+                                            Created quizzes
+                                        </small>
+                                    </div>
+
                                 </div>
 
-                            </div>
 
+                                {/* Published */}
 
-                            <div className="admin-stat-card">
+                                <div className="admin-stat-card">
 
-                                <div className="admin-stat-icon green">
-                                    📢
+                                    <div className="admin-stat-icon green">
+                                        📢
+                                    </div>
+
+                                    <div className="admin-stat-content">
+                                        <span>Published</span>
+
+                                        <h3>
+                                            {stats.published_quizzes ?? 0}
+                                        </h3>
+
+                                        <small>
+                                            Live quizzes
+                                        </small>
+                                    </div>
+
                                 </div>
 
-                                <div>
-                                    <span>Published Quizzes</span>
 
-                                    <h3>
-                                        {stats.published_quizzes}
-                                    </h3>
+                                {/* Draft */}
+
+                                <div className="admin-stat-card">
+
+                                    <div className="admin-stat-icon orange">
+                                        📄
+                                    </div>
+
+                                    <div className="admin-stat-content">
+                                        <span>Draft Quizzes</span>
+
+                                        <h3>
+                                            {stats.draft_quizzes ?? 0}
+                                        </h3>
+
+                                        <small>
+                                            Unpublished quizzes
+                                        </small>
+                                    </div>
+
                                 </div>
 
-                            </div>
 
+                                {/* Questions */}
 
-                            <div className="admin-stat-card">
+                                <div className="admin-stat-card">
 
-                                <div className="admin-stat-icon orange">
-                                    📄
+                                    <div className="admin-stat-icon cyan">
+                                        ❓
+                                    </div>
+
+                                    <div className="admin-stat-content">
+                                        <span>Total Questions</span>
+
+                                        <h3>
+                                            {stats.total_questions ?? 0}
+                                        </h3>
+
+                                        <small>
+                                            Question bank
+                                        </small>
+                                    </div>
+
                                 </div>
 
-                                <div>
-                                    <span>Draft Quizzes</span>
 
-                                    <h3>
-                                        {stats.draft_quizzes}
-                                    </h3>
-                                </div>
+                                {/* Attempts */}
 
-                            </div>
+                                <div className="admin-stat-card">
 
+                                    <div className="admin-stat-icon red">
+                                        🎯
+                                    </div>
 
-                            <div className="admin-stat-card">
+                                    <div className="admin-stat-content">
+                                        <span>Total Attempts</span>
 
-                                <div className="admin-stat-icon cyan">
-                                    ❓
-                                </div>
+                                        <h3>
+                                            {stats.total_attempts ?? 0}
+                                        </h3>
 
-                                <div>
-                                    <span>Total Questions</span>
+                                        <small>
+                                            Quiz attempts
+                                        </small>
+                                    </div>
 
-                                    <h3>
-                                        {stats.total_questions}
-                                    </h3>
-                                </div>
-
-                            </div>
-
-
-                            <div className="admin-stat-card">
-
-                                <div className="admin-stat-icon red">
-                                    🎯
-                                </div>
-
-                                <div>
-                                    <span>Total Attempts</span>
-
-                                    <h3>
-                                        {stats.total_attempts}
-                                    </h3>
                                 </div>
 
                             </div>
@@ -353,62 +576,76 @@ const AdminDashboard = () => {
                         </section>
 
 
-                        {/* ================= PERFORMANCE ================= */}
+                        {/* =================================================
+                            PERFORMANCE
+                        ================================================= */}
 
-                        <section className="admin-performance">
+                        <section className="admin-performance-grid">
+
+                            {/* Average Score */}
 
                             <div className="performance-card">
 
-                                <div className="performance-icon">
+                                <div className="performance-icon purple">
                                     📊
                                 </div>
 
                                 <div>
-                                    <span>
-                                        Average Score
-                                    </span>
+                                    <span>Average Score</span>
 
                                     <h2>
-                                        {stats.average_score}%
+                                        {stats.average_score ?? 0}%
                                     </h2>
+
+                                    <small>
+                                        Overall platform average
+                                    </small>
                                 </div>
 
                             </div>
 
 
+                            {/* Passed */}
+
                             <div className="performance-card">
 
-                                <div className="performance-icon">
+                                <div className="performance-icon green">
                                     ✅
                                 </div>
 
                                 <div>
-                                    <span>
-                                        Passed Attempts
-                                    </span>
+                                    <span>Passed Attempts</span>
 
                                     <h2>
-                                        {stats.passed_attempts}
+                                        {stats.passed_attempts ?? 0}
                                     </h2>
+
+                                    <small>
+                                        Successful attempts
+                                    </small>
                                 </div>
 
                             </div>
 
 
+                            {/* Failed */}
+
                             <div className="performance-card">
 
-                                <div className="performance-icon">
+                                <div className="performance-icon red">
                                     ❌
                                 </div>
 
                                 <div>
-                                    <span>
-                                        Failed Attempts
-                                    </span>
+                                    <span>Failed Attempts</span>
 
                                     <h2>
-                                        {stats.failed_attempts}
+                                        {stats.failed_attempts ?? 0}
                                     </h2>
+
+                                    <small>
+                                        Attempts needing improvement
+                                    </small>
                                 </div>
 
                             </div>
@@ -416,19 +653,23 @@ const AdminDashboard = () => {
                         </section>
 
 
-                        {/* ================= QUICK ACTIONS ================= */}
+                        {/* =================================================
+                            QUICK ACTIONS
+                        ================================================= */}
 
                         <section className="admin-section">
 
-                            <div className="admin-section-header">
+                            <div className="admin-section-heading">
 
                                 <div>
-                                    <h2>
-                                        Quick Actions
-                                    </h2>
+                                    <span className="section-eyebrow">
+                                        ADMIN TOOLS
+                                    </span>
+
+                                    <h2>Quick Actions</h2>
 
                                     <p>
-                                        Common administration tasks.
+                                        Frequently used administration tools.
                                     </p>
                                 </div>
 
@@ -437,95 +678,159 @@ const AdminDashboard = () => {
 
                             <div className="admin-actions-grid">
 
+                                {/* Create Quiz */}
+
                                 <button
+                                    type="button"
                                     onClick={() =>
-                                        navigate("/create-quiz")
+                                        goTo("/create-quiz")
                                     }
                                 >
-                                    <span>➕</span>
+                                    <span className="action-icon purple">
+                                        ➕
+                                    </span>
 
                                     <div>
-                                        <strong>
-                                            Create Quiz
-                                        </strong>
+                                        <strong>Create Quiz</strong>
 
                                         <small>
-                                            Create a new quiz
+                                            Create a new assessment
                                         </small>
                                     </div>
+
+                                    <span className="action-arrow">
+                                        →
+                                    </span>
                                 </button>
 
 
+                                {/* Manage Quizzes */}
+
                                 <button
+                                    type="button"
                                     onClick={() =>
-                                        navigate("/admin/users")
+                                        goTo("/manage-quizzes")
                                     }
                                 >
-                                    <span>👥</span>
+                                    <span className="action-icon blue">
+                                        📝
+                                    </span>
 
                                     <div>
-                                        <strong>
-                                            Manage Users
-                                        </strong>
+                                        <strong>Manage Quizzes</strong>
 
                                         <small>
-                                            View and manage students
+                                            Edit and organize quizzes
                                         </small>
                                     </div>
+
+                                    <span className="action-arrow">
+                                        →
+                                    </span>
                                 </button>
 
 
+                                {/* Manage Users */}
+
                                 <button
+                                    type="button"
                                     onClick={() =>
-                                        navigate("/admin/quizzes")
+                                        goTo("/manage-users")
                                     }
                                 >
-                                    <span>📝</span>
+                                    <span className="action-icon green">
+                                        👥
+                                    </span>
 
                                     <div>
-                                        <strong>
-                                            Manage Quizzes
-                                        </strong>
+                                        <strong>Manage Users</strong>
 
                                         <small>
-                                            Edit and manage quizzes
+                                            View registered users
                                         </small>
                                     </div>
-                                </button>
-                                <button
-                                    onClick={() =>
-                                        navigate("/admin/categories")
-                                    }
-                                >
-                                    <span>🗂️</span>
 
-                                    <div>
-                                        <strong>
-                                            Manage Categories
-                                        </strong>
-
-                                        <small>
-                                            Create and manage quiz categories
-                                        </small>
-                                    </div>
+                                    <span className="action-arrow">
+                                        →
+                                    </span>
                                 </button>
 
+
+                                {/* Analytics */}
+
                                 <button
+                                    type="button"
                                     onClick={() =>
-                                        navigate("/admin/analytics")
+                                        goTo("/admin/analytics")
                                     }
                                 >
-                                    <span>📊</span>
+                                    <span className="action-icon orange">
+                                        📊
+                                    </span>
 
                                     <div>
-                                        <strong>
-                                            View Analytics
-                                        </strong>
+                                        <strong>View Analytics</strong>
 
                                         <small>
                                             Monitor platform performance
                                         </small>
                                     </div>
+
+                                    <span className="action-arrow">
+                                        →
+                                    </span>
+                                </button>
+
+
+                                {/* Reports */}
+
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        goTo("/reports")
+                                    }
+                                >
+                                    <span className="action-icon red">
+                                        📋
+                                    </span>
+
+                                    <div>
+                                        <strong>Reports</strong>
+
+                                        <small>
+                                            View platform reports
+                                        </small>
+                                    </div>
+
+                                    <span className="action-arrow">
+                                        →
+                                    </span>
+                                </button>
+
+
+                                {/* Categories */}
+
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        goTo("/admin/categories")
+                                    }
+                                >
+                                    <span className="action-icon cyan">
+                                        🗂️
+                                    </span>
+
+                                    <div>
+                                        <strong>Categories</strong>
+
+                                        <small>
+                                            Manage quiz categories
+                                        </small>
+                                    </div>
+
+                                    <span className="action-arrow">
+                                        →
+                                    </span>
                                 </button>
 
                             </div>
@@ -533,52 +838,116 @@ const AdminDashboard = () => {
                         </section>
 
 
-                        {/* ================= SUMMARY ================= */}
+                        {/* =================================================
+                            SUMMARY
+                        ================================================= */}
 
-                        <section className="admin-summary">
+                        <section className="admin-summary-grid">
 
-                            <div>
-                                <span>Quiz Status</span>
+                            {/* Quiz Status */}
 
-                                <strong>
-                                    {stats.published_quizzes} Published
-                                </strong>
+                            <div className="summary-card">
 
-                                <small>
-                                    {stats.draft_quizzes} Draft
-                                </small>
+                                <div className="summary-icon purple">
+                                    📝
+                                </div>
+
+                                <div className="summary-content">
+
+                                    <span>Quiz Status</span>
+
+                                    <strong>
+                                        {stats.published_quizzes ?? 0}
+                                    </strong>
+
+                                    <p>
+                                        Published quizzes
+                                    </p>
+
+                                    <small>
+                                        {stats.draft_quizzes ?? 0} drafts
+                                        waiting for publication
+                                    </small>
+
+                                </div>
+
                             </div>
 
 
-                            <div>
-                                <span>Attempt Performance</span>
+                            {/* Attempt Performance */}
 
-                                <strong>
-                                    {stats.passed_attempts} Passed
-                                </strong>
+                            <div className="summary-card">
 
-                                <small>
-                                    {stats.failed_attempts} Failed
-                                </small>
+                                <div className="summary-icon green">
+                                    🎯
+                                </div>
+
+                                <div className="summary-content">
+
+                                    <span>Attempt Performance</span>
+
+                                    <strong>
+                                        {stats.passed_attempts ?? 0}
+                                    </strong>
+
+                                    <p>
+                                        Passed attempts
+                                    </p>
+
+                                    <small>
+                                        {stats.failed_attempts ?? 0} failed
+                                        attempts
+                                    </small>
+
+                                </div>
+
                             </div>
 
 
-                            <div>
-                                <span>Question Bank</span>
+                            {/* Question Bank */}
 
-                                <strong>
-                                    {stats.total_questions}
-                                </strong>
+                            <div className="summary-card">
 
-                                <small>
-                                    Total Questions
-                                </small>
+                                <div className="summary-icon blue">
+                                    ❓
+                                </div>
+
+                                <div className="summary-content">
+
+                                    <span>Question Bank</span>
+
+                                    <strong>
+                                        {stats.total_questions ?? 0}
+                                    </strong>
+
+                                    <p>
+                                        Total questions
+                                    </p>
+
+                                    <small>
+                                        Available across your quizzes
+                                    </small>
+
+                                </div>
+
                             </div>
 
                         </section>
 
                     </>
                 )}
+
+                {/* FOOTER */}
+
+                <footer className="admin-footer">
+                    <span>
+                        Quiz Management Platform
+                    </span>
+
+                    <span>
+                        Administration Panel
+                    </span>
+                </footer>
 
             </main>
 

@@ -1,425 +1,968 @@
-/* =====================================================
-   Leaderboard Page
-===================================================== */
+/* =========================================================
+   LEADERBOARD — PREMIUM UI
+========================================================= */
 
 .leaderboard-page {
     min-height: 100vh;
-    padding: 40px;
-    background: #f5f6fb;
+
+    padding: 38px 45px 55px;
+
     box-sizing: border-box;
+
+    background:
+            radial-gradient(
+                    circle at 92% 0%,
+                    rgba(245, 158, 11, 0.08),
+                    transparent 28%
+            ),
+            radial-gradient(
+                    circle at 0% 40%,
+                    rgba(81, 70, 229, 0.08),
+                    transparent 30%
+            ),
+            #f6f7fb;
+
+    color: #202638;
 }
 
-/* =====================================================
-   Header
-===================================================== */
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 .leaderboard-header {
-    max-width: 1200px;
-    margin: 0 auto 30px;
+    max-width: 1250px;
+
+    margin: 0 auto 28px;
 
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
 
-    gap: 20px;
+    gap: 25px;
+}
+
+.leaderboard-header > div:first-child {
+    min-width: 0;
 }
 
 .leaderboard-header h1 {
-    margin: 0 0 8px;
-
-    font-size: 34px;
-    font-weight: 700;
-
-    color: #202638;
-}
-
-.leaderboard-header p {
-    margin: 0;
-
-    font-size: 16px;
-    color: #737b8c;
-}
-
-/* =====================================================
-   Back Button
-===================================================== */
-
-.back-dashboard-btn {
-    border: none;
-
-    padding: 12px 20px;
-
-    background: #4f46e5;
-    color: white;
-
-    border-radius: 8px;
-
-    font-size: 14px;
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition: 0.2s ease;
-}
-
-.back-dashboard-btn:hover {
-    background: #4338ca;
-}
-
-/* =====================================================
-   Top Three
-===================================================== */
-
-.top-three {
-    max-width: 1200px;
-
-    margin: 0 auto 30px;
-
-    display: grid;
-
-    grid-template-columns: repeat(3, 1fr);
-
-    gap: 20px;
-}
-
-.top-student {
-    background: white;
-
-    border-radius: 16px;
-
-    padding: 28px;
-
-    text-align: center;
-
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
-
-    border-top: 5px solid transparent;
-
-    transition: 0.2s ease;
-}
-
-.top-student:hover {
-    transform: translateY(-3px);
-}
-
-.rank-first {
-    border-top-color: #f59e0b;
-}
-
-.rank-second {
-    border-top-color: #94a3b8;
-}
-
-.rank-third {
-    border-top-color: #cd7c32;
-}
-
-.rank-normal {
-    border-top-color: transparent;
-}
-
-.top-rank {
-    font-size: 30px;
-
-    margin-bottom: 12px;
-}
-
-.top-avatar {
-    width: 60px;
-    height: 60px;
-
-    margin: 0 auto 12px;
+    margin: 0 0 7px;
 
     display: flex;
 
-    justify-content: center;
     align-items: center;
 
-    border-radius: 50%;
+    font-size: 34px;
 
-    background: #4f46e5;
+    line-height: 1.15;
 
-    color: white;
+    font-weight: 800;
 
-    font-size: 24px;
-    font-weight: 700;
-}
-
-.top-student h2 {
-    margin: 0 0 10px;
-
-    font-size: 20px;
+    letter-spacing: -0.6px;
 
     color: #202638;
 }
 
-.top-score {
-    font-size: 25px;
+.leaderboard-header h1::before {
+    content: "";
 
-    font-weight: 700;
+    width: 6px;
 
-    color: #4f46e5;
+    height: 31px;
+
+    margin-right: 12px;
+
+    border-radius: 10px;
+
+    background:
+            linear-gradient(
+                    180deg,
+                    #f59e0b,
+                    #5146e5
+            );
 }
 
-.top-student > span {
-    display: block;
+.leaderboard-header p {
+    margin: 0 0 0 18px;
 
-    margin-top: 4px;
+    color: #747c8f;
+
+    font-size: 15px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+.back-dashboard-btn {
+    min-height: 45px;
+
+    padding: 0 19px;
+
+    border: 1px solid #dddffa;
+
+    border-radius: 11px;
+
+    background: #ffffff;
+
+    color: #5146e5;
 
     font-size: 13px;
 
-    color: #737b8c;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+            0 5px 18px rgba(30, 35, 70, 0.05);
+
+    transition:
+            background 0.2s ease,
+            color 0.2s ease,
+            border-color 0.2s ease,
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
 }
 
-/* =====================================================
-   Main Leaderboard Card
-===================================================== */
+.back-dashboard-btn:hover {
+    background: #5146e5;
+
+    border-color: #5146e5;
+
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+            0 8px 20px rgba(81, 70, 229, 0.20);
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.leaderboard-error {
+    max-width: 1250px;
+
+    margin: 0 auto 20px;
+
+    padding: 14px 17px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #ffd1d1;
+
+    border-radius: 11px;
+
+    background: #fff1f1;
+
+    color: #b91c1c;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   TOP THREE PODIUM
+========================================================= */
+
+.top-three {
+    max-width: 1250px;
+
+    margin: 0 auto 25px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 16px;
+
+    align-items: stretch;
+}
+
+.top-student {
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 27px 22px 25px;
+
+    box-sizing: border-box;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px solid #e9eaf2;
+
+    border-radius: 18px;
+
+    box-shadow:
+            0 7px 25px rgba(30, 35, 70, 0.06);
+
+    transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease;
+}
+
+.top-student::after {
+    content: "";
+
+    position: absolute;
+
+    width: 150px;
+
+    height: 150px;
+
+    right: -75px;
+
+    bottom: -85px;
+
+    border-radius: 50%;
+
+    background: rgba(81, 70, 229, 0.045);
+
+    pointer-events: none;
+}
+
+.top-student:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+            0 13px 32px rgba(30, 35, 70, 0.11);
+}
+
+
+/* =========================================================
+   TOP RANK COLORS
+========================================================= */
+
+.top-student.rank-first {
+    border-top: 4px solid #f59e0b;
+
+    box-shadow:
+            0 8px 28px rgba(245, 158, 11, 0.10);
+}
+
+.top-student.rank-second {
+    border-top: 4px solid #94a3b8;
+}
+
+.top-student.rank-third {
+    border-top: 4px solid #cd7c32;
+}
+
+
+/* =========================================================
+   RANK ICON
+========================================================= */
+
+.top-rank {
+    position: relative;
+
+    z-index: 1;
+
+    width: 48px;
+
+    height: 48px;
+
+    margin-bottom: 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 15px;
+
+    background: #f8f8fc;
+
+    font-size: 25px;
+
+    box-shadow:
+            0 4px 12px rgba(30, 35, 70, 0.05);
+}
+
+.rank-first .top-rank {
+    background: #fff7df;
+}
+
+.rank-second .top-rank {
+    background: #f1f4f7;
+}
+
+.rank-third .top-rank {
+    background: #fff1e7;
+}
+
+
+/* =========================================================
+   TOP AVATAR
+========================================================= */
+
+.top-avatar {
+    position: relative;
+
+    z-index: 1;
+
+    width: 66px;
+
+    height: 66px;
+
+    margin-bottom: 13px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+            linear-gradient(
+                    145deg,
+                    #5146e5,
+                    #7c3aed
+            );
+
+    color: #ffffff;
+
+    font-size: 25px;
+
+    font-weight: 800;
+
+    box-shadow:
+            0 8px 20px rgba(81, 70, 229, 0.22);
+}
+
+.rank-first .top-avatar {
+    background:
+            linear-gradient(
+                    145deg,
+                    #f59e0b,
+                    #d97706
+            );
+
+    box-shadow:
+            0 8px 20px rgba(245, 158, 11, 0.22);
+}
+
+.rank-second .top-avatar {
+    background:
+            linear-gradient(
+                    145deg,
+                    #64748b,
+                    #475569
+            );
+}
+
+.rank-third .top-avatar {
+    background:
+            linear-gradient(
+                    145deg,
+                    #c47a3c,
+                    #a85c27
+            );
+}
+
+
+/* =========================================================
+   TOP STUDENT NAME
+========================================================= */
+
+.top-student h2 {
+    position: relative;
+
+    z-index: 1;
+
+    max-width: 90%;
+
+    margin: 0 0 9px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    color: #202638;
+
+    font-size: 19px;
+
+    font-weight: 750;
+}
+
+
+/* =========================================================
+   TOP SCORE
+========================================================= */
+
+.top-score {
+    position: relative;
+
+    z-index: 1;
+
+    color: #5146e5;
+
+    font-size: 27px;
+
+    line-height: 1;
+
+    font-weight: 850;
+
+    letter-spacing: -0.5px;
+}
+
+.rank-first .top-score {
+    color: #d97706;
+}
+
+.top-student > span {
+    position: relative;
+
+    z-index: 1;
+
+    display: block;
+
+    margin-top: 6px;
+
+    color: #81889a;
+
+    font-size: 11px;
+
+    font-weight: 650;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.35px;
+}
+
+
+/* =========================================================
+   MAIN LEADERBOARD CARD
+========================================================= */
 
 .leaderboard-card {
-    max-width: 1200px;
+    max-width: 1250px;
 
     margin: 0 auto;
 
-    background: white;
+    padding: 27px;
 
-    border-radius: 16px;
+    box-sizing: border-box;
 
-    padding: 28px;
+    background: #ffffff;
 
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e9eaf2;
+
+    border-radius: 19px;
+
+    box-shadow:
+            0 8px 30px rgba(30, 35, 70, 0.065);
 }
 
 .leaderboard-card-header {
-    margin-bottom: 24px;
+    margin-bottom: 22px;
+
+    padding-bottom: 19px;
+
+    border-bottom: 1px solid #edf0f5;
 }
 
 .leaderboard-card-header h2 {
-    margin: 0 0 6px;
-
-    font-size: 22px;
+    margin: 0 0 5px;
 
     color: #202638;
+
+    font-size: 21px;
+
+    font-weight: 750;
 }
 
 .leaderboard-card-header p {
     margin: 0;
 
-    color: #737b8c;
+    color: #81889a;
 
-    font-size: 14px;
+    font-size: 13px;
+
+    line-height: 1.5;
 }
 
-/* =====================================================
-   Table
-===================================================== */
+
+/* =========================================================
+   TABLE WRAPPER
+========================================================= */
 
 .leaderboard-table-wrapper {
     width: 100%;
 
     overflow-x: auto;
+
+    border: 1px solid #edf0f5;
+
+    border-radius: 13px;
+
+    scrollbar-width: thin;
 }
 
 .leaderboard-table {
     width: 100%;
 
-    border-collapse: collapse;
+    min-width: 850px;
 
-    min-width: 800px;
+    border-collapse: separate;
+
+    border-spacing: 0;
 }
 
+
+/* =========================================================
+   TABLE HEADER
+========================================================= */
+
 .leaderboard-table th {
-    padding: 15px 12px;
+    padding: 14px 13px;
 
     text-align: left;
 
     background: #f7f8fc;
 
-    color: #687084;
+    color: #747c8e;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.4px;
+
+    border-bottom: 1px solid #e8eaf0;
+
+    white-space: nowrap;
+}
+
+.leaderboard-table th:first-child {
+    padding-left: 17px;
+
+    border-top-left-radius: 12px;
+}
+
+.leaderboard-table th:last-child {
+    border-top-right-radius: 12px;
+}
+
+
+/* =========================================================
+   TABLE BODY
+========================================================= */
+
+.leaderboard-table td {
+    padding: 15px 13px;
+
+    color: #50586a;
 
     font-size: 13px;
 
-    font-weight: 600;
+    border-bottom: 1px solid #eef0f4;
 
-    border-bottom: 1px solid #e8eaf0;
+    white-space: nowrap;
 }
 
-.leaderboard-table td {
-    padding: 17px 12px;
+.leaderboard-table tbody tr {
+    background: #ffffff;
 
-    color: #454c5d;
+    transition:
+            background 0.2s ease,
+            transform 0.2s ease;
+}
 
-    font-size: 14px;
-
-    border-bottom: 1px solid #eef0f4;
+.leaderboard-table tbody tr:last-child td {
+    border-bottom: none;
 }
 
 .leaderboard-table tbody tr:hover {
     background: #fafaff;
 }
 
-/* =====================================================
-   Rank Badge
-===================================================== */
+
+/* =========================================================
+   RANK BADGE
+========================================================= */
 
 .rank-badge {
+    min-width: 43px;
+
+    height: 34px;
+
     display: inline-flex;
 
-    justify-content: center;
     align-items: center;
 
-    min-width: 40px;
+    justify-content: center;
+
+    border-radius: 9px;
 
     font-size: 15px;
 
-    font-weight: 700;
+    font-weight: 800;
+}
+
+.rank-badge.rank-first {
+    background: #fff5d9;
+}
+
+.rank-badge.rank-second {
+    background: #eef1f4;
+}
+
+.rank-badge.rank-third {
+    background: #fff0e6;
 }
 
 .rank-badge.rank-normal {
-    color: #555d70;
+    background: #f5f6fa;
+
+    color: #687084;
 }
 
-/* =====================================================
-   Student
-===================================================== */
+
+/* =========================================================
+   STUDENT INFO
+========================================================= */
 
 .student-info {
     display: flex;
 
     align-items: center;
 
-    gap: 12px;
-
-    font-weight: 600;
+    gap: 11px;
 
     color: #202638;
+
+    font-weight: 700;
 }
 
 .student-avatar {
     width: 38px;
+
     height: 38px;
+
+    flex-shrink: 0;
 
     display: flex;
 
-    justify-content: center;
     align-items: center;
+
+    justify-content: center;
 
     border-radius: 50%;
 
-    background: #eef0ff;
+    background:
+            linear-gradient(
+                    145deg,
+                    #eeedff,
+                    #e5e3ff
+            );
 
-    color: #4f46e5;
+    color: #5146e5;
 
-    font-size: 15px;
+    font-size: 14px;
 
-    font-weight: 700;
+    font-weight: 800;
+
+    border: 1px solid #dddafe;
 }
 
-/* =====================================================
-   Scores
-===================================================== */
+
+/* =========================================================
+   SCORES
+========================================================= */
 
 .highest-score {
-    font-weight: 700;
+    color: #5146e5 !important;
 
-    color: #4f46e5 !important;
+    font-weight: 800;
 }
 
 .average-score {
-    font-weight: 600;
+    color: #4b5563 !important;
+
+    font-weight: 700;
 }
 
-/* =====================================================
-   Empty
-===================================================== */
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
 
 .empty-leaderboard {
+    min-height: 320px;
+
+    padding: 55px 20px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
     text-align: center;
 
-    padding: 70px 20px;
+    box-sizing: border-box;
 }
 
 .empty-icon {
-    font-size: 50px;
+    width: 76px;
 
-    margin-bottom: 15px;
+    height: 76px;
+
+    margin-bottom: 17px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 20px;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #fff7df,
+                    #fffaf0
+            );
+
+    border: 1px solid #f8e8b8;
+
+    font-size: 34px;
+
+    box-shadow:
+            0 8px 20px rgba(245, 158, 11, 0.08);
 }
 
 .empty-leaderboard h3 {
     margin: 0 0 8px;
 
-    font-size: 22px;
-
     color: #202638;
+
+    font-size: 20px;
+
+    font-weight: 750;
 }
 
 .empty-leaderboard p {
     margin: 0;
 
-    color: #737b8c;
+    color: #81889a;
+
+    font-size: 13px;
 }
 
-/* =====================================================
-   Loading
-===================================================== */
+
+/* =========================================================
+   LOADING
+========================================================= */
 
 .leaderboard-loading {
     min-height: 70vh;
 
     display: flex;
 
-    justify-content: center;
+    flex-direction: column;
+
     align-items: center;
 
-    font-size: 18px;
+    justify-content: center;
 
-    color: #687084;
+    color: #737b8c;
+
+    font-size: 15px;
 }
 
-/* =====================================================
-   Error
-===================================================== */
+.leaderboard-loading::before {
+    content: "";
 
-.leaderboard-error {
-    max-width: 1200px;
+    width: 40px;
 
-    margin: 0 auto 20px;
+    height: 40px;
 
-    padding: 14px 18px;
+    margin-bottom: 15px;
 
-    border-radius: 8px;
+    border: 3px solid #e4e3f7;
 
-    background: #fee2e2;
+    border-top-color: #5146e5;
 
-    color: #b91c1c;
+    border-radius: 50%;
 
-    font-size: 14px;
+    animation: leaderboard-spin 0.8s linear infinite;
 }
 
-/* =====================================================
-   Responsive
-===================================================== */
+@keyframes leaderboard-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
 
-@media (max-width: 768px) {
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
 
     .leaderboard-page {
-        padding: 20px;
+        padding: 30px 25px 45px;
+    }
+
+    .top-three {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+        gap: 10px;
+    }
+
+    .top-student {
+        padding: 22px 13px;
+    }
+
+    .top-student h2 {
+        font-size: 16px;
+    }
+
+    .top-score {
+        font-size: 23px;
+    }
+
+    .leaderboard-card {
+        padding: 22px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .leaderboard-page {
+        padding: 23px 15px 35px;
     }
 
     .leaderboard-header {
         flex-direction: column;
 
-        align-items: flex-start;
-    }
+        align-items: stretch;
 
-    .top-three {
-        grid-template-columns: 1fr;
-    }
-
-    .leaderboard-card {
-        padding: 18px;
+        gap: 18px;
     }
 
     .leaderboard-header h1 {
         font-size: 28px;
+    }
+
+    .leaderboard-header h1::before {
+        height: 26px;
+
+        margin-right: 9px;
+    }
+
+    .leaderboard-header p {
+        margin-left: 15px;
+
+        font-size: 13px;
+    }
+
+    .back-dashboard-btn {
+        width: 100%;
+    }
+
+    .top-three {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+    }
+
+    .top-student {
+        padding: 24px 18px;
+    }
+
+    .top-student h2 {
+        font-size: 18px;
+    }
+
+    .top-score {
+        font-size: 26px;
+    }
+
+    .leaderboard-card {
+        padding: 18px;
+
+        border-radius: 16px;
+    }
+
+    .leaderboard-card-header {
+        margin-bottom: 17px;
+    }
+
+    .leaderboard-table-wrapper {
+        border-radius: 10px;
+    }
+
+    .leaderboard-table {
+        min-width: 850px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .leaderboard-header h1 {
+        font-size: 25px;
+    }
+
+    .top-student {
+        padding: 21px 15px;
+    }
+
+    .top-avatar {
+        width: 60px;
+        height: 60px;
+    }
+
+    .top-rank {
+        width: 44px;
+        height: 44px;
+    }
+
+    .leaderboard-card {
+        padding: 15px;
     }
 }

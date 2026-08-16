@@ -173,14 +173,28 @@
 ===================================================== */
 
 .welcome-card {
-    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    position: relative;
+    overflow: hidden;
+    min-height: 190px;
+    padding: 38px 42px;
+    border-radius: 24px;
+    background:
+            radial-gradient(
+                    circle at 85% 20%,
+                    rgba(255,255,255,.18),
+                    transparent 25%
+            ),
+            linear-gradient(
+                    135deg,
+                    #4338ca 0%,
+                    #5146e5 45%,
+                    #7c3aed 100%
+            );
     color: white;
-    border-radius: 14px;
-    padding: 28px 30px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 25px;
+    box-shadow: 0 20px 45px rgba(79,70,229,.22);
 }
 
 .welcome-card h2 {
@@ -380,11 +394,23 @@
 }
 
 .quiz-card {
-    background: white;
-    padding: 21px;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    background: rgba(255,255,255,.96);
+    border: 1px solid rgba(226,232,240,.8);
+    border-radius: 22px;
+    padding: 0 22px 22px;
+    box-shadow: 0 10px 30px rgba(15,23,42,.06);
+    transition:
+            transform .3s ease,
+            box-shadow .3s ease,
+            border-color .3s ease;
+}
+
+.quiz-card:hover {
+    transform: translateY(-7px);
+    border-color: rgba(99,102,241,.25);
+    box-shadow: 0 20px 45px rgba(79,70,229,.13);
 }
 
 .quiz-card:hover {
@@ -783,4 +809,50 @@
         font-size: 15px;
     }
 
+}
+.quiz-visual {
+    position: relative;
+    height: 145px;
+    margin: 0 -22px 20px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+            linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #e0e7ff
+            );
+}
+
+.quiz-visual-glow {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: rgba(99,102,241,.2);
+    filter: blur(5px);
+}
+
+.quiz-visual-icon {
+    position: relative;
+    z-index: 2;
+    font-size: 58px;
+    filter: drop-shadow(0 10px 15px rgba(79,70,229,.2));
+}
+
+.quiz-visual-label {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 3;
+    padding: 7px 11px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.8);
+    backdrop-filter: blur(10px);
+    color: #4f46e5;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
 }

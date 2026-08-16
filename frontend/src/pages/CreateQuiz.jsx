@@ -4,7 +4,6 @@ import api from "../services/api";
 import "./CreateQuiz.css";
 
 const CreateQuiz = () => {
-
     const navigate = useNavigate();
 
     // =====================================================
@@ -39,28 +38,28 @@ const CreateQuiz = () => {
 
     const [difficulty, setDifficulty] = useState("Medium");
 
-    const [showQuestions, setShowQuestions] =
-        useState(false);
-
+    const [showQuestions, setShowQuestions] = useState(false);
 
     // =====================================================
     // QUIZ DETAILS
     // =====================================================
 
     const handleQuizDetails = (e) => {
-
         e.preventDefault();
 
         setShowQuestions(true);
-    };
 
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    };
 
     // =====================================================
     // OPTION CHANGE
     // =====================================================
 
     const handleOptionChange = (index, value) => {
-
         const updatedOptions = [...options];
 
         updatedOptions[index] = value;
@@ -68,81 +67,54 @@ const CreateQuiz = () => {
         setOptions(updatedOptions);
     };
 
-
     // =====================================================
     // ADD QUESTION
     // =====================================================
 
     const handleAddQuestion = (e) => {
-
         e.preventDefault();
 
-
-        // -----------------------------
+        // -------------------------------------------------
         // Question validation
-        // -----------------------------
+        // -------------------------------------------------
 
         if (!questionText.trim()) {
-
             alert("Please enter the question.");
-
             return;
         }
 
-
-        // -----------------------------
+        // -------------------------------------------------
         // Options validation
-        // -----------------------------
+        // -------------------------------------------------
 
-        if (
-            options.some(
-                (option) => !option.trim()
-            )
-        ) {
-
+        if (options.some((option) => !option.trim())) {
             alert("Please fill all four options.");
-
             return;
         }
 
-
-        // -----------------------------
+        // -------------------------------------------------
         // Correct answer validation
-        // -----------------------------
+        // -------------------------------------------------
 
         if (!correctAnswer) {
-
-            alert(
-                "Please select the correct answer."
-            );
-
+            alert("Please select the correct answer.");
             return;
         }
 
-
-        // -----------------------------
+        // -------------------------------------------------
         // Marks validation
-        // -----------------------------
+        // -------------------------------------------------
 
-        if (
-            !marks ||
-            Number(marks) <= 0
-        ) {
-
-            alert(
-                "Marks must be greater than 0."
-            );
-
+        if (!marks || Number(marks) <= 0) {
+            alert("Marks must be greater than 0.");
             return;
         }
 
-
-        // =================================================
-        // CREATE QUESTION OBJECT
-        // =================================================
+        // -------------------------------------------------
+        // Create question object
+        // -------------------------------------------------
 
         const newQuestion = {
-
             question: questionText.trim(),
 
             options: [
@@ -161,16 +133,14 @@ const CreateQuiz = () => {
             difficulty: difficulty
         };
 
-
         setQuestions([
             ...questions,
             newQuestion
         ]);
 
-
-        // =================================================
-        // RESET QUESTION FORM
-        // =================================================
+        // -------------------------------------------------
+        // Reset question form
+        // -------------------------------------------------
 
         setQuestionText("");
 
@@ -189,28 +159,26 @@ const CreateQuiz = () => {
 
         setDifficulty("Medium");
 
+        alert("Question added successfully!");
 
-        alert(
-            "Question added successfully!"
-        );
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
     };
 
-
     // =====================================================
-    // DELETE QUESTION BEFORE SAVING
+    // REMOVE QUESTION
     // =====================================================
 
     const handleRemoveQuestion = (index) => {
-
-        const updatedQuestions =
-            questions.filter(
-                (_, questionIndex) =>
-                    questionIndex !== index
-            );
+        const updatedQuestions = questions.filter(
+            (_, questionIndex) =>
+                questionIndex !== index
+        );
 
         setQuestions(updatedQuestions);
     };
-
 
     // =====================================================
     // SAVE COMPLETE QUIZ
@@ -219,14 +187,9 @@ const CreateQuiz = () => {
     const handleSaveQuiz = async () => {
 
         if (questions.length === 0) {
-
-            alert(
-                "Please add at least one question."
-            );
-
+            alert("Please add at least one question.");
             return;
         }
-
 
         try {
 
@@ -234,41 +197,37 @@ const CreateQuiz = () => {
             // 1. CREATE QUIZ
             // =================================================
 
-            const quizResponse =
-                await api.post(
-                    "/quizzes",
-                    {
-                        title,
-                        description,
-                        category,
+            const quizResponse = await api.post(
+                "/quizzes",
+                {
+                    title,
+                    description,
+                    category,
 
-                        difficulty: "Medium",
+                    // Keeping your existing backend behavior
+                    difficulty: "Medium",
 
-                        maxAttempts: 1,
+                    maxAttempts: 1,
 
-                        passingScore: 60,
+                    passingScore: 60,
 
-                        status: "published",
+                    status: "published",
 
-                        duration:
-                            Number(timeLimit)
-                    }
-                );
-
+                    duration: Number(timeLimit)
+                }
+            );
 
             console.log(
                 "Quiz created:",
                 quizResponse.data
             );
 
-
             // =================================================
-            // GET QUIZ ID
+            // 2. GET QUIZ ID
             // =================================================
 
             const quizId =
                 quizResponse.data.data?.id;
-
 
             if (!quizId) {
 
@@ -282,23 +241,16 @@ const CreateQuiz = () => {
                 );
             }
 
-
             // =================================================
-            // 2. SAVE QUESTIONS
+            // 3. SAVE QUESTIONS
             // =================================================
 
-            for (
-                const question
-                of questions
-                ) {
+            for (const question of questions) {
 
                 const correctIndex =
-                    Number(
-                        question.correctAnswer
-                    );
+                    Number(question.correctAnswer);
 
-
-                const correctAnswer =
+                const correctAnswerValue =
                     [
                         "A",
                         "B",
@@ -306,13 +258,9 @@ const CreateQuiz = () => {
                         "D"
                     ][correctIndex];
 
-
                 await api.post(
-
                     `/quizzes/${quizId}/questions`,
-
                     {
-
                         question:
                         question.question,
 
@@ -329,7 +277,7 @@ const CreateQuiz = () => {
                             question.options[3],
 
                         correct_answer:
-                        correctAnswer,
+                        correctAnswerValue,
 
                         explanation:
                         question.explanation,
@@ -343,23 +291,19 @@ const CreateQuiz = () => {
                 );
             }
 
-
             // =================================================
-            // 3. SUCCESS
+            // 4. SUCCESS
             // =================================================
 
             console.log(
                 "All questions saved successfully."
             );
 
-
             alert(
                 "Quiz and all questions created successfully!"
             );
 
-
             navigate("/dashboard");
-
 
         } catch (error) {
 
@@ -369,26 +313,110 @@ const CreateQuiz = () => {
                 error
             );
 
-
             alert(
-
                 error.response?.data?.message ||
-
                 "Failed to create quiz. Please check the backend."
             );
         }
     };
-
 
     // =====================================================
     // UI
     // =====================================================
 
     return (
-
         <div className="create-quiz-page">
 
-            <h1>Create Quiz</h1>
+            {/* =================================================
+                HEADER
+            ================================================= */}
+
+            <header className="create-quiz-header">
+
+                <div>
+                    <h1>
+                        Create New Quiz
+                    </h1>
+
+                    <p>
+                        Build an engaging assessment for your students.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    className="create-quiz-cancel"
+                    onClick={() =>
+                        navigate("/dashboard")
+                    }
+                >
+                    ← Back to Dashboard
+                </button>
+
+            </header>
+
+
+            {/* =================================================
+                PROGRESS
+            ================================================= */}
+
+            <div className="quiz-builder-progress">
+
+                <div className="progress-steps">
+
+                    <div
+                        className={`progress-step ${
+                            !showQuestions
+                                ? "active"
+                                : "completed"
+                        }`}
+                    >
+
+                        <div className="progress-step-number">
+                            {!showQuestions ? "1" : "✓"}
+                        </div>
+
+                        <span>
+                            Quiz Details
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        className={`progress-step ${
+                            showQuestions
+                                ? "active"
+                                : ""
+                        }`}
+                    >
+
+                        <div className="progress-step-number">
+                            2
+                        </div>
+
+                        <span>
+                            Add Questions
+                        </span>
+
+                    </div>
+
+
+                    <div className="progress-step">
+
+                        <div className="progress-step-number">
+                            3
+                        </div>
+
+                        <span>
+                            Review & Save
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
 
 
             {/* =================================================
@@ -397,182 +425,238 @@ const CreateQuiz = () => {
 
             {!showQuestions && (
 
-                <>
+                <main className="quiz-builder-card">
 
-                    <p>
-                        Create a new quiz for students.
-                    </p>
+                    <div className="builder-section-header">
+
+                        <h2>
+                            Quiz Information
+                        </h2>
+
+                        <p>
+                            Enter the basic information about your quiz.
+                        </p>
+
+                    </div>
 
 
-                    <form
-                        onSubmit={
-                            handleQuizDetails
-                        }
-                    >
+                    <form onSubmit={handleQuizDetails}>
 
-                        {/* Quiz Title */}
+                        <div className="quiz-form-grid">
 
-                        <div>
+                            {/* =================================================
+                                TITLE
+                            ================================================= */}
 
-                            <label>
-                                Quiz Title
-                            </label>
+                            <div className="quiz-form-group full-width">
 
-                            <input
-                                type="text"
-                                placeholder="Enter quiz title"
-                                value={title}
-                                onChange={(e) =>
-                                    setTitle(
-                                        e.target.value
-                                    )
-                                }
-                                required
-                            />
+                                <label>
+                                    Quiz Title
+                                </label>
+
+                                <input
+                                    type="text"
+                                    placeholder="e.g. Java Programming Fundamentals"
+                                    value={title}
+                                    onChange={(e) =>
+                                        setTitle(
+                                            e.target.value
+                                        )
+                                    }
+                                    required
+                                />
+
+                            </div>
+
+
+                            {/* =================================================
+                                DESCRIPTION
+                            ================================================= */}
+
+                            <div className="quiz-form-group full-width">
+
+                                <label>
+                                    Description
+                                </label>
+
+                                <textarea
+                                    placeholder="Write a short description about this quiz..."
+                                    value={description}
+                                    onChange={(e) =>
+                                        setDescription(
+                                            e.target.value
+                                        )
+                                    }
+                                    required
+                                />
+
+                            </div>
+
+
+                            {/* =================================================
+                                CATEGORY
+                            ================================================= */}
+
+                            <div className="quiz-form-group">
+
+                                <label>
+                                    Category
+                                </label>
+
+                                <select
+                                    value={category}
+                                    onChange={(e) =>
+                                        setCategory(
+                                            e.target.value
+                                        )
+                                    }
+                                    required
+                                >
+
+                                    <option value="">
+                                        Select category
+                                    </option>
+
+                                    <option value="Java">
+                                        Java
+                                    </option>
+
+                                    <option value="Python">
+                                        Python
+                                    </option>
+
+                                    <option value="Database">
+                                        Database
+                                    </option>
+
+                                    <option value="Web Development">
+                                        Web Development
+                                    </option>
+
+                                    <option value="Other">
+                                        Other
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            {/* =================================================
+                                TIME LIMIT
+                            ================================================= */}
+
+                            <div className="quiz-form-group">
+
+                                <label>
+                                    Time Limit
+                                </label>
+
+                                <input
+                                    type="number"
+                                    placeholder="Example: 20"
+                                    min="1"
+                                    value={timeLimit}
+                                    onChange={(e) =>
+                                        setTimeLimit(
+                                            e.target.value
+                                        )
+                                    }
+                                    required
+                                />
+
+                            </div>
 
                         </div>
 
 
-                        {/* Description */}
+                        {/* =================================================
+                            FOOTER
+                        ================================================= */}
 
-                        <div>
+                        <div className="quiz-builder-footer">
 
-                            <label>
-                                Description
-                            </label>
-
-                            <textarea
-                                placeholder="Enter quiz description"
-                                value={description}
-                                onChange={(e) =>
-                                    setDescription(
-                                        e.target.value
-                                    )
+                            <button
+                                type="button"
+                                className="secondary-builder-btn"
+                                onClick={() =>
+                                    navigate("/dashboard")
                                 }
-                                required
-                            />
-
-                        </div>
-
-
-                        {/* Category */}
-
-                        <div>
-
-                            <label>
-                                Category
-                            </label>
-
-                            <select
-                                value={category}
-                                onChange={(e) =>
-                                    setCategory(
-                                        e.target.value
-                                    )
-                                }
-                                required
                             >
+                                Cancel
+                            </button>
 
-                                <option value="">
-                                    Select category
-                                </option>
-
-                                <option value="Java">
-                                    Java
-                                </option>
-
-                                <option value="Python">
-                                    Python
-                                </option>
-
-                                <option value="Database">
-                                    Database
-                                </option>
-
-                                <option value="Web Development">
-                                    Web Development
-                                </option>
-
-                                <option value="Other">
-                                    Other
-                                </option>
-
-                            </select>
+                            <button
+                                type="submit"
+                                className="primary-builder-btn"
+                            >
+                                Next: Add Questions →
+                            </button>
 
                         </div>
-
-
-                        {/* Time Limit */}
-
-                        <div>
-
-                            <label>
-                                Time Limit (minutes)
-                            </label>
-
-                            <input
-                                type="number"
-                                placeholder="Example: 20"
-                                value={timeLimit}
-                                onChange={(e) =>
-                                    setTimeLimit(
-                                        e.target.value
-                                    )
-                                }
-                                min="1"
-                                required
-                            />
-
-                        </div>
-
-
-                        {/* Submit */}
-
-                        <button type="submit">
-
-                            Next: Add Questions
-
-                        </button>
-
-
-                        <button
-                            type="button"
-                            onClick={() =>
-                                navigate(
-                                    "/dashboard"
-                                )
-                            }
-                        >
-
-                            Cancel
-
-                        </button>
 
                     </form>
 
-                </>
+                </main>
+
             )}
 
 
             {/* =================================================
-                QUESTION SECTION
+                QUESTION BUILDER
             ================================================= */}
 
             {showQuestions && (
 
-                <div>
+                <main className="quiz-builder-card">
 
-                    <h2>
-                        Add Questions
-                    </h2>
+                    {/* =================================================
+                        SECTION HEADER
+                    ================================================= */}
+
+                    <div className="builder-section-header">
+
+                        <h2>
+                            Add Questions
+                        </h2>
+
+                        <p>
+                            Create questions and choose the correct answer.
+                        </p>
+
+                    </div>
 
 
-                    <p>
-                        Quiz:{" "}
-                        <strong>
-                            {title}
+                    {/* =================================================
+                        QUIZ INFORMATION
+                    ================================================= */}
+
+                    <div
+                        style={{
+                            background: "#f5f3ff",
+                            padding: "14px 16px",
+                            borderRadius: "10px",
+                            marginBottom: "25px"
+                        }}
+                    >
+
+                        <strong
+                            style={{
+                                color: "#5146e5"
+                            }}
+                        >
+                            Quiz:
                         </strong>
-                    </p>
+
+                        <span
+                            style={{
+                                marginLeft: "8px"
+                            }}
+                        >
+                            {title}
+                        </span>
+
+                    </div>
 
 
                     {/* =================================================
@@ -580,21 +664,23 @@ const CreateQuiz = () => {
                     ================================================= */}
 
                     <form
-                        onSubmit={
-                            handleAddQuestion
-                        }
+                        onSubmit={handleAddQuestion}
+                        className="question-builder"
                     >
 
-                        {/* Question */}
+                        {/* =================================================
+                            QUESTION
+                        ================================================= */}
 
-                        <div>
+                        <div className="quiz-form-group">
 
                             <label>
                                 Question
                             </label>
 
                             <textarea
-                                placeholder="Enter your question"
+                                className="question-textarea"
+                                placeholder="Write your question here..."
                                 value={questionText}
                                 onChange={(e) =>
                                     setQuestionText(
@@ -611,45 +697,30 @@ const CreateQuiz = () => {
                             OPTIONS
                         ================================================= */}
 
-                        <h3>
-                            Options
+                        <h3 className="options-title">
+                            Answer Options
                         </h3>
 
-
                         {options.map(
-                            (
-                                option,
-                                index
-                            ) => (
+                            (option, index) => (
 
                                 <div
+                                    className="option-builder"
                                     key={index}
                                 >
 
-                                    <label>
-
-                                        Option{" "}
-                                        {
-                                            String.fromCharCode(
-                                                65 + index
-                                            )
-                                        }
-
-                                    </label>
-
+                                    <div className="option-letter">
+                                        {String.fromCharCode(
+                                            65 + index
+                                        )}
+                                    </div>
 
                                     <input
                                         type="text"
-                                        placeholder={
-                                            `Enter option ${
-                                                String.fromCharCode(
-                                                    65 + index
-                                                )
-                                            }`
-                                        }
-                                        value={
-                                            option
-                                        }
+                                        placeholder={`Enter option ${String.fromCharCode(
+                                            65 + index
+                                        )}`}
+                                        value={option}
                                         onChange={(e) =>
                                             handleOptionChange(
                                                 index,
@@ -669,69 +740,89 @@ const CreateQuiz = () => {
                             CORRECT ANSWER
                         ================================================= */}
 
-                        <h3>
-                            Correct Answer
-                        </h3>
+                        <div className="correct-answer-section">
 
+                            <h3>
+                                Correct Answer
+                            </h3>
 
-                        {options.map(
-                            (
-                                option,
-                                index
-                            ) => (
+                            <div className="correct-answer-options">
 
-                                <div
-                                    key={index}
-                                >
+                                {options.map(
+                                    (option, index) => {
 
-                                    <label>
-
-                                        <input
-                                            type="radio"
-                                            name="correctAnswer"
-                                            value={index}
-                                            checked={
-                                                correctAnswer ===
-                                                String(index)
-                                            }
-                                            onChange={(e) =>
-                                                setCorrectAnswer(
-                                                    e.target.value
-                                                )
-                                            }
-                                        />
-
-                                        {" "}
-                                        Option{" "}
-                                        {
+                                        const letter =
                                             String.fromCharCode(
                                                 65 + index
-                                            )
-                                        }
+                                            );
 
-                                    </label>
+                                        return (
 
-                                </div>
+                                            <div
+                                                key={index}
+                                                className={`correct-answer-option ${
+                                                    correctAnswer ===
+                                                    String(index)
+                                                        ? "selected"
+                                                        : ""
+                                                }`}
+                                                onClick={() =>
+                                                    setCorrectAnswer(
+                                                        String(index)
+                                                    )
+                                                }
+                                            >
 
-                            )
-                        )}
+                                                <label>
+
+                                                    <input
+                                                        type="radio"
+                                                        name="correctAnswer"
+                                                        value={index}
+                                                        checked={
+                                                            correctAnswer ===
+                                                            String(index)
+                                                        }
+                                                        onChange={(e) =>
+                                                            setCorrectAnswer(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                    />
+
+                                                    Option {letter}
+
+                                                </label>
+
+                                            </div>
+
+                                        );
+                                    }
+                                )}
+
+                            </div>
+
+                        </div>
 
 
                         {/* =================================================
                             EXPLANATION
                         ================================================= */}
 
-                        <div>
+                        <div
+                            className="quiz-form-group"
+                            style={{
+                                marginTop: "25px"
+                            }}
+                        >
 
                             <label>
                                 Explanation
                             </label>
 
                             <textarea
-                                placeholder="Explain why this answer is correct (optional)"
-                                value={
-                                    explanation
-                                }
+                                placeholder="Explain why the selected answer is correct... (optional)"
+                                value={explanation}
                                 onChange={(e) =>
                                     setExplanation(
                                         e.target.value
@@ -743,256 +834,311 @@ const CreateQuiz = () => {
 
 
                         {/* =================================================
-                            MARKS
+                            MARKS + DIFFICULTY
                         ================================================= */}
 
-                        <div>
+                        <div className="quiz-form-grid">
 
-                            <label>
-                                Marks
-                            </label>
+                            <div className="quiz-form-group">
 
-                            <input
-                                type="number"
-                                min="1"
-                                value={marks}
-                                onChange={(e) =>
-                                    setMarks(
-                                        e.target.value
-                                    )
-                                }
-                                required
-                            />
+                                <label>
+                                    Marks
+                                </label>
+
+                                <input
+                                    type="number"
+                                    min="1"
+                                    value={marks}
+                                    onChange={(e) =>
+                                        setMarks(
+                                            e.target.value
+                                        )
+                                    }
+                                    required
+                                />
+
+                            </div>
+
+
+                            <div className="quiz-form-group">
+
+                                <label>
+                                    Difficulty
+                                </label>
+
+                                <select
+                                    value={difficulty}
+                                    onChange={(e) =>
+                                        setDifficulty(
+                                            e.target.value
+                                        )
+                                    }
+                                >
+
+                                    <option value="Easy">
+                                        Easy
+                                    </option>
+
+                                    <option value="Medium">
+                                        Medium
+                                    </option>
+
+                                    <option value="Hard">
+                                        Hard
+                                    </option>
+
+                                </select>
+
+                            </div>
 
                         </div>
 
 
                         {/* =================================================
-                            DIFFICULTY
+                            ADD QUESTION BUTTON
                         ================================================= */}
 
-                        <div>
+                        <div className="quiz-builder-footer">
 
-                            <label>
-                                Difficulty
-                            </label>
-
-                            <select
-                                value={
-                                    difficulty
-                                }
-                                onChange={(e) =>
-                                    setDifficulty(
-                                        e.target.value
-                                    )
-                                }
+                            <button
+                                type="submit"
+                                className="primary-builder-btn"
                             >
-
-                                <option value="Easy">
-                                    Easy
-                                </option>
-
-                                <option value="Medium">
-                                    Medium
-                                </option>
-
-                                <option value="Hard">
-                                    Hard
-                                </option>
-
-                            </select>
+                                + Add Question
+                            </button>
 
                         </div>
 
-
-                        {/* Add Question */}
-
-                        <button
-                            type="submit"
-                        >
-
-                            Add Question
-
-                        </button>
-
                     </form>
-
-
-                    <hr />
 
 
                     {/* =================================================
                         QUESTIONS PREVIEW
                     ================================================= */}
 
-                    <h2>
+                    <div
+                        style={{
+                            marginTop: "35px"
+                        }}
+                    >
 
-                        Questions Added:{" "}
-                        {questions.length}
+                        <div className="builder-section-header">
 
-                    </h2>
-
-
-                    {questions.map(
-                        (
-                            question,
-                            index
-                        ) => (
-
-                            <div
-                                key={index}
-                                className="question-preview"
-                            >
-
-                                <h3>
-
-                                    Question{" "}
-                                    {index + 1}
-
-                                </h3>
-
-
-                                <p>
-
-                                    <strong>
-                                        {question.question}
-                                    </strong>
-
-                                </p>
-
-
-                                <p>
-
-                                    <strong>
-                                        Difficulty:
-                                    </strong>{" "}
-
-                                    {question.difficulty}
-
-                                    {" | "}
-
-                                    <strong>
-                                        Marks:
-                                    </strong>{" "}
-
-                                    {question.marks}
-
-                                </p>
-
-
-                                <ol>
-
-                                    {question.options.map(
-                                        (
-                                            option,
-                                            optionIndex
-                                        ) => (
-
-                                            <li
-                                                key={
-                                                    optionIndex
-                                                }
-                                            >
-
-                                                {option}
-
-
-                                                {question.correctAnswer ===
-                                                    String(
-                                                        optionIndex
-                                                    ) && (
-
-                                                        <strong>
-
-                                                            {" "}
-                                                            ✓ Correct
-
-                                                        </strong>
-                                                    )}
-
-                                            </li>
-                                        )
-                                    )}
-
-                                </ol>
-
-
-                                {question.explanation && (
-
-                                    <p>
-
-                                        <strong>
-                                            Explanation:
-                                        </strong>{" "}
-
-                                        {
-                                            question.explanation
-                                        }
-
-                                    </p>
-
-                                )}
-
-
-                                {/* Remove */}
-
-                                <button
-                                    type="button"
-                                    onClick={() =>
-                                        handleRemoveQuestion(
-                                            index
-                                        )
-                                    }
+                            <h2>
+                                Questions Added
+                                <span
+                                    style={{
+                                        color: "#5146e5",
+                                        marginLeft: "8px"
+                                    }}
                                 >
+                                    {questions.length}
+                                </span>
+                            </h2>
 
-                                    Remove Question
+                            <p>
+                                Review your questions before saving the quiz.
+                            </p>
 
-                                </button>
+                        </div>
+
+
+                        {questions.length === 0 ? (
+
+                            <div className="empty-questions">
+
+                                <div className="empty-questions-icon">
+                                    📝
+                                </div>
+
+                                <strong>
+                                    No questions added yet
+                                </strong>
+
+                                <p>
+                                    Add your first question using the form above.
+                                </p>
 
                             </div>
 
-                        )
-                    )}
+                        ) : (
+
+                            questions.map(
+                                (question, index) => (
+
+                                    <div
+                                        className="question-preview"
+                                        key={index}
+                                    >
+
+                                        <div className="question-preview-header">
+
+                                            <h3>
+                                                Question {index + 1}
+                                            </h3>
+
+                                            <button
+                                                type="button"
+                                                className="remove-question-btn"
+                                                onClick={() =>
+                                                    handleRemoveQuestion(
+                                                        index
+                                                    )
+                                                }
+                                            >
+                                                Remove
+                                            </button>
+
+                                        </div>
 
 
-                    <br />
+                                        {/* Question */}
+
+                                        <p>
+                                            <strong>
+                                                {question.question}
+                                            </strong>
+                                        </p>
+
+
+                                        {/* Options */}
+
+                                        <ol>
+
+                                            {question.options.map(
+                                                (
+                                                    option,
+                                                    optionIndex
+                                                ) => (
+
+                                                    <li
+                                                        key={
+                                                            optionIndex
+                                                        }
+                                                    >
+
+                                                        {option}
+
+                                                        {question.correctAnswer ===
+                                                            String(
+                                                                optionIndex
+                                                            ) && (
+
+                                                                <strong
+                                                                    style={{
+                                                                        color: "#16a34a",
+                                                                        marginLeft: "8px"
+                                                                    }}
+                                                                >
+                                                                    ✓ Correct
+                                                                </strong>
+
+                                                            )}
+
+                                                    </li>
+
+                                                )
+                                            )}
+
+                                        </ol>
+
+
+                                        {/* Metadata */}
+
+                                        <p>
+
+                                            <strong>
+                                                Difficulty:
+                                            </strong>{" "}
+
+                                            {question.difficulty}
+
+                                            {"  •  "}
+
+                                            <strong>
+                                                Marks:
+                                            </strong>{" "}
+
+                                            {question.marks}
+
+                                        </p>
+
+
+                                        {/* Explanation */}
+
+                                        {question.explanation && (
+
+                                            <p>
+
+                                                <strong>
+                                                    Explanation:
+                                                </strong>{" "}
+
+                                                {question.explanation}
+
+                                            </p>
+
+                                        )}
+
+                                    </div>
+
+                                )
+                            )
+
+                        )}
+
+                    </div>
 
 
                     {/* =================================================
                         SAVE QUIZ
                     ================================================= */}
 
-                    <button
-                        type="button"
-                        onClick={
-                            handleSaveQuiz
-                        }
-                    >
+                    <div className="quiz-builder-footer">
 
-                        Save Quiz
+                        <button
+                            type="button"
+                            className="secondary-builder-btn"
+                            onClick={() => {
+                                setShowQuestions(false);
 
-                    </button>
+                                window.scrollTo({
+                                    top: 0,
+                                    behavior: "smooth"
+                                });
+                            }}
+                        >
+                            ← Edit Quiz Details
+                        </button>
 
 
-                    <button
-                        type="button"
-                        onClick={() =>
-                            navigate(
-                                "/dashboard"
-                            )
-                        }
-                    >
+                        <button
+                            type="button"
+                            className="primary-builder-btn"
+                            onClick={handleSaveQuiz}
+                            disabled={questions.length === 0}
+                            style={{
+                                opacity:
+                                    questions.length === 0
+                                        ? 0.5
+                                        : 1,
+                                cursor:
+                                    questions.length === 0
+                                        ? "not-allowed"
+                                        : "pointer"
+                            }}
+                        >
+                            💾 Save & Publish Quiz
+                        </button>
 
-                        Cancel
+                    </div>
 
-                    </button>
+                </main>
 
-                </div>
             )}
 
         </div>
     );
 };
-
 
 export default CreateQuiz;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import "./ManageQuizzes.css";
@@ -8,7 +8,6 @@ const ManageQuizzes = () => {
 
     const [quizzes, setQuizzes] = useState([]);
     const [loading, setLoading] = useState(true);
-
     const [editingQuiz, setEditingQuiz] = useState(null);
 
     const [formData, setFormData] = useState({
@@ -17,18 +16,18 @@ const ManageQuizzes = () => {
         category: "",
         difficulty: "medium",
         maxAttempts: 1,
-        passingScore: 60
+        passingScore: 60,
     });
 
     // ==========================================
-    // Fetch Quizzes
+    // FETCH QUIZZES
     // ==========================================
+
     const fetchQuizzes = async () => {
         try {
             setLoading(true);
 
             const response = await api.get("/quizzes");
-
             const data = response.data;
 
             if (Array.isArray(data)) {
@@ -38,9 +37,9 @@ const ManageQuizzes = () => {
             } else {
                 setQuizzes([]);
             }
-
         } catch (error) {
             console.error("Failed to fetch quizzes:", error);
+
             alert(
                 error.response?.data?.message ||
                 "Failed to load quizzes."
@@ -55,8 +54,27 @@ const ManageQuizzes = () => {
     }, []);
 
     // ==========================================
-    // Edit Quiz
+    // STATISTICS
     // ==========================================
+
+    const statistics = useMemo(() => {
+        const published = quizzes.filter(
+            (quiz) => quiz.status === "published"
+        ).length;
+
+        const drafts = quizzes.length - published;
+
+        return {
+            total: quizzes.length,
+            published,
+            drafts,
+        };
+    }, [quizzes]);
+
+    // ==========================================
+    // EDIT QUIZ
+    // ==========================================
+
     const handleEdit = (quiz) => {
         setEditingQuiz(quiz);
 
@@ -66,25 +84,27 @@ const ManageQuizzes = () => {
             category: quiz.category || "",
             difficulty: quiz.difficulty || "medium",
             maxAttempts: quiz.max_attempts ?? 1,
-            passingScore: quiz.passing_score ?? 60
+            passingScore: quiz.passing_score ?? 60,
         });
     };
 
     // ==========================================
-    // Handle Form Change
+    // FORM CHANGE
     // ==========================================
+
     const handleChange = (e) => {
         const { name, value } = e.target;
 
         setFormData((previous) => ({
             ...previous,
-            [name]: value
+            [name]: value,
         }));
     };
 
     // ==========================================
-    // Update Quiz
+    // UPDATE QUIZ
     // ==========================================
+
     const handleUpdate = async (e) => {
         e.preventDefault();
 
@@ -101,7 +121,7 @@ const ManageQuizzes = () => {
                     category: formData.category,
                     difficulty: formData.difficulty,
                     maxAttempts: Number(formData.maxAttempts),
-                    passingScore: Number(formData.passingScore)
+                    passingScore: Number(formData.passingScore),
                 }
             );
 
@@ -110,7 +130,6 @@ const ManageQuizzes = () => {
             setEditingQuiz(null);
 
             await fetchQuizzes();
-
         } catch (error) {
             console.error("Update quiz error:", error);
 
@@ -122,8 +141,9 @@ const ManageQuizzes = () => {
     };
 
     // ==========================================
-    // Delete Quiz
+    // DELETE QUIZ
     // ==========================================
+
     const handleDelete = async (quiz) => {
         const confirmed = window.confirm(
             `Are you sure you want to delete "${quiz.title}"?`
@@ -139,7 +159,6 @@ const ManageQuizzes = () => {
             alert("Quiz deleted successfully.");
 
             await fetchQuizzes();
-
         } catch (error) {
             console.error("Delete quiz error:", error);
 
@@ -151,8 +170,9 @@ const ManageQuizzes = () => {
     };
 
     // ==========================================
-    // Publish / Unpublish
+    // PUBLISH / UNPUBLISH
     // ==========================================
+
     const handleStatusChange = async (quiz) => {
         const newStatus =
             quiz.status === "published"
@@ -163,12 +183,11 @@ const ManageQuizzes = () => {
             await api.patch(
                 `/quizzes/${quiz.id}/publish`,
                 {
-                    status: newStatus
+                    status: newStatus,
                 }
             );
 
             await fetchQuizzes();
-
         } catch (error) {
             console.error("Status update error:", error);
 
@@ -180,40 +199,71 @@ const ManageQuizzes = () => {
     };
 
     // ==========================================
-    // Cancel Edit
+    // CANCEL EDIT
     // ==========================================
+
     const handleCancelEdit = () => {
         setEditingQuiz(null);
     };
 
     // ==========================================
-    // Loading
+    // DIFFICULTY CLASS
     // ==========================================
+
+    const getDifficultyClass = (difficulty) => {
+        return String(difficulty || "medium").toLowerCase();
+    };
+
+    // ==========================================
+    // LOADING
+    // ==========================================
+
     if (loading) {
         return (
             <div className="manage-quizzes-page">
                 <div className="manage-loading">
                     <div className="loading-spinner"></div>
-                    <p>Loading quizzes...</p>
+                    <h3>Loading your quizzes</h3>
+                    <p>Please wait while we prepare your dashboard...</p>
                 </div>
             </div>
         );
     }
 
+    // ==========================================
+    // MAIN UI
+    // ==========================================
+
     return (
         <div className="manage-quizzes-page">
 
             {/* ======================================
-                Header
+                HERO HEADER
             ====================================== */}
+
             <header className="manage-header">
 
-                <div>
-                    <h1>📝 Manage Quizzes</h1>
+                <div className="manage-header-content">
 
-                    <p>
-                        View, edit, publish or delete quizzes.
-                    </p>
+                    <div className="manage-title-icon">
+                        📝
+                    </div>
+
+                    <div>
+                        <div className="manage-eyebrow">
+                            ADMINISTRATION
+                        </div>
+
+                        <h1>
+                            Manage Quizzes
+                        </h1>
+
+                        <p>
+                            Create, organize, publish and manage
+                            your assessment library.
+                        </p>
+                    </div>
+
                 </div>
 
                 <div className="header-actions">
@@ -222,103 +272,171 @@ const ManageQuizzes = () => {
                         className="back-dashboard-btn"
                         onClick={() => navigate("/dashboard")}
                     >
-                        ← Dashboard
+                        <span>←</span>
+                        Dashboard
                     </button>
 
                     <button
                         className="create-quiz-btn"
                         onClick={() => navigate("/create-quiz")}
                     >
-                        + Create Quiz
+                        <span>＋</span>
+                        Create Quiz
                     </button>
 
                 </div>
 
             </header>
 
+
             {/* ======================================
-                Statistics
+                STATISTICS
             ====================================== */}
+
             <section className="quiz-stats">
 
                 <div className="quiz-stat-card">
-                    <span>📚</span>
 
-                    <div>
-                        <p>Total Quizzes</p>
-                        <strong>{quizzes.length}</strong>
+                    <div className="quiz-stat-icon blue">
+                        📚
                     </div>
-                </div>
 
-                <div className="quiz-stat-card">
-                    <span>🟢</span>
+                    <div className="quiz-stat-content">
 
-                    <div>
-                        <p>Published</p>
+                        <span className="quiz-stat-label">
+                            Total Quizzes
+                        </span>
 
                         <strong>
-                            {
-                                quizzes.filter(
-                                    (quiz) =>
-                                        quiz.status === "published"
-                                ).length
-                            }
+                            {statistics.total}
                         </strong>
+
+                        <small>
+                            Assessment library
+                        </small>
+
                     </div>
+
                 </div>
 
-                <div className="quiz-stat-card">
-                    <span>📝</span>
 
-                    <div>
-                        <p>Drafts</p>
+                <div className="quiz-stat-card">
+
+                    <div className="quiz-stat-icon green">
+                        🚀
+                    </div>
+
+                    <div className="quiz-stat-content">
+
+                        <span className="quiz-stat-label">
+                            Published
+                        </span>
 
                         <strong>
-                            {
-                                quizzes.filter(
-                                    (quiz) =>
-                                        quiz.status !== "published"
-                                ).length
-                            }
+                            {statistics.published}
                         </strong>
+
+                        <small>
+                            Available to students
+                        </small>
+
                     </div>
+
+                </div>
+
+
+                <div className="quiz-stat-card">
+
+                    <div className="quiz-stat-icon orange">
+                        📝
+                    </div>
+
+                    <div className="quiz-stat-content">
+
+                        <span className="quiz-stat-label">
+                            Drafts
+                        </span>
+
+                        <strong>
+                            {statistics.drafts}
+                        </strong>
+
+                        <small>
+                            Still being prepared
+                        </small>
+
+                    </div>
+
                 </div>
 
             </section>
 
+
             {/* ======================================
-                Quiz List
+                QUIZ LIST
             ====================================== */}
+
             <section className="quiz-list-section">
 
                 <div className="section-title">
+
                     <div>
-                        <h2>All Quizzes</h2>
+
+                        <div className="section-title-row">
+
+                            <h2>
+                                Quiz Library
+                            </h2>
+
+                            <span className="quiz-count">
+                                {quizzes.length}
+                            </span>
+
+                        </div>
 
                         <p>
-                            {quizzes.length} quiz
-                            {quizzes.length !== 1 ? "zes" : ""}
-                            {" "}available
+                            Manage all quizzes created on the platform.
                         </p>
+
                     </div>
+
+                    {quizzes.length > 0 && (
+                        <div className="library-status">
+                            <span className="status-dot"></span>
+                            {statistics.published} Published
+                        </div>
+                    )}
+
                 </div>
+
+
+                {/* ======================================
+                    EMPTY STATE
+                ====================================== */}
 
                 {quizzes.length === 0 ? (
 
                     <div className="empty-quizzes">
-                        <div>📭</div>
 
-                        <h2>No quizzes found</h2>
+                        <div className="empty-illustration">
+                            📚
+                        </div>
+
+                        <h2>
+                            Your quiz library is empty
+                        </h2>
 
                         <p>
-                            Create your first quiz to get started.
+                            Create your first quiz and start building
+                            your assessment collection.
                         </p>
 
                         <button
                             onClick={() => navigate("/create-quiz")}
                         >
-                            + Create Quiz
+                            ＋ Create Your First Quiz
                         </button>
+
                     </div>
 
                 ) : (
@@ -328,14 +446,16 @@ const ManageQuizzes = () => {
                         <table className="quiz-table">
 
                             <thead>
+
                             <tr>
-                                <th>Quiz</th>
-                                <th>Category</th>
-                                <th>Difficulty</th>
-                                <th>Duration</th>
-                                <th>Status</th>
-                                <th>Actions</th>
+                                <th>QUIZ</th>
+                                <th>CATEGORY</th>
+                                <th>DIFFICULTY</th>
+                                <th>DURATION</th>
+                                <th>STATUS</th>
+                                <th>ACTIONS</th>
                             </tr>
+
                             </thead>
 
                             <tbody>
@@ -344,67 +464,98 @@ const ManageQuizzes = () => {
 
                                 <tr key={quiz.id}>
 
+                                    {/* QUIZ */}
+
                                     <td>
+
                                         <div className="quiz-name-cell">
 
                                             <div className="quiz-icon">
                                                 📝
                                             </div>
 
-                                            <div>
+                                            <div className="quiz-name-content">
+
                                                 <strong>
-                                                    {quiz.title}
+                                                    {quiz.title || "Untitled Quiz"}
                                                 </strong>
 
                                                 <span>
-                          {quiz.description ||
-                              "No description"}
-                          </span>
+                                                    {quiz.description ||
+                                                        "No description available"}
+                                                </span>
+
                                             </div>
 
                                         </div>
+
                                     </td>
 
-                                    <td>
-                          <span className="category-badge">
-                          {quiz.category ||
-                              "General"}
-                          </span>
-                                    </td>
 
-                                    <td>
-                          <span
-                              className={`difficulty-badge ${String(
-                                  quiz.difficulty ||
-                                  "medium"
-                              ).toLowerCase()}`}
-                          >
-                              {quiz.difficulty ||
-                                  "medium"}
-                          </span>
-                                    </td>
-
-                                    <td>
-                                        ⏱ {quiz.duration || 30} min
-                                    </td>
+                                    {/* CATEGORY */}
 
                                     <td>
 
-    <span
-        className={`status-badge ${
-            quiz.status ===
-            "published"
-                ? "published"
-                : "draft"
-        }`}
-    >
-                              {quiz.status ===
-                              "published"
-                                  ? "Published"
-                                  : "Draft"}
-                          </span>
+                                        <span className="category-badge">
+                                            {quiz.category || "General"}
+                                        </span>
 
                                     </td>
+
+
+                                    {/* DIFFICULTY */}
+
+                                    <td>
+
+                                        <span
+                                            className={`difficulty-badge ${getDifficultyClass(
+                                                quiz.difficulty
+                                            )}`}
+                                        >
+                                            <span className="difficulty-dot"></span>
+
+                                            {quiz.difficulty || "Medium"}
+                                        </span>
+
+                                    </td>
+
+
+                                    {/* DURATION */}
+
+                                    <td>
+
+                                        <span className="duration-cell">
+                                            <span>⏱</span>
+                                            {quiz.duration || 30} min
+                                        </span>
+
+                                    </td>
+
+
+                                    {/* STATUS */}
+
+                                    <td>
+
+                                        <span
+                                            className={`status-badge ${
+                                                quiz.status === "published"
+                                                    ? "published"
+                                                    : "draft"
+                                            }`}
+                                        >
+
+                                            <span className="status-indicator"></span>
+
+                                            {quiz.status === "published"
+                                                ? "Published"
+                                                : "Draft"}
+
+                                        </span>
+
+                                    </td>
+
+
+                                    {/* ACTIONS */}
 
                                     <td>
 
@@ -415,36 +566,49 @@ const ManageQuizzes = () => {
                                                 onClick={() =>
                                                     handleEdit(quiz)
                                                 }
+                                                title="Edit quiz"
                                             >
-                                                ✏️ Edit
+                                                ✏️
+                                                <span>Edit</span>
                                             </button>
+
 
                                             <button
                                                 className={
-                                                    quiz.status ===
-                                                    "published"
+                                                    quiz.status === "published"
                                                         ? "unpublish-btn"
                                                         : "publish-btn"
                                                 }
                                                 onClick={() =>
-                                                    handleStatusChange(
-                                                        quiz
-                                                    )
+                                                    handleStatusChange(quiz)
+                                                }
+                                                title={
+                                                    quiz.status === "published"
+                                                        ? "Move to draft"
+                                                        : "Publish quiz"
                                                 }
                                             >
-                                                {quiz.status ===
-                                                "published"
-                                                    ? "⏸ Unpublish"
-                                                    : "🚀 Publish"}
+                                                {quiz.status === "published"
+                                                    ? "⏸"
+                                                    : "🚀"}
+
+                                                <span>
+                                                    {quiz.status === "published"
+                                                        ? "Unpublish"
+                                                        : "Publish"}
+                                                </span>
                                             </button>
+
 
                                             <button
                                                 className="delete-btn"
                                                 onClick={() =>
                                                     handleDelete(quiz)
                                                 }
+                                                title="Delete quiz"
                                             >
-                                                🗑 Delete
+                                                🗑️
+                                                <span>Delete</span>
                                             </button>
 
                                         </div>
@@ -465,33 +629,62 @@ const ManageQuizzes = () => {
 
             </section>
 
+
             {/* ======================================
-                Edit Modal
+                EDIT MODAL
             ====================================== */}
+
             {editingQuiz && (
 
-                <div className="modal-overlay">
+                <div
+                    className="modal-overlay"
+                    onMouseDown={(e) => {
+                        if (e.target === e.currentTarget) {
+                            handleCancelEdit();
+                        }
+                    }}
+                >
 
                     <div className="edit-modal">
 
                         <div className="modal-header">
 
-                            <div>
-                                <h2>✏️ Edit Quiz</h2>
+                            <div className="modal-title-wrapper">
 
-                                <p>
-                                    Update quiz information.
-                                </p>
+                                <div className="modal-icon">
+                                    ✏️
+                                </div>
+
+                                <div>
+
+                                    <div className="modal-eyebrow">
+                                        QUIZ SETTINGS
+                                    </div>
+
+                                    <h2>
+                                        Edit Quiz
+                                    </h2>
+
+                                    <p>
+                                        Update your quiz information and
+                                        assessment settings.
+                                    </p>
+
+                                </div>
+
                             </div>
 
                             <button
+                                type="button"
                                 className="close-modal"
                                 onClick={handleCancelEdit}
+                                aria-label="Close"
                             >
                                 ×
                             </button>
 
                         </div>
+
 
                         <form onSubmit={handleUpdate}>
 
@@ -506,10 +699,12 @@ const ManageQuizzes = () => {
                                     name="title"
                                     value={formData.title}
                                     onChange={handleChange}
+                                    placeholder="Enter quiz title"
                                     required
                                 />
 
                             </div>
+
 
                             <div className="form-group">
 
@@ -522,9 +717,11 @@ const ManageQuizzes = () => {
                                     value={formData.description}
                                     onChange={handleChange}
                                     rows="4"
+                                    placeholder="Describe what this quiz is about..."
                                 />
 
                             </div>
+
 
                             <div className="form-row">
 
@@ -539,9 +736,11 @@ const ManageQuizzes = () => {
                                         name="category"
                                         value={formData.category}
                                         onChange={handleChange}
+                                        placeholder="e.g. Java, Science"
                                     />
 
                                 </div>
+
 
                                 <div className="form-group">
 
@@ -565,11 +764,13 @@ const ManageQuizzes = () => {
                                         <option value="hard">
                                             Hard
                                         </option>
+
                                     </select>
 
                                 </div>
 
                             </div>
+
 
                             <div className="form-row">
 
@@ -583,13 +784,12 @@ const ManageQuizzes = () => {
                                         type="number"
                                         name="maxAttempts"
                                         min="1"
-                                        value={
-                                            formData.maxAttempts
-                                        }
+                                        value={formData.maxAttempts}
                                         onChange={handleChange}
                                     />
 
                                 </div>
+
 
                                 <div className="form-group">
 
@@ -602,15 +802,14 @@ const ManageQuizzes = () => {
                                         name="passingScore"
                                         min="0"
                                         max="100"
-                                        value={
-                                            formData.passingScore
-                                        }
+                                        value={formData.passingScore}
                                         onChange={handleChange}
                                     />
 
                                 </div>
 
                             </div>
+
 
                             <div className="modal-actions">
 
@@ -626,7 +825,7 @@ const ManageQuizzes = () => {
                                     type="submit"
                                     className="save-btn"
                                 >
-                                    Save Changes
+                                    ✓ Save Changes
                                 </button>
 
                             </div>

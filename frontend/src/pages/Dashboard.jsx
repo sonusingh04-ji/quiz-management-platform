@@ -28,15 +28,13 @@ const Dashboard = () => {
     // =====================================================
 
     const [recentAttempts, setRecentAttempts] = useState([]);
-
     const [studentDashboardLoading, setStudentDashboardLoading] =
         useState(false);
-
     const [studentDashboardError, setStudentDashboardError] =
         useState("");
 
     // =====================================================
-    // QUIZ DATA
+    // QUIZZES
     // =====================================================
 
     const [quizzes, setQuizzes] = useState([]);
@@ -44,7 +42,7 @@ const Dashboard = () => {
     const [quizError, setQuizError] = useState("");
 
     // =====================================================
-    // DISCOVERY FILTERS
+    // FILTERS
     // =====================================================
 
     const [search, setSearch] = useState("");
@@ -65,6 +63,15 @@ const Dashboard = () => {
 
         try {
             const parsedUser = JSON.parse(storedUser);
+
+            // Dashboard is ONLY for students.
+            // If an admin somehow reaches /dashboard,
+            // send them to the admin dashboard.
+            if (parsedUser.role?.toLowerCase() === "admin") {
+                navigate("/admin-dashboard", { replace: true });
+                return;
+            }
+
             setUser(parsedUser);
         } catch (error) {
             console.error("Invalid user data:", error);
@@ -85,21 +92,12 @@ const Dashboard = () => {
             return;
         }
 
-        const isAdmin =
-            user.role?.toLowerCase() === "admin";
-
-        if (isAdmin) {
-            return;
-        }
-
         const fetchStudentDashboard = async () => {
             try {
                 setStudentDashboardLoading(true);
                 setStudentDashboardError("");
 
-                const response = await api.get(
-                    "/student/dashboard"
-                );
+                const response = await api.get("/student/dashboard");
 
                 console.log(
                     "STUDENT DASHBOARD:",
@@ -110,10 +108,6 @@ const Dashboard = () => {
                     const dashboardData =
                         response.data.data || {};
 
-                    // -----------------------------
-                    // Statistics
-                    // -----------------------------
-
                     setStudentStats(
                         dashboardData.statistics || {
                             available_quizzes: 0,
@@ -122,10 +116,6 @@ const Dashboard = () => {
                             rank: null,
                         }
                     );
-
-                    // -----------------------------
-                    // Recent Attempts
-                    // -----------------------------
 
                     setRecentAttempts(
                         dashboardData.recent_attempts || []
@@ -169,30 +159,19 @@ const Dashboard = () => {
             return;
         }
 
-        const isAdmin =
-            user.role?.toLowerCase() === "admin";
-
-        if (isAdmin) {
-            return;
-        }
-
         const fetchQuizzes = async () => {
             try {
                 setQuizLoading(true);
                 setQuizError("");
 
-                const response = await api.get(
-                    "/discovery"
-                );
+                const response = await api.get("/discovery");
 
                 console.log(
                     "DISCOVER QUIZZES:",
                     response.data
                 );
 
-                setQuizzes(
-                    response.data.data || []
-                );
+                setQuizzes(response.data.data || []);
             } catch (error) {
                 console.error(
                     "Failed to fetch quizzes:",
@@ -258,7 +237,7 @@ const Dashboard = () => {
     ]);
 
     // =====================================================
-    // UNIQUE CATEGORIES
+    // CATEGORIES
     // =====================================================
 
     const categories = useMemo(() => {
@@ -272,7 +251,7 @@ const Dashboard = () => {
     }, [quizzes]);
 
     // =====================================================
-    // UNIQUE DIFFICULTIES
+    // DIFFICULTIES
     // =====================================================
 
     const difficulties = useMemo(() => {
@@ -311,42 +290,64 @@ const Dashboard = () => {
     // =====================================================
 
     const handleStartQuiz = (quizId) => {
-        console.log(
-            "Starting quiz:",
-            quizId
-        );
-
         navigate(`/quiz/${quizId}`);
     };
 
     // =====================================================
-    // LOADING USER
+    // CATEGORY ICON
+    // =====================================================
+
+    const getCategoryIcon = (categoryName) => {
+        const value =
+            categoryName?.toLowerCase() || "";
+
+        if (value.includes("java")) return "☕";
+        if (value.includes("python")) return "🐍";
+
+        if (
+            value.includes("sql") ||
+            value.includes("database")
+        ) {
+            return "🗄️";
+        }
+
+        if (value.includes("javascript")) return "JS";
+        if (value.includes("react")) return "⚛";
+        if (value.includes("spring")) return "🍃";
+        if (value.includes("web")) return "🌐";
+
+        if (
+            value.includes("c++") ||
+            value.includes("cpp")
+        ) {
+            return "C++";
+        }
+
+        return "✦";
+    };
+
+    // =====================================================
+    // LOADING
     // =====================================================
 
     if (!user) {
         return (
             <div className="dashboard-loading">
-                Loading...
+                <div className="loading-spinner"></div>
+                <span>Loading dashboard...</span>
             </div>
         );
     }
 
     // =====================================================
-    // ROLE
-    // =====================================================
-
-    const isAdmin =
-        user.role?.toLowerCase() === "admin";
-
-    // =====================================================
-    // DASHBOARD
+    // STUDENT DASHBOARD
     // =====================================================
 
     return (
         <div className="dashboard">
 
             {/* =================================================
-                SIDEBAR
+                STUDENT SIDEBAR
             ================================================= */}
 
             <aside className="sidebar">
@@ -354,28 +355,19 @@ const Dashboard = () => {
                 {/* BRAND */}
 
                 <div className="brand">
-
                     <div className="brand-icon">
                         Q
                     </div>
 
                     <div>
-                        <h2>
-                            Quiz Platform
-                        </h2>
-
-                        <span>
-                            Management System
-                        </span>
+                        <h2>Quiz Platform</h2>
+                        <span>Learning System</span>
                     </div>
-
                 </div>
 
                 {/* NAVIGATION */}
 
                 <nav className="sidebar-nav">
-
-                    {/* DASHBOARD */}
 
                     <button
                         className="nav-item active"
@@ -387,131 +379,55 @@ const Dashboard = () => {
                         Dashboard
                     </button>
 
-                    {/* ADMIN MENU */}
+                    <button
+                        className="nav-item"
+                        onClick={() =>
+                            navigate("/discover")
+                        }
+                    >
+                        <span>🔍</span>
+                        Discover
+                    </button>
 
-                    {isAdmin && (
-                        <>
-                            <button
-                                className="nav-item"
-                                onClick={() =>
-                                    navigate(
-                                        "/create-quiz"
-                                    )
-                                }
-                            >
-                                <span>➕</span>
-                                Create Quiz
-                            </button>
+                    <button
+                        className="nav-item"
+                        onClick={() =>
+                            navigate("/history")
+                        }
+                    >
+                        <span>📝</span>
+                        Quiz History
+                    </button>
 
-                            <button
-                                className="nav-item"
-                                onClick={() => navigate("/manage-quizzes")}
-                            >
-                                <span>📝</span>
-                                Manage Quizzes
-                            </button>
+                    <button
+                        className="nav-item"
+                        onClick={() =>
+                            navigate("/leaderboard")
+                        }
+                    >
+                        <span>🏆</span>
+                        Leaderboard
+                    </button>
 
-                            <button
-                                className="nav-item"
-                                onClick={() => navigate("/manage-users")}
-                            >
-                                <span>👥</span>
-                                Manage Users
-                            </button>
+                    <button
+                        className="nav-item"
+                        onClick={() =>
+                            navigate("/results")
+                        }
+                    >
+                        <span>📈</span>
+                        Results
+                    </button>
 
-                            <button
-                                className="nav-item"
-                                onClick={() => navigate("/admin/results")}
-                            >
-                                <span>📋</span>
-                                Results
-                            </button>
-
-                            <button
-                                className="nav-item"
-                                onClick={() => navigate("/admin/analytics")}
-                            >
-                                <span>📊</span>
-                                Analytics
-                            </button>
-
-                            <button
-                                className="nav-item"
-                                onClick={() => navigate("/admin/categories")}
-                            >
-                                <span>📂</span>
-                                Manage Categories
-                            </button>
-
-
-                            <button
-                                className="nav-item"
-                                onClick={() => navigate("/reports")}
-                            >
-                                <span>📋</span>
-                                Reports
-                            </button>
-                        </>
-                    )}
-
-                    {/* STUDENT MENU */}
-
-                    {!isAdmin && (
-                        <>
-                            <button
-                                className="nav-item"
-                                onClick={() => navigate("/discover")}
-                            >
-                                <span>🔍</span>
-                                Discover
-                            </button>
-
-                            <button
-                                className="nav-item"
-                                onClick={() =>
-                                    navigate(
-                                        "/history"
-                                    )
-                                }
-
-                            >
-                                <span>📝</span>
-                                Quiz History
-                            </button>
-
-                            <button
-                                className="nav-item"
-                                onClick={() =>
-                                    navigate(
-                                        "/leaderboard"
-                                    )
-                                }
-                            >
-                                <span>🏆</span>
-                                Leaderboard
-                            </button>
-
-                            <button
-                                className="nav-item"
-                                onClick={() =>
-                                    navigate(
-                                        "/results"
-                                    )
-                                }
-                            >
-                                <span>📈</span>
-                                Results
-                            </button>
-
-                            <button
-                                className="nav-item"
-                                onClick={() => navigate("/profile")}
-                            >
-                                <span>👤</span>
-                                Profile
-                            </button>
-                        </>
-                    )}
+                    <button
+                        className="nav-item"
+                        onClick={() =>
+                            navigate("/profile")
+                        }
+                    >
+                        <span>👤</span>
+                        Profile
+                    </button>
 
                 </nav>
 
@@ -534,28 +450,19 @@ const Dashboard = () => {
             <main className="dashboard-main">
 
                 {/* =================================================
-                    TOP BAR
+                    TOPBAR
                 ================================================= */}
 
                 <header className="topbar">
 
                     <div>
-
-                        <h1>
-                            {isAdmin
-                                ? "Admin Dashboard"
-                                : "Dashboard"}
-                        </h1>
+                        <h1>Student Dashboard</h1>
 
                         <p>
-                            {isAdmin
-                                ? "Manage quizzes, questions, users and platform activity."
-                                : "Discover quizzes and track your learning progress."}
+                            Discover quizzes and track your
+                            learning progress.
                         </p>
-
                     </div>
-
-                    {/* USER INFO */}
 
                     <div className="user-info">
 
@@ -566,7 +473,6 @@ const Dashboard = () => {
                         </div>
 
                         <div>
-
                             <strong>
                                 {user.full_name}
                             </strong>
@@ -574,7 +480,6 @@ const Dashboard = () => {
                             <span>
                                 {user.role}
                             </span>
-
                         </div>
 
                     </div>
@@ -588,841 +493,542 @@ const Dashboard = () => {
                 <section className="welcome-card">
 
                     <div>
-
                         <h2>
                             Welcome back,{" "}
                             {user.full_name}! 👋
                         </h2>
 
                         <p>
-                            {isAdmin
-                                ? "Manage your quiz platform from one place."
-                                : "Ready to test your knowledge and improve your skills?"}
+                            Ready to test your knowledge
+                            and improve your skills?
                         </p>
-
                     </div>
 
-                    <div className="welcome-icon">
-                        {isAdmin
-                            ? "⚙️"
-                            : "🧠"}
+                    <div className="welcome-visual">
+
+                        <div className="visual-circle visual-circle-one"></div>
+
+                        <div className="visual-circle visual-circle-two"></div>
+
+                        <div className="welcome-illustration">
+                            ✦
+                        </div>
+
+                        <div className="floating-card floating-card-one">
+                            ✓
+                        </div>
+
+                        <div className="floating-card floating-card-two">
+                            100%
+                        </div>
+
                     </div>
 
                 </section>
 
                 {/* =================================================
-                    ADMIN DASHBOARD
+                    STUDENT STATISTICS
                 ================================================= */}
 
-                {isAdmin && (
-                    <>
-
-                        {/* ADMIN STATISTICS */}
-
-                        <section className="stats-grid">
-
-                            {/* TOTAL QUIZZES */}
-
-                            <div className="stat-card">
-
-                                <div className="stat-icon blue">
-                                    📝
-                                </div>
-
-                                <div>
-
-                                    <span>
-                                        Total Quizzes
-                                    </span>
-
-                                    <h3>
-                                        12
-                                    </h3>
-
-                                </div>
-
-                            </div>
-
-                            {/* TOTAL STUDENTS */}
-
-                            <div className="stat-card">
-
-                                <div className="stat-icon green">
-                                    👥
-                                </div>
-
-                                <div>
-
-                                    <span>
-                                        Total Students
-                                    </span>
-
-                                    <h3>
-                                        8
-                                    </h3>
-
-                                </div>
-
-                            </div>
-
-                            {/* TOTAL ATTEMPTS */}
-
-                            <div className="stat-card">
-
-                                <div className="stat-icon orange">
-                                    🎯
-                                </div>
-
-                                <div>
-
-                                    <span>
-                                        Total Attempts
-                                    </span>
-
-                                    <h3>
-                                        24
-                                    </h3>
-
-                                </div>
-
-                            </div>
-
-                            {/* PUBLISHED QUIZZES */}
-
-                            <div className="stat-card">
-
-                                <div className="stat-icon purple">
-                                    📊
-                                </div>
-
-                                <div>
-
-                                    <span>
-                                        Published Quizzes
-                                    </span>
-
-                                    <h3>
-                                        8
-                                    </h3>
-
-                                </div>
-
-                            </div>
-
-                        </section>
-
-                        {/* ADMIN ACTIONS */}
-
-                        <section className="content-section">
-
-                            <div className="section-header">
-
-                                <div>
-
-                                    <h2>
-                                        Admin Actions
-                                    </h2>
-
-                                    <p>
-                                        Manage your quiz platform.
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-                            <div className="quiz-grid">
-
-                                {/* CREATE QUIZ */}
-
-                                <div className="quiz-card">
-
-                                    <div className="quiz-card-top">
-
-                                        <span className="quiz-category">
-                                            Quiz
-                                        </span>
-
-                                    </div>
-
-                                    <h3>
-                                        Create New Quiz
-                                    </h3>
-
-                                    <p>
-                                        Create a new quiz and add
-                                        questions for students.
-                                    </p>
-
-                                    <div className="quiz-footer">
-
-                                        <span>
-                                            Admin
-                                        </span>
-
-                                        <button
-                                            onClick={() =>
-                                                navigate(
-                                                    "/create-quiz"
-                                                )
-                                            }
-                                        >
-                                            Create Quiz
-                                        </button>
-
-                                    </div>
-
-                                </div>
-
-                                {/* MANAGE QUIZZES */}
-
-                                <div className="quiz-card">
-
-                                    <div className="quiz-card-top">
-
-                                        <span className="quiz-category">
-                                            Management
-                                        </span>
-
-                                    </div>
-
-                                    <h3>
-                                        Manage Quizzes
-                                    </h3>
-
-                                    <p>
-                                        View, edit, publish or delete
-                                        existing quizzes.
-                                    </p>
-
-                                    <div className="quiz-footer">
-
-                                        <span>
-                                            Admin
-                                        </span>
-
-                                        <button>
-                                            Manage
-                                        </button>
-
-                                    </div>
-
-                                </div>
-
-                                {/* RESULTS */}
-
-                                <div className="quiz-card">
-
-                                    <div className="quiz-card-top">
-
-                                        <span className="quiz-category">
-                                            Analytics
-                                        </span>
-
-                                    </div>
-
-                                    <h3>
-                                        Results & Analytics
-                                    </h3>
-
-                                    <p>
-                                        View student attempts,
-                                        results and performance.
-                                    </p>
-
-                                    <div className="quiz-footer">
-
-                                        <span>
-                                            Admin
-                                        </span>
-
-                                        <button
-                                            onClick={() =>
-                                                navigate("/admin/results")
-                                            }
-                                        >
-                                            View Results
-                                        </button>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </section>
-
-                    </>
+                <section className="stats-grid">
+
+                    <div className="stat-card">
+
+                        <div className="stat-icon blue">
+                            📝
+                        </div>
+
+                        <div>
+                            <span>
+                                Available Quizzes
+                            </span>
+
+                            <h3>
+                                {studentDashboardLoading
+                                    ? "..."
+                                    : studentStats.available_quizzes}
+                            </h3>
+                        </div>
+
+                    </div>
+
+                    <div className="stat-card">
+
+                        <div className="stat-icon green">
+                            ✅
+                        </div>
+
+                        <div>
+                            <span>
+                                Completed
+                            </span>
+
+                            <h3>
+                                {studentDashboardLoading
+                                    ? "..."
+                                    : studentStats.total_attempted}
+                            </h3>
+                        </div>
+
+                    </div>
+
+                    <div className="stat-card">
+
+                        <div className="stat-icon orange">
+                            🎯
+                        </div>
+
+                        <div>
+                            <span>
+                                Average Score
+                            </span>
+
+                            <h3>
+                                {studentDashboardLoading
+                                    ? "..."
+                                    : `${Number(
+                                        studentStats.average_score || 0
+                                    ).toFixed(2)}%`}
+                            </h3>
+                        </div>
+
+                    </div>
+
+                    <div className="stat-card">
+
+                        <div className="stat-icon purple">
+                            🏆
+                        </div>
+
+                        <div>
+                            <span>
+                                Rank
+                            </span>
+
+                            <h3>
+                                {studentDashboardLoading
+                                    ? "..."
+                                    : studentStats.rank
+                                        ? `#${studentStats.rank}`
+                                        : "--"}
+                            </h3>
+                        </div>
+
+                    </div>
+
+                </section>
+
+                {/* ERROR */}
+
+                {studentDashboardError && (
+                    <div className="quiz-error">
+                        {studentDashboardError}
+                    </div>
                 )}
 
                 {/* =================================================
-                    STUDENT DASHBOARD
+                    RECENT ATTEMPTS
                 ================================================= */}
 
-                {!isAdmin && (
-                    <>
+                <section className="content-section">
 
-                        {/* =================================================
-                            STUDENT STATISTICS
-                        ================================================= */}
+                    <div className="section-header">
 
-                        <section className="stats-grid">
+                        <div>
+                            <h2>
+                                Recent Attempts
+                            </h2>
 
-                            {/* AVAILABLE QUIZZES */}
+                            <p>
+                                View your latest quiz
+                                performance.
+                            </p>
+                        </div>
 
-                            <div className="stat-card">
+                        <button
+                            className="view-all-btn"
+                            onClick={() =>
+                                navigate("/history")
+                            }
+                        >
+                            View All
+                        </button>
 
-                                <div className="stat-icon blue">
+                    </div>
+
+                    <div className="recent-attempts-card">
+
+                        {studentDashboardLoading ? (
+
+                            <div className="recent-attempt-loading">
+                                Loading recent attempts...
+                            </div>
+
+                        ) : recentAttempts.length === 0 ? (
+
+                            <div className="recent-attempt-empty">
+
+                                <div className="empty-icon">
                                     📝
                                 </div>
 
-                                <div>
+                                <h3>
+                                    No attempts yet
+                                </h3>
 
-                                    <span>
-                                        Available Quizzes
-                                    </span>
-
-                                    <h3>
-                                        {studentDashboardLoading
-                                            ? "..."
-                                            : studentStats.available_quizzes}
-                                    </h3>
-
-                                </div>
+                                <p>
+                                    Complete a quiz to see
+                                    your performance here.
+                                </p>
 
                             </div>
 
-                            {/* COMPLETED */}
+                        ) : (
 
-                            <div className="stat-card">
+                            <div className="attempt-list">
 
-                                <div className="stat-icon green">
-                                    ✅
-                                </div>
+                                {recentAttempts.map(
+                                    (attempt, index) => {
 
-                                <div>
+                                        const score =
+                                            Number(
+                                                attempt.percentage || 0
+                                            );
 
-                                    <span>
-                                        Completed
-                                    </span>
+                                        const isPassed =
+                                            score >= 60;
 
-                                    <h3>
-                                        {studentDashboardLoading
-                                            ? "..."
-                                            : studentStats.total_attempted}
-                                    </h3>
-
-                                </div>
-
-                            </div>
-
-                            {/* AVERAGE SCORE */}
-
-                            <div className="stat-card">
-
-                                <div className="stat-icon orange">
-                                    🎯
-                                </div>
-
-                                <div>
-
-                                    <span>
-                                        Average Score
-                                    </span>
-
-                                    <h3>
-                                        {studentDashboardLoading
-                                            ? "..."
-                                            : `${Number(
-                                                studentStats.average_score || 0
-                                            ).toFixed(2)}%`}
-                                    </h3>
-
-                                </div>
-
-                            </div>
-
-                            {/* RANK */}
-
-                            <div className="stat-card">
-
-                                <div className="stat-icon purple">
-                                    🏆
-                                </div>
-
-                                <div>
-
-                                    <span>
-                                        Rank
-                                    </span>
-
-                                    <h3>
-                                        {studentDashboardLoading
-                                            ? "..."
-                                            : studentStats.rank
-                                                ? `#${studentStats.rank}`
-                                                : "--"}
-                                    </h3>
-
-                                </div>
-
-                            </div>
-
-                        </section>
-
-                        {/* =================================================
-                            DASHBOARD STATISTICS ERROR
-                        ================================================= */}
-
-                        {studentDashboardError && (
-                            <div className="quiz-error">
-                                {studentDashboardError}
-                            </div>
-                        )}
-
-                        {/* =================================================
-                            RECENT ATTEMPTS
-                        ================================================= */}
-
-                        <section className="content-section">
-
-                            <div className="section-header">
-
-                                <div>
-
-                                    <h2>
-                                        Recent Attempts
-                                    </h2>
-
-                                    <p>
-                                        View your latest quiz performance.
-                                    </p>
-
-                                </div>
-
-                                <button
-                                    className="view-all-btn"
-                                    onClick={() =>
-                                        navigate("/history")
-                                    }
-                                >
-                                    View All
-                                </button>
-
-                            </div>
-
-                            <div className="recent-attempts-card">
-
-                                {/* LOADING */}
-
-                                {studentDashboardLoading ? (
-
-                                    <div className="recent-attempt-loading">
-                                        Loading recent attempts...
-                                    </div>
-
-                                ) : recentAttempts.length === 0 ? (
-
-                                    /* EMPTY */
-
-                                    <div className="recent-attempt-empty">
-
-                                        <div className="empty-icon">
-                                            📝
-                                        </div>
-
-                                        <h3>
-                                            No attempts yet
-                                        </h3>
-
-                                        <p>
-                                            Complete a quiz to see
-                                            your performance here.
-                                        </p>
-
-                                    </div>
-
-                                ) : (
-
-                                    /* ATTEMPTS */
-
-                                    <div className="attempt-list">
-
-                                        {recentAttempts.map(
-                                            (attempt, index) => {
-
-                                                const score =
-                                                    Number(
-                                                        attempt.percentage || 0
-                                                    );
-
-                                                const isPassed =
-                                                    score >= 60;
-
-                                                return (
-                                                    <div
-                                                        className="attempt-row"
-                                                        key={`${attempt.quiz_id}-${attempt.submitted_at}-${index}`}
-                                                    >
-
-                                                        {/* ATTEMPT INFO */}
-
-                                                        <div className="attempt-info">
-
-                                                            <div className="attempt-icon">
-                                                                📝
-                                                            </div>
-
-                                                            <div>
-
-                                                                <h3>
-                                                                    {attempt.quiz_title ||
-                                                                        "Untitled Quiz"}
-                                                                </h3>
-
-                                                                <span>
-                                                                    {attempt.submitted_at
-                                                                        ? new Date(
-                                                                            attempt.submitted_at
-                                                                        ).toLocaleString()
-                                                                        : "Date unavailable"}
-                                                                </span>
-
-                                                            </div>
-
-                                                        </div>
-
-                                                        {/* RESULT */}
-
-                                                        <div className="attempt-result">
-
-                                                            <strong
-                                                                className={
-                                                                    isPassed
-                                                                        ? "score-pass"
-                                                                        : "score-fail"
-                                                                }
-                                                            >
-                                                                {score.toFixed(2)}%
-                                                            </strong>
-
-                                                            <span
-                                                                className={
-                                                                    isPassed
-                                                                        ? "status-pass"
-                                                                        : "status-fail"
-                                                                }
-                                                            >
-                                                                {isPassed
-                                                                    ? "PASSED"
-                                                                    : "FAILED"}
-                                                            </span>
-
-                                                        </div>
-
-                                                    </div>
-                                                );
-                                            }
-                                        )}
-
-                                    </div>
-
-                                )}
-
-                            </div>
-
-                        </section>
-
-                        {/* =================================================
-                            QUIZ DISCOVERY
-                        ================================================= */}
-
-                        <section className="content-section">
-
-                            <div className="section-header">
-
-                                <div>
-
-                                    <h2>
-                                        Discover Quizzes
-                                    </h2>
-
-                                    <p>
-                                        Search and filter quizzes
-                                        before starting.
-                                    </p>
-
-                                </div>
-
-                                <button
-                                    className="view-all-btn"
-                                    onClick={() =>
-                                        navigate(
-                                            "/history"
-                                        )
-                                    }
-                                >
-                                    Quiz History
-                                </button>
-
-                            </div>
-
-                            {/* =================================================
-                                SEARCH + FILTERS
-                            ================================================= */}
-
-                            <div className="quiz-filters">
-
-                                {/* SEARCH */}
-
-                                <div className="search-box">
-
-                                    <span>
-                                        🔍
-                                    </span>
-
-                                    <input
-                                        type="text"
-                                        placeholder="Search quizzes..."
-                                        value={search}
-                                        onChange={(e) =>
-                                            setSearch(
-                                                e.target.value
-                                            )
-                                        }
-                                    />
-
-                                </div>
-
-                                {/* CATEGORY */}
-
-                                <select
-                                    value={category}
-                                    onChange={(e) =>
-                                        setCategory(
-                                            e.target.value
-                                        )
-                                    }
-                                >
-
-                                    <option value="">
-                                        All Categories
-                                    </option>
-
-                                    {categories.map(
-                                        (item) => (
-                                            <option
-                                                key={item}
-                                                value={item}
+                                        return (
+                                            <div
+                                                className="attempt-row"
+                                                key={`${attempt.quiz_id}-${attempt.submitted_at}-${index}`}
                                             >
-                                                {item}
-                                            </option>
-                                        )
-                                    )}
 
-                                </select>
+                                                <div className="attempt-info">
 
-                                {/* DIFFICULTY */}
-
-                                <select
-                                    value={difficulty}
-                                    onChange={(e) =>
-                                        setDifficulty(
-                                            e.target.value
-                                        )
-                                    }
-                                >
-
-                                    <option value="">
-                                        All Difficulties
-                                    </option>
-
-                                    {difficulties.map(
-                                        (item) => (
-                                            <option
-                                                key={item}
-                                                value={item}
-                                            >
-                                                {item
-                                                        .charAt(0)
-                                                        .toUpperCase() +
-                                                    item.slice(1)}
-                                            </option>
-                                        )
-                                    )}
-
-                                </select>
-
-                                {/* CLEAR */}
-
-                                {(search ||
-                                    category ||
-                                    difficulty) && (
-
-                                    <button
-                                        className="clear-filter-btn"
-                                        onClick={
-                                            handleClearFilters
-                                        }
-                                    >
-                                        Clear
-                                    </button>
-
-                                )}
-
-                            </div>
-
-                            {/* =================================================
-                                LOADING
-                            ================================================= */}
-
-                            {quizLoading && (
-
-                                <div className="dashboard-loading">
-                                    Loading available quizzes...
-                                </div>
-
-                            )}
-
-                            {/* =================================================
-                                ERROR
-                            ================================================= */}
-
-                            {!quizLoading &&
-                                quizError && (
-
-                                    <div className="quiz-error">
-                                        {quizError}
-                                    </div>
-
-                                )}
-
-                            {/* =================================================
-                                NO QUIZZES
-                            ================================================= */}
-
-                            {!quizLoading &&
-                                !quizError &&
-                                filteredQuizzes.length === 0 && (
-
-                                    <div className="quiz-card">
-
-                                        <h3>
-                                            No quizzes found
-                                        </h3>
-
-                                        <p>
-                                            Try changing your
-                                            search or filters.
-                                        </p>
-
-                                        {(search ||
-                                            category ||
-                                            difficulty) && (
-
-                                            <button
-                                                onClick={
-                                                    handleClearFilters
-                                                }
-                                            >
-                                                Clear Filters
-                                            </button>
-
-                                        )}
-
-                                    </div>
-
-                                )}
-
-                            {/* =================================================
-                                QUIZ CARDS
-                            ================================================= */}
-
-                            {!quizLoading &&
-                                !quizError &&
-                                filteredQuizzes.length > 0 && (
-
-                                    <div className="quiz-grid">
-
-                                        {filteredQuizzes.map(
-                                            (quiz) => (
-
-                                                <div
-                                                    className="quiz-card"
-                                                    key={quiz.id}
-                                                >
-
-                                                    {/* CATEGORY + TIME */}
-
-                                                    <div className="quiz-card-top">
-
-                                                        <span className="quiz-category">
-                                                            {quiz.category ||
-                                                                "General"}
-                                                        </span>
-
-                                                        <span className="quiz-time">
-                                                            ⏱{" "}
-                                                            {quiz.duration ||
-                                                                30}{" "}
-                                                            min
-                                                        </span>
-
+                                                    <div className="attempt-icon">
+                                                        📝
                                                     </div>
 
-                                                    {/* TITLE */}
+                                                    <div>
 
-                                                    <h3>
-                                                        {quiz.title}
-                                                    </h3>
-
-                                                    {/* DESCRIPTION */}
-
-                                                    <p>
-                                                        {quiz.description ||
-                                                            "Test your knowledge with this quiz."}
-                                                    </p>
-
-                                                    {/* FOOTER */}
-
-                                                    <div className="quiz-footer">
+                                                        <h3>
+                                                            {attempt.quiz_title ||
+                                                                "Untitled Quiz"}
+                                                        </h3>
 
                                                         <span>
-                                                            {quiz.difficulty
-                                                                ? quiz.difficulty
-                                                                    .charAt(0)
-                                                                    .toUpperCase() +
-                                                                quiz.difficulty.slice(
-                                                                    1
-                                                                )
-                                                                : "General"}
+                                                            {attempt.submitted_at
+                                                                ? new Date(
+                                                                    attempt.submitted_at
+                                                                ).toLocaleString()
+                                                                : "Date unavailable"}
                                                         </span>
-
-                                                        <button
-                                                            onClick={() =>
-                                                                handleStartQuiz(
-                                                                    quiz.id
-                                                                )
-                                                            }
-                                                        >
-                                                            Start Quiz
-                                                        </button>
 
                                                     </div>
 
                                                 </div>
 
-                                            )
-                                        )}
+                                                <div className="attempt-result">
 
-                                    </div>
+                                                    <strong
+                                                        className={
+                                                            isPassed
+                                                                ? "score-pass"
+                                                                : "score-fail"
+                                                        }
+                                                    >
+                                                        {score.toFixed(2)}%
+                                                    </strong>
 
+                                                    <span
+                                                        className={
+                                                            isPassed
+                                                                ? "status-pass"
+                                                                : "status-fail"
+                                                        }
+                                                    >
+                                                        {isPassed
+                                                            ? "PASSED"
+                                                            : "FAILED"}
+                                                    </span>
+
+                                                </div>
+
+                                            </div>
+                                        );
+                                    }
                                 )}
 
-                        </section>
+                            </div>
 
-                    </>
-                )}
+                        )}
+
+                    </div>
+
+                </section>
+
+                {/* =================================================
+                    QUIZ DISCOVERY
+                ================================================= */}
+
+                <section className="content-section">
+
+                    <div className="section-header">
+
+                        <div>
+                            <h2>
+                                Discover Quizzes
+                            </h2>
+
+                            <p>
+                                Search and filter quizzes
+                                before starting.
+                            </p>
+                        </div>
+
+                        <button
+                            className="view-all-btn"
+                            onClick={() =>
+                                navigate("/discover")
+                            }
+                        >
+                            Explore All
+                        </button>
+
+                    </div>
+
+                    {/* FILTERS */}
+
+                    <div className="quiz-filters">
+
+                        <div className="search-box">
+
+                            <span>🔍</span>
+
+                            <input
+                                type="text"
+                                placeholder="Search quizzes..."
+                                value={search}
+                                onChange={(e) =>
+                                    setSearch(
+                                        e.target.value
+                                    )
+                                }
+                            />
+
+                        </div>
+
+                        <select
+                            value={category}
+                            onChange={(e) =>
+                                setCategory(
+                                    e.target.value
+                                )
+                            }
+                        >
+                            <option value="">
+                                All Categories
+                            </option>
+
+                            {categories.map((item) => (
+                                <option
+                                    key={item}
+                                    value={item}
+                                >
+                                    {item}
+                                </option>
+                            ))}
+
+                        </select>
+
+                        <select
+                            value={difficulty}
+                            onChange={(e) =>
+                                setDifficulty(
+                                    e.target.value
+                                )
+                            }
+                        >
+                            <option value="">
+                                All Difficulties
+                            </option>
+
+                            {difficulties.map((item) => (
+                                <option
+                                    key={item}
+                                    value={item}
+                                >
+                                    {item
+                                            .charAt(0)
+                                            .toUpperCase() +
+                                        item.slice(1)}
+                                </option>
+                            ))}
+
+                        </select>
+
+                        {(search ||
+                            category ||
+                            difficulty) && (
+                            <button
+                                className="clear-filter-btn"
+                                onClick={
+                                    handleClearFilters
+                                }
+                            >
+                                Clear
+                            </button>
+                        )}
+
+                    </div>
+
+                    {/* QUIZ LOADING */}
+
+                    {quizLoading && (
+                        <div className="dashboard-loading">
+                            Loading available quizzes...
+                        </div>
+                    )}
+
+                    {/* QUIZ ERROR */}
+
+                    {!quizLoading && quizError && (
+                        <div className="quiz-error">
+                            {quizError}
+                        </div>
+                    )}
+
+                    {/* NO QUIZZES */}
+
+                    {!quizLoading &&
+                        !quizError &&
+                        filteredQuizzes.length === 0 && (
+
+                            <div className="quiz-card">
+
+                                <h3>
+                                    No quizzes found
+                                </h3>
+
+                                <p>
+                                    Try changing your
+                                    search or filters.
+                                </p>
+
+                                {(search ||
+                                    category ||
+                                    difficulty) && (
+                                    <button
+                                        onClick={
+                                            handleClearFilters
+                                        }
+                                    >
+                                        Clear Filters
+                                    </button>
+                                )}
+
+                            </div>
+                        )}
+
+                    {/* QUIZ GRID */}
+
+                    {!quizLoading &&
+                        !quizError &&
+                        filteredQuizzes.length > 0 && (
+
+                            <div className="quiz-grid">
+
+                                {filteredQuizzes.map(
+                                    (quiz) => (
+
+                                        <div
+                                            className="quiz-card"
+                                            key={quiz.id}
+                                        >
+
+                                            {/* VISUAL */}
+
+                                            <div className="quiz-visual">
+
+                                                <div className="quiz-visual-glow"></div>
+
+                                                <span className="quiz-visual-icon">
+                                                    {getCategoryIcon(
+                                                        quiz.category
+                                                    )}
+                                                </span>
+
+                                                <span className="quiz-visual-label">
+                                                    {quiz.category ||
+                                                        "General"}
+                                                </span>
+
+                                            </div>
+
+                                            {/* CARD TOP */}
+
+                                            <div className="quiz-card-top">
+
+                                                <span className="quiz-category">
+                                                    {quiz.category ||
+                                                        "General"}
+                                                </span>
+
+                                                <span className="quiz-time">
+                                                    ⏱{" "}
+                                                    {quiz.duration ||
+                                                        30}{" "}
+                                                    min
+                                                </span>
+
+                                            </div>
+
+                                            <h3>
+                                                {quiz.title}
+                                            </h3>
+
+                                            <p>
+                                                {quiz.description ||
+                                                    "Test your knowledge with this quiz."}
+                                            </p>
+
+                                            {/* FOOTER */}
+
+                                            <div className="quiz-footer">
+
+                                                <span>
+                                                    {quiz.difficulty
+                                                        ? quiz.difficulty
+                                                            .charAt(0)
+                                                            .toUpperCase() +
+                                                        quiz.difficulty.slice(
+                                                            1
+                                                        )
+                                                        : "General"}
+                                                </span>
+
+                                                <button
+                                                    onClick={() =>
+                                                        handleStartQuiz(
+                                                            quiz.id
+                                                        )
+                                                    }
+                                                >
+                                                    Start Quiz
+                                                </button>
+
+                                            </div>
+
+                                        </div>
+
+                                    )
+                                )}
+
+                            </div>
+                        )}
+
+                </section>
 
                 {/* =================================================
                     ACCOUNT INFORMATION
