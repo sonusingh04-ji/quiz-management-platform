@@ -8,44 +8,47 @@ The platform provides separate experiences for Students and Administrators, incl
 
 ## 📌 Project Overview
 
-The Quiz Management & Online Assessment Platform provides a centralized system for online assessments.
+The Quiz Management & Online Assessment Platform provides a centralized system for conducting online assessments.
 
-### Student Features
+Students can discover and attempt quizzes, submit answers, view results, track their performance, and check leaderboard rankings.
 
-- Student registration and login
-- Browse available quizzes
-- View quiz details
-- Start and attempt quizzes
-- Question navigation
-- Answer selection
-- Quiz timer
-- Automatic quiz submission
-- Score calculation
-- Pass/fail result
-- Result and answer review
-- Attempt history
+Administrators can manage users, categories, quizzes, questions, assessments, results, reports, and analytics through an administrative dashboard.
+
+---
+
+## ✨ Features
+
+### 👨‍🎓 Student Features
+
+- User registration and login
+- Secure authentication
 - Student dashboard
-- Performance statistics
+- Discover available quizzes
+- Search and browse quizzes
+- Take timed quizzes
+- Question navigation
+- Submit quiz attempts
+- View quiz results
+- View attempt details
+- Quiz history
+- Performance tracking
 - Leaderboard
-- Profile management
+- Student profile management
+- Password reset functionality
 
-### Admin Features
+### 👨‍💼 Admin Features
 
-- Admin authentication
 - Admin dashboard
 - User management
-- Quiz creation
-- Quiz editing
-- Quiz deletion
-- Publish/unpublish quizzes
-- Category management
+- Quiz management
+- Create and manage quizzes
 - Question management
-- Option management
-- Correct-answer configuration
-- Admin results
-- Analytics
+- Category management
+- Results management
 - Reports
-- Platform activity overview
+- Analytics dashboard
+- Leaderboard management
+- Student performance monitoring
 
 ---
 
@@ -54,17 +57,17 @@ The Quiz Management & Online Assessment Platform provides a centralized system f
 ### Frontend
 
 - React.js
-- React Router
 - JavaScript (JSX)
 - CSS
 - Vite
+- React Router
 
 ### Backend
 
 - Node.js
 - Express.js
 - REST APIs
-- Authentication and authorization middleware
+- Authentication & Authorization Middleware
 
 ### Database
 
@@ -77,21 +80,41 @@ The Quiz Management & Online Assessment Platform provides a centralized system f
 - IntelliJ IDEA
 - Vite
 
-The project specification recommends React.js for the frontend, Node.js/Express.js for the backend, and PostgreSQL for the database. :contentReference[oaicite:1]{index=1}
-
 ---
 
 ## 🏗️ Application Architecture
 
 ```text
-                Student / Admin
-                       │
-                       ▼
-                React Frontend
-                       │
-                       │ REST API
-                       ▼
-                Node.js + Express
-                       │
-                       ▼
-                   PostgreSQL
+                    ┌─────────────────────┐
+                    │     Student/Admin   │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │   React Frontend    │
+                    │   React + Vite       │
+                    └──────────┬──────────┘
+                               │
+                         REST API Calls
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │   Express Backend   │
+                    │      Node.js        │
+                    └──────────┬──────────┘
+                               │
+                ┌──────────────┼──────────────┐
+                ▼              ▼              ▼
+          Controllers      Services      Middleware
+                │              │              │
+                └──────────────┼──────────────┘
+                               ▼
+                    ┌─────────────────────┐
+                    │    Repositories     │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │     PostgreSQL      │
+                    │      Database       │
+                    └─────────────────────┘
