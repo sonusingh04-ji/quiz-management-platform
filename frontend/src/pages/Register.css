@@ -1,0 +1,263 @@
+/* =========================================
+   REGISTER PAGE
+========================================= */
+
+.register-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: #f4f5fb;
+    box-sizing: border-box;
+}
+
+/* Register Card */
+.register-card {
+    width: 100%;
+    max-width: 480px;
+    padding: 40px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
+}
+
+/* Title */
+.register-card h1 {
+    margin: 0;
+    text-align: center;
+    color: #20263a;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+/* Subtitle */
+.register-card > p {
+    margin: 10px 0 30px;
+    text-align: center;
+    color: #747b91;
+    font-size: 15px;
+}
+
+/* Form */
+.register-card form {
+    width: 100%;
+}
+
+/* Field */
+.register-field {
+    margin-bottom: 18px;
+}
+
+/* Label */
+.register-field label {
+    display: block;
+    margin-bottom: 8px;
+    color: #20263a;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Inputs */
+.register-field input {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #dfe2ec;
+    border-radius: 8px;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 15px;
+    color: #20263a;
+    background: #ffffff;
+    transition: border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Input Focus */
+.register-field input:focus {
+    border-color: #5146e5;
+    box-shadow: 0 0 0 3px rgba(81, 70, 229, 0.1);
+}
+
+/* Placeholder */
+.register-field input::placeholder {
+    color: #a1a7b8;
+}
+
+/* Error Message */
+.register-error {
+    margin: 10px 0 15px;
+    padding: 11px 13px;
+    border-radius: 7px;
+    background: #fee2e2;
+    color: #dc2626;
+    font-size: 14px;
+}
+
+/* Success Message */
+.register-success {
+    margin: 10px 0 15px;
+    padding: 11px 13px;
+    border-radius: 7px;
+    background: #dcfce7;
+    color: #15803d;
+    font-size: 14px;
+}
+
+/* Register Button */
+.register-button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 8px;
+    background: #5146e5;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease,
+    transform 0.1s ease;
+}
+
+/* Hover */
+.register-button:hover {
+    background: #4338ca;
+}
+
+/* Click */
+.register-button:active {
+    transform: scale(0.99);
+}
+
+/* Disabled */
+.register-button:disabled {
+    background: #a5a1ee;
+    cursor: not-allowed;
+}
+
+/* Login Section */
+.register-login {
+    margin-top: 25px;
+    text-align: center;
+    color: #747b91;
+    font-size: 14px;
+}
+
+/* Login Link */
+.register-login button {
+    border: none;
+    padding: 0;
+    background: transparent;
+    color: #5146e5;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.register-login button:hover {
+    color: #4338ca;
+    text-decoration: underline;
+}
+
+/* Mobile */
+@media (max-width: 500px) {
+
+    .register-page {
+        padding: 15px;
+    }
+
+    .register-card {
+        padding: 28px 22px;
+    }
+
+    .register-card h1 {
+        font-size: 24px;
+    }
+}
+/* =========================================
+   ACCOUNT TYPE / ROLE
+========================================= */
+
+.role-options {
+    display: flex;
+    gap: 14px;
+    width: 100%;
+}
+
+.role-option {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    padding: 13px;
+    border: 1px solid #dfe2ec;
+    border-radius: 8px;
+
+    background: #ffffff;
+    color: #20263a;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+            border-color 0.2s ease,
+            background 0.2s ease,
+            box-shadow 0.2s ease;
+}
+
+.role-option:hover {
+    border-color: #5146e5;
+    background: #f8f7ff;
+}
+
+.role-option input {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+
+    accent-color: #5146e5;
+
+    cursor: pointer;
+}
+
+.role-option:has(input:checked) {
+    border-color: #5146e5;
+    background: #f5f3ff;
+    box-shadow: 0 0 0 2px rgba(81, 70, 229, 0.08);
+}
+
+
+/* =========================================
+   ADMIN CODE
+========================================= */
+
+.admin-code-field {
+    margin-bottom: 18px;
+}
+
+.admin-code-field small {
+    display: block;
+    margin-top: 7px;
+
+    color: #747b91;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+
+/* =========================================
+   ADMIN BUTTON
+========================================= */
+
+.register-button {
+    transition:
+            background 0.2s ease,
+            transform 0.1s ease,
+            opacity 0.2s ease;
+}

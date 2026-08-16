@@ -1,0 +1,857 @@
+/* ==========================================
+   Manage Users Page
+========================================== */
+
+.manage-users-page {
+    min-height: 100vh;
+    background: #f5f6fb;
+    padding: 32px 42px 60px;
+}
+
+/* ==========================================
+   Header
+========================================== */
+
+.manage-users-header {
+    max-width: 1100px;
+    margin: 0 auto 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.manage-users-header h1 {
+    margin: 0;
+
+    font-size: 34px;
+    font-weight: 700;
+    color: #172033;
+}
+
+.manage-users-header p {
+    margin: 8px 0 0;
+
+    font-size: 17px;
+    color: #737c91;
+}
+
+.back-dashboard-btn {
+    border: none;
+    background: #eeeeff;
+    color: #5146e5;
+
+    padding: 13px 20px;
+
+    border-radius: 12px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.back-dashboard-btn:hover {
+    background: #e2e1ff;
+    transform: translateY(-1px);
+}
+
+/* ==========================================
+   Statistics
+========================================== */
+
+.user-statistics {
+    max-width: 1100px;
+    margin: 0 auto 28px;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.user-stat-card {
+    background: white;
+
+    border-radius: 16px;
+
+    padding: 24px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    box-shadow: 0 5px 20px rgba(20, 25, 50, 0.06);
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+
+    border-radius: 13px;
+
+    background: #e8e9ff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 24px;
+}
+
+.active-icon {
+    background: #dcfce7;
+}
+
+.inactive-icon {
+    background: #fee2e2;
+}
+
+.student-icon {
+    background: #fff1d8;
+}
+
+.user-stat-card span {
+    display: block;
+
+    color: #737c91;
+
+    font-size: 14px;
+
+    margin-bottom: 5px;
+}
+
+.user-stat-card strong {
+    display: block;
+
+    color: #172033;
+
+    font-size: 25px;
+}
+
+/* ==========================================
+   Users Container
+========================================== */
+
+.users-container {
+    max-width: 1100px;
+    margin: 0 auto;
+
+    background: white;
+
+    border-radius: 18px;
+
+    padding: 28px;
+
+    box-shadow: 0 5px 20px rgba(20, 25, 50, 0.06);
+}
+
+.users-title {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 24px;
+}
+
+.users-title h2 {
+    margin: 0;
+
+    color: #172033;
+
+    font-size: 24px;
+}
+
+.users-title p {
+    margin: 6px 0 0;
+
+    color: #7b8498;
+
+    font-size: 15px;
+}
+
+.refresh-users-btn {
+    border: none;
+
+    background: #eeeeff;
+    color: #5146e5;
+
+    padding: 11px 17px;
+
+    border-radius: 10px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.refresh-users-btn:hover {
+    background: #e2e1ff;
+}
+
+.refresh-users-btn:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+}
+
+/* ==========================================
+   Table
+========================================== */
+
+.users-table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+.users-table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+.users-table th {
+    text-align: left;
+
+    padding: 15px 12px;
+
+    color: #7b8498;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    border-bottom: 1px solid #e8eaf0;
+}
+
+.users-table td {
+    padding: 17px 12px;
+
+    border-bottom: 1px solid #edf0f5;
+
+    color: #30394d;
+
+    font-size: 14px;
+}
+
+.users-table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.users-table tbody tr:hover {
+    background: #fafaff;
+}
+
+.users-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ==========================================
+   User Info
+========================================== */
+
+.user-info {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.user-avatar {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    background: #5146e5;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 700;
+
+    font-size: 16px;
+}
+
+.user-info strong {
+    display: block;
+
+    color: #20293b;
+
+    font-size: 15px;
+}
+
+.user-info small {
+    display: block;
+
+    margin-top: 4px;
+
+    color: #8a92a4;
+
+    font-size: 11px;
+
+    max-width: 150px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+.user-email {
+    color: #626c80;
+}
+
+/* ==========================================
+   Role Badge
+========================================== */
+
+.role-badge {
+    display: inline-block;
+
+    padding: 7px 12px;
+
+    border-radius: 8px;
+
+    background: #eeeeff;
+
+    color: #5146e5;
+
+    font-weight: 600;
+
+    font-size: 13px;
+
+    text-transform: capitalize;
+}
+
+.role-badge.admin {
+    background: #f3e8ff;
+    color: #7e22ce;
+}
+
+.role-badge.teacher {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.role-badge.student {
+    background: #e0e7ff;
+    color: #4338ca;
+}
+
+.role-badge.recruiter {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+/* ==========================================
+   Status Badge
+========================================== */
+
+.status-badge {
+    display: inline-block;
+
+    padding: 7px 12px;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+.status-badge.active {
+    background: #dcfce7;
+
+    color: #15803d;
+}
+
+.status-badge.inactive {
+    background: #fee2e2;
+
+    color: #b91c1c;
+}
+
+/* ==========================================
+   Status Action
+========================================== */
+
+.status-action-btn {
+    border: none;
+
+    padding: 9px 14px;
+
+    border-radius: 9px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.status-action-btn.deactivate {
+    background: #fff1f2;
+
+    color: #dc2626;
+}
+
+.status-action-btn.deactivate:hover {
+    background: #ffe4e6;
+}
+
+.status-action-btn.activate {
+    background: #dcfce7;
+
+    color: #15803d;
+}
+
+.status-action-btn.activate:hover {
+    background: #bbf7d0;
+}
+
+.status-action-btn:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+}
+
+/* ==========================================
+   Loading
+========================================== */
+
+.users-loading {
+    min-height: 280px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #737c91;
+}
+
+.loading-spinner {
+    width: 35px;
+    height: 35px;
+
+    border: 4px solid #e6e7f5;
+
+    border-top-color: #5146e5;
+
+    border-radius: 50%;
+
+    animation: spin 0.8s linear infinite;
+
+    margin-bottom: 14px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ==========================================
+   Error
+========================================== */
+
+.users-error,
+.no-users {
+    min-height: 280px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    color: #737c91;
+}
+
+.users-error > div,
+.no-users > div {
+    font-size: 42px;
+
+    margin-bottom: 10px;
+}
+
+.users-error h3,
+.no-users h3 {
+    margin: 0 0 7px;
+
+    color: #20293b;
+
+    font-size: 20px;
+}
+
+.users-error p,
+.no-users p {
+    margin: 0 0 18px;
+}
+
+.users-error button {
+    border: none;
+
+    background: #5146e5;
+
+    color: white;
+
+    padding: 10px 18px;
+
+    border-radius: 9px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+/* ==========================================
+   Responsive
+========================================== */
+
+@media (max-width: 900px) {
+
+    .user-statistics {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .manage-users-page {
+        padding: 25px 20px 50px;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .manage-users-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 18px;
+    }
+
+    .manage-users-header h1 {
+        font-size: 28px;
+    }
+
+    .user-statistics {
+        grid-template-columns: 1fr;
+    }
+
+    .users-container {
+        padding: 18px;
+    }
+
+}
+/* ==========================================
+   Search
+========================================== */
+
+.users-search {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 22px;
+
+    padding: 12px 15px;
+
+    background: #f8f9fd;
+
+    border: 1px solid #e6e8f0;
+
+    border-radius: 11px;
+}
+
+.users-search > span {
+    font-size: 18px;
+}
+
+.users-search input {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: #20293b;
+
+    font-size: 14px;
+}
+
+.users-search input::placeholder {
+    color: #9299aa;
+}
+
+.clear-search-btn {
+    border: none;
+
+    background: transparent;
+
+    color: #7b8498;
+
+    cursor: pointer;
+
+    font-size: 15px;
+}
+
+/* ==========================================
+   User Actions
+========================================== */
+
+.user-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    flex-wrap: wrap;
+}
+
+.view-user-btn,
+.delete-user-btn {
+    border: none;
+
+    padding: 9px 12px;
+
+    border-radius: 9px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.view-user-btn {
+    background: #eeeeff;
+    color: #5146e5;
+}
+
+.view-user-btn:hover {
+    background: #dedcff;
+}
+
+.delete-user-btn {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.delete-user-btn:hover {
+    background: #fecaca;
+}
+
+.view-user-btn:disabled,
+.delete-user-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ==========================================
+   User Details Modal
+========================================== */
+
+.user-details-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(15, 23, 42, 0.45);
+}
+
+.user-details-modal {
+    width: 100%;
+
+    max-width: 520px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: white;
+
+    border-radius: 18px;
+
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.2);
+}
+
+.user-details-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 22px 24px;
+
+    border-bottom: 1px solid #edf0f5;
+}
+
+.user-details-header h2 {
+    margin: 0;
+
+    color: #172033;
+
+    font-size: 21px;
+}
+
+.user-details-header p {
+    margin: 5px 0 0;
+
+    color: #7b8498;
+
+    font-size: 13px;
+}
+
+.close-user-details {
+    border: none;
+
+    background: #f1f2f6;
+
+    color: #596276;
+
+    width: 34px;
+    height: 34px;
+
+    border-radius: 9px;
+
+    cursor: pointer;
+
+    font-size: 15px;
+}
+
+.close-user-details:hover {
+    background: #e5e7ed;
+}
+
+.user-details-content {
+    padding: 25px;
+}
+
+.detail-avatar {
+    width: 70px;
+    height: 70px;
+
+    margin: 0 auto 24px;
+
+    border-radius: 50%;
+
+    background: #5146e5;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 27px;
+
+    font-weight: 700;
+}
+
+.detail-row {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 14px 0;
+
+    border-bottom: 1px solid #edf0f5;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-row span {
+    color: #7b8498;
+
+    font-size: 14px;
+}
+
+.detail-row strong {
+    color: #20293b;
+
+    font-size: 14px;
+
+    text-align: right;
+
+    word-break: break-word;
+}
+
+.user-details-loading {
+    padding: 60px 20px;
+
+    text-align: center;
+
+    color: #737c91;
+}
+
+/* ==========================================
+   Responsive Actions
+========================================== */
+
+@media (max-width: 700px) {
+
+    .user-actions {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .view-user-btn,
+    .status-action-btn,
+    .delete-user-btn {
+        width: 100%;
+    }
+
+    .detail-row {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 5px;
+    }
+
+    .detail-row strong {
+        text-align: left;
+    }
+}

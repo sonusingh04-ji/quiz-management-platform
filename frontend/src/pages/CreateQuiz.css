@@ -1,0 +1,352 @@
+/* =========================================================
+   CREATE QUIZ PAGE
+   ========================================================= */
+
+.create-quiz-page {
+    min-height: 100vh;
+    background: #f5f6fc;
+    padding: 45px 60px 70px;
+    box-sizing: border-box;
+    color: #1f2937;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.create-quiz-page > h1 {
+    margin: 0;
+    text-align: center;
+    font-size: 42px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.create-quiz-page > p {
+    margin: 10px 0 35px;
+    text-align: center;
+    font-size: 18px;
+    color: #737b91;
+}
+
+/* =========================================================
+   QUIZ DETAILS FORM
+   ========================================================= */
+
+.create-quiz-page form {
+    width: min(760px, 100%);
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 35px 40px;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(31, 41, 55, 0.07);
+    box-sizing: border-box;
+}
+
+/* =========================================================
+   FORM GROUPS
+   ========================================================= */
+
+.create-quiz-page form > div {
+    margin-bottom: 22px;
+}
+
+.create-quiz-page label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #374151;
+}
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.create-quiz-page input[type="text"],
+.create-quiz-page input[type="number"],
+.create-quiz-page textarea,
+.create-quiz-page select {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #dfe3ef;
+    border-radius: 10px;
+    background: #ffffff;
+    padding: 13px 14px;
+    font-size: 15px;
+    color: #1f2937;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+.create-quiz-page input[type="text"],
+.create-quiz-page input[type="number"],
+.create-quiz-page select {
+    height: 46px;
+}
+
+.create-quiz-page textarea {
+    min-height: 110px;
+    resize: vertical;
+    font-family: inherit;
+}
+
+.create-quiz-page input::placeholder,
+.create-quiz-page textarea::placeholder {
+    color: #9aa2b3;
+}
+
+/* INPUT FOCUS */
+
+.create-quiz-page input[type="text"]:focus,
+.create-quiz-page input[type="number"]:focus,
+.create-quiz-page textarea:focus,
+.create-quiz-page select:focus {
+    border-color: #5146e5;
+    box-shadow: 0 0 0 3px rgba(81, 70, 229, 0.1);
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.create-quiz-page button {
+    border: none;
+    border-radius: 9px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+    background: #5146e5;
+    color: #ffffff;
+}
+
+.create-quiz-page button:hover {
+    background: #4338ca;
+    transform: translateY(-1px);
+}
+
+.create-quiz-page button:active {
+    transform: translateY(0);
+}
+
+/* =========================================================
+   FORM BUTTON ROW
+   ========================================================= */
+
+.create-quiz-page form > button {
+    margin-right: 10px;
+}
+
+/* Cancel buttons */
+
+.create-quiz-page form > button[type="button"] {
+    background: #eef0f7;
+    color: #4b5563;
+}
+
+.create-quiz-page form > button[type="button"]:hover {
+    background: #e2e5ef;
+}
+
+/* =========================================================
+   ADD QUESTIONS SECTION
+   ========================================================= */
+
+.create-quiz-page > div {
+    width: min(900px, 100%);
+    margin: 0 auto;
+}
+
+/* Quiz name shown above question form */
+
+.create-quiz-page > div > p {
+    text-align: center;
+    color: #737b91;
+    font-size: 16px;
+    margin-bottom: 25px;
+}
+
+.create-quiz-page > div > p strong {
+    color: #5146e5;
+}
+
+/* =========================================================
+   ADD QUESTIONS HEADING
+   ========================================================= */
+
+.create-quiz-page h2 {
+    color: #111827;
+    font-size: 26px;
+    margin-top: 25px;
+    margin-bottom: 18px;
+}
+
+.create-quiz-page > div > h2:first-child {
+    text-align: center;
+    font-size: 32px;
+}
+
+/* =========================================================
+   QUESTION FORM
+   ========================================================= */
+
+.create-quiz-page > div > form {
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* =========================================================
+   OPTIONS
+   ========================================================= */
+
+.create-quiz-page h3 {
+    color: #263247;
+    font-size: 18px;
+    margin: 25px 0 14px;
+}
+
+.create-quiz-page > div > form > div {
+    margin-bottom: 18px;
+}
+
+/* =========================================================
+   CORRECT ANSWER RADIO
+   ========================================================= */
+
+.create-quiz-page input[type="radio"] {
+    width: 17px;
+    height: 17px;
+    margin-right: 9px;
+    accent-color: #5146e5;
+    cursor: pointer;
+}
+
+.create-quiz-page input[type="radio"] + * {
+    cursor: pointer;
+}
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+.create-quiz-page hr {
+    width: min(900px, 100%);
+    margin: 35px auto;
+    border: none;
+    border-top: 1px solid #e2e5ef;
+}
+
+/* =========================================================
+   QUESTIONS ADDED
+   ========================================================= */
+
+.create-quiz-page ol {
+    margin: 10px 0 0;
+    padding-left: 25px;
+}
+
+.create-quiz-page ol li {
+    margin-bottom: 10px;
+    color: #4b5563;
+    line-height: 1.5;
+}
+
+.create-quiz-page ol strong {
+    color: #16834b;
+    font-weight: 700;
+}
+
+/* =========================================================
+   SAVED QUESTION CARDS
+   ========================================================= */
+
+/*
+   Your current JSX does not have a class around each
+   question, so we style the question blocks using
+   the structure already present.
+*/
+
+.create-quiz-page > div > div > h3 {
+    color: #111827;
+}
+
+.create-quiz-page > div > div > p {
+    color: #596276;
+    line-height: 1.6;
+}
+
+/* =========================================================
+   SAVE / CANCEL BUTTONS
+   ========================================================= */
+
+.create-quiz-page > div > button {
+    margin-right: 10px;
+    margin-top: 8px;
+}
+
+.create-quiz-page > div > button:first-of-type {
+    background: #5146e5;
+}
+
+.create-quiz-page > div > button:first-of-type:hover {
+    background: #4338ca;
+}
+
+.create-quiz-page > div > button:last-of-type {
+    background: #eef0f7;
+    color: #4b5563;
+}
+
+.create-quiz-page > div > button:last-of-type:hover {
+    background: #e2e5ef;
+}
+
+/* =========================================================
+   RESPONSIVE DESIGN
+   ========================================================= */
+
+@media (max-width: 900px) {
+    .create-quiz-page {
+        padding: 35px 25px 60px;
+    }
+
+    .create-quiz-page > h1 {
+        font-size: 34px;
+    }
+
+    .create-quiz-page form {
+        padding: 28px 25px;
+    }
+}
+
+@media (max-width: 600px) {
+    .create-quiz-page {
+        padding: 25px 15px 50px;
+    }
+
+    .create-quiz-page > h1 {
+        font-size: 30px;
+    }
+
+    .create-quiz-page > p {
+        font-size: 16px;
+    }
+
+    .create-quiz-page form {
+        padding: 22px 18px;
+        border-radius: 14px;
+    }
+
+    .create-quiz-page form > button {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .create-quiz-page > div > button {
+        width: 100%;
+        margin: 5px 0;
+    }
+}

@@ -1,0 +1,536 @@
+/* =========================================================
+   ADMIN ANALYTICS PAGE
+========================================================= */
+
+.admin-analytics-page {
+    min-height: 100vh;
+    background: #f5f6fb;
+    padding: 40px 50px 60px;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.analytics-header {
+    max-width: 1200px;
+    margin: 0 auto 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.analytics-header > div {
+    flex: 1;
+}
+
+.analytics-header h1 {
+    margin: 0 0 8px;
+
+    font-size: 36px;
+    font-weight: 700;
+    color: #172033;
+}
+
+.analytics-header p {
+    margin: 0;
+
+    font-size: 17px;
+    color: #78839b;
+}
+
+
+/* =========================================================
+   DASHBOARD BUTTON
+========================================================= */
+
+.analytics-header button {
+    border: none;
+    outline: none;
+
+    background: #eeeaff;
+    color: #5146e5;
+
+    padding: 12px 20px;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+            background 0.2s ease,
+            transform 0.2s ease;
+}
+
+.analytics-header button:hover {
+    background: #ddd7ff;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   ANALYTICS CARDS
+========================================================= */
+
+.analytics-cards {
+    max-width: 1200px;
+    margin: 0 auto 35px;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+   SINGLE ANALYTICS CARD
+========================================================= */
+
+.analytics-card {
+    background: #ffffff;
+
+    min-height: 120px;
+
+    padding: 25px;
+
+    border-radius: 18px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+
+    box-sizing: border-box;
+
+    box-shadow:
+            0 5px 20px rgba(30, 40, 70, 0.07);
+
+    transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+}
+
+.analytics-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+            0 10px 28px rgba(30, 40, 70, 0.11);
+}
+
+
+/* =========================================================
+   ICON
+========================================================= */
+
+.analytics-icon {
+    width: 58px;
+    height: 58px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eeeaff;
+
+    border-radius: 15px;
+
+    font-size: 27px;
+}
+
+
+/* =========================================================
+   CARD TEXT
+========================================================= */
+
+.analytics-card p {
+    margin: 0 0 7px;
+
+    color: #7b849b;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.analytics-card h2 {
+    margin: 0;
+
+    color: #202a3c;
+
+    font-size: 30px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   ANALYTICS SECTION
+========================================================= */
+
+.analytics-section {
+    max-width: 1200px;
+
+    margin: 0 auto 25px;
+
+    padding: 30px;
+
+    background: #ffffff;
+
+    border-radius: 18px;
+
+    box-sizing: border-box;
+
+    box-shadow:
+            0 5px 20px rgba(30, 40, 70, 0.07);
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.analytics-section h2 {
+    margin: 0 0 22px;
+
+    color: #202a3c;
+
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.analytics-section > p {
+    margin: 0;
+
+    color: #7b849b;
+
+    font-size: 16px;
+}
+
+
+/* =========================================================
+   ANALYTICS LIST
+========================================================= */
+
+.analytics-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+
+/* =========================================================
+   LIST ITEM
+========================================================= */
+
+.analytics-list-item {
+    min-height: 72px;
+
+    padding: 16px 20px;
+
+    box-sizing: border-box;
+
+    background: #f8f9fd;
+
+    border: 1px solid #edf0f7;
+
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    transition:
+            background 0.2s ease,
+            transform 0.2s ease;
+}
+
+.analytics-list-item:hover {
+    background: #f1f0ff;
+
+    transform: translateX(3px);
+}
+
+
+/* =========================================================
+   QUIZ TITLE
+========================================================= */
+
+.analytics-list-item strong {
+    color: #273247;
+
+    font-size: 16px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   QUIZ STATISTICS
+========================================================= */
+
+.analytics-list-item > div:last-child {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 25px;
+}
+
+.analytics-list-item span {
+    color: #68738b;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   TOP QUIZ RANK
+========================================================= */
+
+.analytics-list-item strong::first-letter {
+    color: #5146e5;
+}
+
+
+/* =========================================================
+   ERROR / EMPTY STATE
+========================================================= */
+
+.analytics-section h2 + p {
+    padding: 20px;
+
+    background: #f8f9fd;
+
+    border-radius: 10px;
+
+    text-align: center;
+
+    color: #7b849b;
+}
+
+
+/* =========================================================
+   LOADING PAGE
+========================================================= */
+
+.admin-analytics-page > .analytics-header + p {
+    max-width: 1200px;
+
+    margin: 50px auto;
+
+    text-align: center;
+
+    color: #78839b;
+
+    font-size: 17px;
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .admin-analytics-page {
+        padding: 30px 25px 50px;
+    }
+
+    .analytics-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .analytics-header h1 {
+        font-size: 32px;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .admin-analytics-page {
+        padding: 25px 15px 40px;
+    }
+
+    .analytics-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .analytics-header h1 {
+        font-size: 28px;
+    }
+
+    .analytics-header p {
+        font-size: 15px;
+    }
+
+    .analytics-header button {
+        width: 100%;
+    }
+
+    .analytics-cards {
+        grid-template-columns: 1fr;
+
+        gap: 15px;
+    }
+
+    .analytics-card {
+        min-height: 105px;
+
+        padding: 20px;
+    }
+
+    .analytics-card h2 {
+        font-size: 26px;
+    }
+
+    .analytics-section {
+        padding: 20px;
+    }
+
+    .analytics-section h2 {
+        font-size: 21px;
+    }
+
+    .analytics-list-item {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .analytics-list-item > div:last-child {
+        width: 100%;
+
+        justify-content: flex-start;
+
+        flex-wrap: wrap;
+
+        gap: 10px;
+    }
+
+    .analytics-list-item span {
+        white-space: normal;
+    }
+
+}
+/* =====================================================
+   ATTEMPTS OVER TIME
+===================================================== */
+
+.attempts-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 18px;
+    min-height: 280px;
+    padding: 30px 20px 10px;
+    overflow-x: auto;
+    border-top: 1px solid #eef0f6;
+}
+
+.attempt-bar-wrapper {
+    min-width: 55px;
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.attempt-value {
+    margin-bottom: 8px;
+    color: #20263a;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.attempt-bar-container {
+    width: 32px;
+    height: 180px;
+    display: flex;
+    align-items: flex-end;
+    background: #f0efff;
+    border-radius: 8px 8px 0 0;
+    overflow: hidden;
+}
+
+.attempt-bar {
+    width: 100%;
+    min-height: 4px;
+    background: #5146e5;
+    border-radius: 8px 8px 0 0;
+    transition: height 0.3s ease;
+}
+
+.attempt-date {
+    margin-top: 10px;
+    color: #747b91;
+    font-size: 12px;
+    white-space: nowrap;
+}
+/* =====================================================
+   PASS / FAIL RATIO
+===================================================== */
+
+.pass-fail-container {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.pass-fail-item {
+    width: 100%;
+}
+
+.pass-fail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    color: #20263a;
+    font-size: 14px;
+}
+
+.pass-fail-bar {
+    width: 100%;
+    height: 12px;
+    background: #eef0f6;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.pass-bar {
+    height: 100%;
+    background: #16a34a;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+.fail-bar {
+    height: 100%;
+    background: #dc2626;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}

@@ -1,0 +1,167 @@
+/* =========================================
+   LOGIN PAGE
+========================================= */
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: #f4f5fb;
+    box-sizing: border-box;
+}
+
+/* Login Card */
+.login-card {
+    width: 100%;
+    max-width: 430px;
+    padding: 40px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
+}
+
+/* Title */
+.login-card h1 {
+    margin: 0;
+    text-align: center;
+    color: #20263a;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+/* Subtitle */
+.login-card > p {
+    margin: 10px 0 30px;
+    text-align: center;
+    color: #747b91;
+    font-size: 15px;
+}
+
+/* Form */
+.login-card form {
+    width: 100%;
+}
+
+/* Field */
+.login-card form > div {
+    margin-bottom: 20px;
+}
+
+/* Labels */
+.login-card label {
+    display: block;
+    margin-bottom: 8px;
+    color: #20263a;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Inputs */
+.login-card input {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #dfe2ec;
+    border-radius: 8px;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 15px;
+    color: #20263a;
+    background: #ffffff;
+    transition: border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Input Focus */
+.login-card input:focus {
+    border-color: #5146e5;
+    box-shadow: 0 0 0 3px rgba(81, 70, 229, 0.1);
+}
+
+/* Placeholder */
+.login-card input::placeholder {
+    color: #a1a7b8;
+}
+
+/* Error */
+.login-card form p {
+    margin: 10px 0;
+    padding: 10px 12px;
+    border-radius: 7px;
+    font-size: 14px;
+}
+
+/* Login Button */
+.login-card button[type="submit"] {
+    width: 100%;
+    padding: 14px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 8px;
+    background: #5146e5;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease,
+    transform 0.1s ease;
+}
+
+/* Button Hover */
+.login-card button[type="submit"]:hover {
+    background: #4338ca;
+}
+
+/* Button Click */
+.login-card button[type="submit"]:active {
+    transform: scale(0.99);
+}
+
+/* Disabled Button */
+.login-card button[type="submit"]:disabled {
+    background: #a5a1ee;
+    cursor: not-allowed;
+}
+
+/* Mobile */
+@media (max-width: 500px) {
+
+    .login-page {
+        padding: 15px;
+    }
+
+    .login-card {
+        padding: 28px 22px;
+    }
+
+    .login-card h1 {
+        font-size: 24px;
+    }
+}
+/* =========================================
+   REGISTER LINK
+========================================= */
+
+.login-register {
+    margin-top: 25px;
+    text-align: center;
+    color: #747b91;
+    font-size: 14px;
+}
+
+.login-register button {
+    border: none;
+    padding: 0;
+    background: transparent;
+    color: #5146e5;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.login-register button:hover {
+    color: #4338ca;
+    text-decoration: underline;
+}

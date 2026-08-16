@@ -1,0 +1,425 @@
+/* =====================================================
+   Leaderboard Page
+===================================================== */
+
+.leaderboard-page {
+    min-height: 100vh;
+    padding: 40px;
+    background: #f5f6fb;
+    box-sizing: border-box;
+}
+
+/* =====================================================
+   Header
+===================================================== */
+
+.leaderboard-header {
+    max-width: 1200px;
+    margin: 0 auto 30px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+}
+
+.leaderboard-header h1 {
+    margin: 0 0 8px;
+
+    font-size: 34px;
+    font-weight: 700;
+
+    color: #202638;
+}
+
+.leaderboard-header p {
+    margin: 0;
+
+    font-size: 16px;
+    color: #737b8c;
+}
+
+/* =====================================================
+   Back Button
+===================================================== */
+
+.back-dashboard-btn {
+    border: none;
+
+    padding: 12px 20px;
+
+    background: #4f46e5;
+    color: white;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.back-dashboard-btn:hover {
+    background: #4338ca;
+}
+
+/* =====================================================
+   Top Three
+===================================================== */
+
+.top-three {
+    max-width: 1200px;
+
+    margin: 0 auto 30px;
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+.top-student {
+    background: white;
+
+    border-radius: 16px;
+
+    padding: 28px;
+
+    text-align: center;
+
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+
+    border-top: 5px solid transparent;
+
+    transition: 0.2s ease;
+}
+
+.top-student:hover {
+    transform: translateY(-3px);
+}
+
+.rank-first {
+    border-top-color: #f59e0b;
+}
+
+.rank-second {
+    border-top-color: #94a3b8;
+}
+
+.rank-third {
+    border-top-color: #cd7c32;
+}
+
+.rank-normal {
+    border-top-color: transparent;
+}
+
+.top-rank {
+    font-size: 30px;
+
+    margin-bottom: 12px;
+}
+
+.top-avatar {
+    width: 60px;
+    height: 60px;
+
+    margin: 0 auto 12px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+
+    background: #4f46e5;
+
+    color: white;
+
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.top-student h2 {
+    margin: 0 0 10px;
+
+    font-size: 20px;
+
+    color: #202638;
+}
+
+.top-score {
+    font-size: 25px;
+
+    font-weight: 700;
+
+    color: #4f46e5;
+}
+
+.top-student > span {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 13px;
+
+    color: #737b8c;
+}
+
+/* =====================================================
+   Main Leaderboard Card
+===================================================== */
+
+.leaderboard-card {
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    background: white;
+
+    border-radius: 16px;
+
+    padding: 28px;
+
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+}
+
+.leaderboard-card-header {
+    margin-bottom: 24px;
+}
+
+.leaderboard-card-header h2 {
+    margin: 0 0 6px;
+
+    font-size: 22px;
+
+    color: #202638;
+}
+
+.leaderboard-card-header p {
+    margin: 0;
+
+    color: #737b8c;
+
+    font-size: 14px;
+}
+
+/* =====================================================
+   Table
+===================================================== */
+
+.leaderboard-table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+.leaderboard-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 800px;
+}
+
+.leaderboard-table th {
+    padding: 15px 12px;
+
+    text-align: left;
+
+    background: #f7f8fc;
+
+    color: #687084;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    border-bottom: 1px solid #e8eaf0;
+}
+
+.leaderboard-table td {
+    padding: 17px 12px;
+
+    color: #454c5d;
+
+    font-size: 14px;
+
+    border-bottom: 1px solid #eef0f4;
+}
+
+.leaderboard-table tbody tr:hover {
+    background: #fafaff;
+}
+
+/* =====================================================
+   Rank Badge
+===================================================== */
+
+.rank-badge {
+    display: inline-flex;
+
+    justify-content: center;
+    align-items: center;
+
+    min-width: 40px;
+
+    font-size: 15px;
+
+    font-weight: 700;
+}
+
+.rank-badge.rank-normal {
+    color: #555d70;
+}
+
+/* =====================================================
+   Student
+===================================================== */
+
+.student-info {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    font-weight: 600;
+
+    color: #202638;
+}
+
+.student-avatar {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+
+    background: #eef0ff;
+
+    color: #4f46e5;
+
+    font-size: 15px;
+
+    font-weight: 700;
+}
+
+/* =====================================================
+   Scores
+===================================================== */
+
+.highest-score {
+    font-weight: 700;
+
+    color: #4f46e5 !important;
+}
+
+.average-score {
+    font-weight: 600;
+}
+
+/* =====================================================
+   Empty
+===================================================== */
+
+.empty-leaderboard {
+    text-align: center;
+
+    padding: 70px 20px;
+}
+
+.empty-icon {
+    font-size: 50px;
+
+    margin-bottom: 15px;
+}
+
+.empty-leaderboard h3 {
+    margin: 0 0 8px;
+
+    font-size: 22px;
+
+    color: #202638;
+}
+
+.empty-leaderboard p {
+    margin: 0;
+
+    color: #737b8c;
+}
+
+/* =====================================================
+   Loading
+===================================================== */
+
+.leaderboard-loading {
+    min-height: 70vh;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    font-size: 18px;
+
+    color: #687084;
+}
+
+/* =====================================================
+   Error
+===================================================== */
+
+.leaderboard-error {
+    max-width: 1200px;
+
+    margin: 0 auto 20px;
+
+    padding: 14px 18px;
+
+    border-radius: 8px;
+
+    background: #fee2e2;
+
+    color: #b91c1c;
+
+    font-size: 14px;
+}
+
+/* =====================================================
+   Responsive
+===================================================== */
+
+@media (max-width: 768px) {
+
+    .leaderboard-page {
+        padding: 20px;
+    }
+
+    .leaderboard-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .top-three {
+        grid-template-columns: 1fr;
+    }
+
+    .leaderboard-card {
+        padding: 18px;
+    }
+
+    .leaderboard-header h1 {
+        font-size: 28px;
+    }
+}
