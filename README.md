@@ -1,120 +1,36 @@
-# Quiz Management & Online Assessment Platform
+## 🛠️ Admin Panel Screenshots
 
-A full-stack web application for creating, managing, conducting, and evaluating online quizzes and assessments.
+The admin panel provides centralized tools for managing quizzes, users, categories, results, analytics, and reports.
 
-The platform provides separate experiences for Students and Administrators, including quiz management, timed assessments, results, analytics, leaderboard functionality, and user management.
+### Admin Login
+![Admin Login](screenshots/admin/admin-01.png)
 
----
+### Admin Dashboard
+![Admin Dashboard](screenshots/admin/admin-02.png)
 
-## 📌 Project Overview
+### Manage Quizzes
+![Manage Quizzes](screenshots/admin/admin-03.png)
 
-The Quiz Management & Online Assessment Platform provides a centralized system for conducting online assessments.
+### Create New Quiz
+![Create New Quiz](screenshots/admin/admin-04.png)
 
-Students can discover and attempt quizzes, submit answers, view results, track their performance, and check leaderboard rankings.
+### Manage Users
+![Manage Users](screenshots/admin/admin-05.png)
 
-Administrators can manage users, categories, quizzes, questions, assessments, results, reports, and analytics through an administrative dashboard.
+### Manage Categories
+![Manage Categories](screenshots/admin/admin-06.png)
 
----
+### Results & Analytics
+![Results & Analytics](screenshots/admin/admin-07.png)
 
-## ✨ Features
+### Analytics
+![Analytics](screenshots/admin/admin-08.png)
 
-### 👨‍🎓 Student Features
+### Analytics — Average Quiz Scores
+![Average Quiz Scores](screenshots/admin/admin-09.png)
 
-- User registration and login
-- Secure authentication
-- Student dashboard
-- Discover available quizzes
-- Search and browse quizzes
-- Take timed quizzes
-- Question navigation
-- Submit quiz attempts
-- View quiz results
-- View attempt details
-- Quiz history
-- Performance tracking
-- Leaderboard
-- Student profile management
-- Password reset functionality
+### Admin Reports — Quiz Performance
+![Quiz Performance](screenshots/admin/admin-10.png)
 
-### 👨‍💼 Admin Features
-
-- Admin dashboard
-- User management
-- Quiz management
-- Create and manage quizzes
-- Question management
-- Category management
-- Results management
-- Reports
-- Analytics dashboard
-- Leaderboard management
-- Student performance monitoring
-
----
-
-## 🛠️ Technology Stack
-
-### Frontend
-
-- React.js
-- JavaScript (JSX)
-- CSS
-- Vite
-- React Router
-
-### Backend
-
-- Node.js
-- Express.js
-- REST APIs
-- Authentication & Authorization Middleware
-
-### Database
-
-- PostgreSQL
-
-### Development Tools
-
-- Git
-- GitHub
-- IntelliJ IDEA
-- Vite
-
----
-
-## 🏗️ Application Architecture
-
-```text
-                    ┌─────────────────────┐
-                    │     Student/Admin   │
-                    └──────────┬──────────┘
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │   React Frontend    │
-                    │   React + Vite       │
-                    └──────────┬──────────┘
-                               │
-                         REST API Calls
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │   Express Backend   │
-                    │      Node.js        │
-                    └──────────┬──────────┘
-                               │
-                ┌──────────────┼──────────────┐
-                ▼              ▼              ▼
-          Controllers      Services      Middleware
-                │              │              │
-                └──────────────┼──────────────┘
-                               ▼
-                    ┌─────────────────────┐
-                    │    Repositories     │
-                    └──────────┬──────────┘
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │     PostgreSQL      │
-                    │      Database       │
-                    └─────────────────────┘
+### Admin Reports — Student Performance & Recent Attempts
+![Student Performance and Recent Attempts](screenshots/admin/admin-11.png)
