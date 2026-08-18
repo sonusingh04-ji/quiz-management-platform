@@ -172,7 +172,7 @@ Administrators can manage quizzes available on the platform.
 
 Administrators can create and configure new quizzes.
 
-![image alt]
+![image alt](https://github.com/sonusingh04-ji/quiz-management-platform/blob/ad7a0466b396259e4147d055e7e3a02b5393ce72/12.png)
 
 ### Question Management
 
