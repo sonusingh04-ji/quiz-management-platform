@@ -131,7 +131,7 @@ Students can view detailed information about a particular quiz attempt, includin
 
 The profile page displays the student's account information, role, email address, and user details.
 
-![image alt]
+![image alt](https://github.com/sonusingh04-ji/quiz-management-platform/blob/3adcf653b1184501fa819384841d6de0df426d7a/10.png)
 
 ---
 
