@@ -161,7 +161,7 @@ The admin dashboard provides an overview of the platform and important administr
 
 Administrators can manage registered users and their account information.
 
-![image alt]
+![image alt](https://github.com/sonusingh04-ji/quiz-management-platform/blob/26be11a2d2985803b8dd5ba158e26894bf6ea4dc/14.png)
 ### Quiz Management
 
 Administrators can manage quizzes available on the platform.
