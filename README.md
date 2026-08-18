@@ -69,8 +69,7 @@ https://github.com/sonusingh04-ji/quiz-management-platform/blob/49bcc608c4b1dee7
 
 The dashboard provides students with an overview of available quizzes, completed quizzes, average score, ranking, and recent attempts.
 
-![Student Dashboard](screenshots/student/student-02.png)
-
+![image alt](https://github.com/sonusingh04-ji/quiz-management-platform/blob/e9b9be67dd9882219a3c46199543b363ef44aad3/2.png)
 ---
 
 ## 3. Discover Quizzes
