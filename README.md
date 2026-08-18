@@ -24,7 +24,6 @@ The application is designed with a clean, modern, and responsive user interface 
 ### 👨‍🎓 Student Features
 
 - 🔐 Student registration and login
-- https://github.com/sonusingh04-ji/quiz-management-platform/blob/49bcc608c4b1dee77988404a791f863056fd929a/1.png
 - 🔑 Forgot and reset password
 - 📊 Personalized student dashboard
 - 🔎 Discover available quizzes
@@ -63,10 +62,8 @@ The Student module provides a complete assessment experience.
 ## 1. Student Registration
 
 Students can create an account by providing their basic information, email address, password, and account type.
+https://github.com/sonusingh04-ji/quiz-management-platform/blob/49bcc608c4b1dee77988404a791f863056fd929a/1.png
 
-![Student Registration](screenshots/student/student-01.png)
-
----
 
 ## 2. Student Dashboard
 
