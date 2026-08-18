@@ -76,7 +76,7 @@ The dashboard provides students with an overview of available quizzes, completed
 
 Students can explore available quizzes and filter them based on quiz title, category, and difficulty.
 
-![image alt]()
+![image alt](https://github.com/sonusingh04-ji/quiz-management-platform/blob/21b9e4fba348c59779f7098155e0e2e102e1fef9/3.png)
 
 ---
 
