@@ -116,7 +116,7 @@ The leaderboard displays student rankings based on quiz performance, including h
 
 Students can review their overall quiz performance, including total attempts, average score, highest score, passed quizzes, failed quizzes, and success rate.
 
-![image alt]
+![image alt](https://github.com/sonusingh04-ji/quiz-management-platform/blob/66e05b9b50d3a6934cb56eeaf7b6eb9d7e6becdc/8.png)
 
 ---
 
