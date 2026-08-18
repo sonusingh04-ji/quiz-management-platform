@@ -195,7 +195,7 @@ Administrators can view and manage student quiz results.
 
 Administrators can review platform analytics and performance information.
 
-![image alt]
+![image alt](https://github.com/sonusingh04-ji/quiz-management-platform/blob/8e1e46f5168533a73879aabd608a192d94e798d8/16.png)
 
 ### Reports
 
