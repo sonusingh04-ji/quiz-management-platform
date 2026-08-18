@@ -196,14 +196,6 @@ The platform provides report-related functionality for administrative review.
 
 ![image alt](https://github.com/sonusingh04-ji/quiz-management-platform/blob/90304f128fb646f38523f296a7bc9a9b501dc4be/18.png)
 
-### Additional Admin Functionality
-
-Additional administrative screens are included in the platform for managing and monitoring the assessment system.
-
-![Admin Screen](screenshots/admin/admin-10.png)
-
-![Admin Screen](screenshots/admin/admin-11.png)
-
 ---
 
 # 🛠️ Technology Stack
