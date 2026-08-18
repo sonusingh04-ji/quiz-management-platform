@@ -100,7 +100,7 @@ After submitting a quiz, students receive a performance summary containing their
 
 Students can view their previous quiz attempts, scores, correct and incorrect answers, submission time, and status.
 
-![image alt]
+![image alt](https://github.com/sonusingh04-ji/quiz-management-platform/blob/395d9fdeb5192f094d815b36570f46c5a2333918/6.png)
 
 ---
 
