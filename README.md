@@ -62,7 +62,7 @@ The Student module provides a complete assessment experience.
 ## 1. Student Registration
 
 Students can create an account by providing their basic information, email address, password, and account type.
-https://github.com/sonusingh04-ji/quiz-management-platform/blob/49bcc608c4b1dee77988404a791f863056fd929a/1.png
+![image alt](https://github.com/sonusingh04-ji/quiz-management-platform/blob/49bcc608c4b1dee77988404a791f863056fd929a/1.png)
 
 
 ## 2. Student Dashboard
@@ -76,7 +76,7 @@ The dashboard provides students with an overview of available quizzes, completed
 
 Students can explore available quizzes and filter them based on quiz title, category, and difficulty.
 
-![Discover Quizzes](screenshots/student/student-03.png)
+![image alt]()
 
 ---
 
@@ -84,7 +84,7 @@ Students can explore available quizzes and filter them based on quiz title, cate
 
 Students can attempt quizzes through an interactive quiz interface with question navigation, progress tracking, and a timer.
 
-![Take Quiz](screenshots/student/student-04.png)
+![image alt]
 
 ---
 
@@ -92,7 +92,7 @@ Students can attempt quizzes through an interactive quiz interface with question
 
 After submitting a quiz, students receive a performance summary containing their score, correct answers, wrong answers, unanswered questions, time taken, and result status.
 
-![Quiz Completed](screenshots/student/student-05.png)
+![image alt]
 
 ---
 
@@ -100,7 +100,7 @@ After submitting a quiz, students receive a performance summary containing their
 
 Students can view their previous quiz attempts, scores, correct and incorrect answers, submission time, and status.
 
-![Quiz History](screenshots/student/student-06.png)
+![image alt]
 
 ---
 
@@ -108,7 +108,7 @@ Students can view their previous quiz attempts, scores, correct and incorrect an
 
 The leaderboard displays student rankings based on quiz performance, including highest and average scores.
 
-![Leaderboard](screenshots/student/student-07.png)
+![image alt]
 
 ---
 
@@ -116,7 +116,7 @@ The leaderboard displays student rankings based on quiz performance, including h
 
 Students can review their overall quiz performance, including total attempts, average score, highest score, passed quizzes, failed quizzes, and success rate.
 
-![My Results](screenshots/student/student-08.png)
+![image alt]
 
 ---
 
@@ -124,15 +124,14 @@ Students can review their overall quiz performance, including total attempts, av
 
 Students can view detailed information about a particular quiz attempt, including score, answers, time taken, status, and question review.
 
-![Attempt Details](screenshots/student/student-09.png)
-
+![image alt]
 ---
 
 ## 10. Student Profile
 
 The profile page displays the student's account information, role, email address, and user details.
 
-![Student Profile](screenshots/student/student-10.png)
+![image alt]
 
 ---
 
@@ -140,7 +139,7 @@ The profile page displays the student's account information, role, email address
 
 Students can request a password reset by entering the email address associated with their account.
 
-![Forgot Password](screenshots/student/student-11.png)
+![image alt]
 
 ---
 
@@ -152,7 +151,7 @@ The Admin module provides centralized management and monitoring capabilities.
 
 The admin dashboard provides an overview of the platform and important administrative information.
 
-![Admin Dashboard](screenshots/admin/admin-01.png)
+![image alt]
 
 ---
 
@@ -162,49 +161,47 @@ The admin dashboard provides an overview of the platform and important administr
 
 Administrators can manage registered users and their account information.
 
-![Admin User Management](screenshots/admin/admin-02.png)
-
+![image alt]
 ### Quiz Management
 
 Administrators can manage quizzes available on the platform.
 
-![Admin Quiz Management](screenshots/admin/admin-03.png)
+![image alt]
 
 ### Create Quiz
 
 Administrators can create and configure new quizzes.
 
-![Create Quiz](screenshots/admin/admin-04.png)
+![image alt]
 
 ### Question Management
 
 Administrators can manage questions and their associated quiz information.
 
-![Question Management](screenshots/admin/admin-05.png)
+![image alt]
 
 ### Category Management
 
 Administrators can manage quiz categories.
 
-![Category Management](screenshots/admin/admin-06.png)
-
+![image alt]
 ### Results Management
 
 Administrators can view and manage student quiz results.
 
-![Admin Results](screenshots/admin/admin-07.png)
+![image alt]
 
 ### Analytics
 
 Administrators can review platform analytics and performance information.
 
-![Admin Analytics](screenshots/admin/admin-08.png)
+![image alt]
 
 ### Reports
 
 The platform provides report-related functionality for administrative review.
 
-![Admin Reports](screenshots/admin/admin-09.png)
+![image alt]
 
 ### Additional Admin Functionality
 
