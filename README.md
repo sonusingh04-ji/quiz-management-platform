@@ -92,7 +92,7 @@ Students can attempt quizzes through an interactive quiz interface with question
 
 After submitting a quiz, students receive a performance summary containing their score, correct answers, wrong answers, unanswered questions, time taken, and result status.
 
-![image alt]
+![image alt](https://github.com/sonusingh04-ji/quiz-management-platform/blob/e169236abec3ea6a2ddb6d35197a5d2e34674e2c/5.png)
 
 ---
 
