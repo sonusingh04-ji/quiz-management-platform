@@ -139,7 +139,7 @@ The profile page displays the student's account information, role, email address
 
 Students can request a password reset by entering the email address associated with their account.
 
-![image alt]
+![image alt](https://github.com/sonusingh04-ji/quiz-management-platform/blob/da43dee9372c987b5987e6f5545877ab9e1be65e/19.png)
 
 ---
 
