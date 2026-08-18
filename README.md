@@ -151,7 +151,7 @@ The Admin module provides centralized management and monitoring capabilities.
 
 The admin dashboard provides an overview of the platform and important administrative information.
 
-![image alt]
+![image alt](https://github.com/sonusingh04-ji/quiz-management-platform/blob/63252ca048003c8d4a20d04b1340bd94e0840778/11.png)
 
 ---
 
