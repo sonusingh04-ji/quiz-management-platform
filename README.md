@@ -84,7 +84,7 @@ Students can explore available quizzes and filter them based on quiz title, cate
 
 Students can attempt quizzes through an interactive quiz interface with question navigation, progress tracking, and a timer.
 
-![image alt]
+![image alt](https://github.com/sonusingh04-ji/quiz-management-platform/blob/020d88fddd4f0c171a637d38215f559a0b333812/4.png)
 
 ---
 
