@@ -189,7 +189,7 @@ Administrators can manage quiz categories.
 
 Administrators can view and manage student quiz results.
 
-![image alt]
+![image alt](https://github.com/sonusingh04-ji/quiz-management-platform/blob/8a5b39b1dcaa00e67efa361b3c320f8c706fac4d/15.png)
 
 ### Analytics
 
