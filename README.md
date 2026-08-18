@@ -184,7 +184,7 @@ Administrators can manage questions and their associated quiz information.
 
 Administrators can manage quiz categories.
 
-![image alt]
+![image alt](https://github.com/sonusingh04-ji/quiz-management-platform/blob/35abdd3d6e79f5a629e1e7d47feaf6759661c5af/17.png)
 ### Results Management
 
 Administrators can view and manage student quiz results.
