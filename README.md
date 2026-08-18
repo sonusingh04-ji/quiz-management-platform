@@ -166,7 +166,7 @@ Administrators can manage registered users and their account information.
 
 Administrators can manage quizzes available on the platform.
 
-![image alt]
+![image alt](https://github.com/sonusingh04-ji/quiz-management-platform/blob/e24305f5d269d75f5a9f046102853f0c6889d611/13.png)
 
 ### Create Quiz
 
