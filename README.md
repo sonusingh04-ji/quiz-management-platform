@@ -124,7 +124,7 @@ Students can review their overall quiz performance, including total attempts, av
 
 Students can view detailed information about a particular quiz attempt, including score, answers, time taken, status, and question review.
 
-![image alt]
+![image alt](https://github.com/sonusingh04-ji/quiz-management-platform/blob/ba4c2643dc4ad55328dc98c3497b7aad94dfd9d3/9.png)
 ---
 
 ## 10. Student Profile
