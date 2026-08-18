@@ -108,7 +108,7 @@ Students can view their previous quiz attempts, scores, correct and incorrect an
 
 The leaderboard displays student rankings based on quiz performance, including highest and average scores.
 
-![image alt]
+![image alt](https://github.com/sonusingh04-ji/quiz-management-platform/blob/6276faf13feb38276d8b6bd1923560f349d9f9ea/7.png)
 
 ---
 
