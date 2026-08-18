@@ -201,7 +201,7 @@ Administrators can review platform analytics and performance information.
 
 The platform provides report-related functionality for administrative review.
 
-![image alt]
+![image alt](https://github.com/sonusingh04-ji/quiz-management-platform/blob/90304f128fb646f38523f296a7bc9a9b501dc4be/18.png)
 
 ### Additional Admin Functionality
 
