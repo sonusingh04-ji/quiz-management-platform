@@ -12,8 +12,8 @@ The **Quiz Management & Online Assessment Platform** is a full-stack web applica
 
 The system supports two primary roles:
 
-- 👨‍🎓 **Student** — Discover and attempt quizzes, view performance, history, results, leaderboard rankings, and profile information.
-- 🛡️ **Admin** — Manage quizzes, questions, users, categories, results, analytics, and reports.
+- 👨‍🎓 **Student** — Discover and attempt quizzes, Take quizzes, view performance, history, results, leaderboard rankings, and profile information.
+- 🛡️ **Admin** — Create quizzes, Manage quizzes, questions, users, categories, results, analytics, and reports.
 
 The application is designed with a clean, modern, and responsive user interface and a structured REST API backend.
 
